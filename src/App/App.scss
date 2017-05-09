@@ -1,25 +1,10 @@
 .App {
-  background-color: yellow;
-  text-align: center;
+  // background-color: gray;
+  background-image: linear-gradient(rgb(39, 31, 19), rgb(10, 8, 5) 85%);
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+section {
+  // background-color: red;
+  padding: 0 30px 0 30px;
+  width: 100%;
 }

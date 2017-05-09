@@ -1,0 +1,24 @@
+import React, { Component } from 'react';
+import { Redirect, Route, NavLink } from 'react-router-dom';
+
+import Featured from '../Featured';
+
+import './SideNavbar.css';
+import logo from '../../public/Spotify_Icon_RGB_White.png';
+
+class SideNavbar extends Component {
+  render() {
+    return (
+      <nav className="SideNavbar-nav">
+        <img src={logo} alt="spotify logo"/>
+        <hr/>
+        <p style={{cursor: "not-allowed"}}>Search</p>
+        <hr/>
+        <NavLink to="/browse/featured" className="selected">Browse</NavLink>
+        <hr/>
+      </nav>
+    )
+  }
+}
+
+export default SideNavbar;

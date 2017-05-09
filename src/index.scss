@@ -1,0 +1,18 @@
+html, body, div, nav, p, a, ul, li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a, a:visited, a:hover {
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
