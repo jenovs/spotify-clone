@@ -1,13 +1,14 @@
 @import "../colors";
 
 .SideNavbar-nav {
-  background-color: $spotify-black;
+  background-color: rgba($spotify-black, 0.5);
   color: $spotify-gray;
   font-size: 16px;
   font-weight: bold;
   height: 100vh;
   padding: 24px 24px 95px 24px;
-  width: 220px;
+  width: 100%;
+  max-width: 220px;
 
   & img {
     width: 32px;

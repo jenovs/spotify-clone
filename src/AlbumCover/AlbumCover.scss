@@ -1,0 +1,57 @@
+.AlbumCover__container {
+  font-size: 18px;
+  font-weight: 200;
+  padding: 0 8px 40px 8px;
+  text-align: center;
+  position: relative;
+
+  @media (max-width: 735px) {
+    width: 50%;
+  }
+
+  @media (min-width: 736px) and (max-width: 1199px  ) {
+    font-size: 15px;
+    width: 33%;
+  }
+
+  @media (min-width: 1200px) and (max-width: 1499px  ) {
+    font-size: 15px;
+    width: 25%;
+  }
+
+  @media (min-width: 1500px) {
+    font-size: 15px;
+    width: 16%;
+  }
+
+  & img {
+    width: 100%;
+  }
+}
+
+.AlbumCover__play-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 8px;
+
+  & i {
+    font-size: 4.6rem;
+    font-weight: 100;
+    opacity: 0.8;
+    transition: font-size 0.3s cubic-bezier(0, 0, 0, 2.41);
+
+    &:hover {
+      font-size: 5.6rem;
+    }
+  }
+}
+
+.AlbumCover__name {
+  margin-top: 12px;
+}

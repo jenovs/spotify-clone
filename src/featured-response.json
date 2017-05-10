@@ -1,0 +1,607 @@
+{
+  "message": "Music to get you there....",
+  "playlists": {
+    "href": "https://api.spotify.com/v1/browse/featured-playlists?timestamp=2017-05-10T08%3A28%3A56&offset=0&limit=20",
+    "items": [
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX0XUsuxWHRQd"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX0XUsuxWHRQd",
+        "id": "37i9dQZF1DX0XUsuxWHRQd",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/126d00feb4d90821d71d7830aef44431a4e02c68",
+            "width": 300
+          }
+        ],
+        "name": "RapCaviar",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "FHjypz4e5EO6Z2+omLmwqIOwkUEBLM2ouMbqj52PGRIV2fumK/f0sbO2u+19mmyabCwzbgciQRg=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX0XUsuxWHRQd/tracks",
+          "total": 58
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX0XUsuxWHRQd"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX8f6LHxMjnzD"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8f6LHxMjnzD",
+        "id": "37i9dQZF1DX8f6LHxMjnzD",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/b06baf14467ecb97c5d83948c3d5da2ba70de299",
+            "width": 300
+          }
+        ],
+        "name": "Weekly Buzz",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "X8w12EIXZbQoM/WeracvYU6oOaaMlcdHyhRa8Gm29pW4uwAsH+mh0KBMX8aNmTHijxOt0c64EI4=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8f6LHxMjnzD/tracks",
+          "total": 56
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX8f6LHxMjnzD"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWVCKO3xAlT1Q"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWVCKO3xAlT1Q",
+        "id": "37i9dQZF1DWVCKO3xAlT1Q",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/580f67dcb7f909e8dbaf72bc825595e0653822f0",
+            "width": 300
+          }
+        ],
+        "name": "Eurovision 2017",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "IMQ+z//NqxjC/05lS6n9HFez6VUsVc4dLq0CyWM0euws4Zc2pDFa0X01DOFnoB0lQ0NzLZk8gJ8=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWVCKO3xAlT1Q/tracks",
+          "total": 42
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWVCKO3xAlT1Q"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWY8U6Zq7nvbE"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWY8U6Zq7nvbE",
+        "id": "37i9dQZF1DWY8U6Zq7nvbE",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/6945ca32f598409dcff5781841575becaa5e9b66",
+            "width": 300
+          }
+        ],
+        "name": "Hot Acoustic Covers",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "Y3gIOr6wzjFp1rzm18aNYPnMnVZw6eKI94TxB9vU7k0Qj5SlTAZoe6DnaF+4zKLQas4aSvOGXpI=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWY8U6Zq7nvbE/tracks",
+          "total": 43
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWY8U6Zq7nvbE"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DXcBWIGoYBM5M"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DXcBWIGoYBM5M",
+        "id": "37i9dQZF1DXcBWIGoYBM5M",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/61ba56389a67047a9ed42cf3230d40f778614b50",
+            "width": 300
+          }
+        ],
+        "name": "Today's Top Hits",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "zqa/sxLVQafyVZQNTY3pT5BoXVsHu91fUhHPjpnVtU2wHqgZa5w3koQ/xTkPDKdDbGU896ihu2c=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DXcBWIGoYBM5M/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DXcBWIGoYBM5M"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWSJHnPb1f0X3"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWSJHnPb1f0X3",
+        "id": "37i9dQZF1DWSJHnPb1f0X3",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ff40cea7c26c884b36a917119120cd2e5126a1bb",
+            "width": 300
+          }
+        ],
+        "name": "Cardio",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "LjUjnKelGLox86d0hzBr3SUDHIDKMGx6xdUf3YZTsSGwdb7g/a33Bx9oYfyNuQ48GTceRM8cT+s=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWSJHnPb1f0X3/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWSJHnPb1f0X3"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX8tZsk68tuDw"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8tZsk68tuDw",
+        "id": "37i9dQZF1DX8tZsk68tuDw",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/f345d0ecea83230bca1cbc8598b2e750ca62da2f",
+            "width": 300
+          }
+        ],
+        "name": "Fresh Electronic",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "EYGaVOPdRmgH9GxatW6nROu+Hj23YzpKn5l3ia9iCADVn6sITFLP0Kuvtg3bktD2GURV34GEQwk=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8tZsk68tuDw/tracks",
+          "total": 90
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX8tZsk68tuDw"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX2MyUCsl25eb"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2MyUCsl25eb",
+        "id": "37i9dQZF1DX2MyUCsl25eb",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/4db50808b8042f7ccb651168958f635d323dfbca",
+            "width": 300
+          }
+        ],
+        "name": "Morning Commute",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "miXRg9KaB1QcGQ6GiObcWCtp7sv2M7bsh8z34bnJhDAkvfZ9v0KHm6dulg8TPJmcqE7JAsqbztA=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2MyUCsl25eb/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX2MyUCsl25eb"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX6VDO8a6cQME"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX6VDO8a6cQME",
+        "id": "37i9dQZF1DX6VDO8a6cQME",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/d1f24e64fe62a2acb2a395c5cb25e348e0ad40ac",
+            "width": 300
+          }
+        ],
+        "name": "I Love My 90's R&B",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "UVDiYpWaC2Sdu9uun/RKF1ez6VUsVc4dO4Ofb4bvv7BwC77u0WbTSeliTLd/rBOcsVmN7aovRiQ=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX6VDO8a6cQME/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX6VDO8a6cQME"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX2czWA9hqErK"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2czWA9hqErK",
+        "id": "37i9dQZF1DX2czWA9hqErK",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/d961d3d16fbfeef86b81494ddcfbeba3d2f7a78a",
+            "width": 300
+          }
+        ],
+        "name": "Easy",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "Y7/Sy8O6sd4ZzNdWN2iWhikHKtb6TZt50STmdi5R+LIFi/R1KIH/PALNCuqNQFii8jgOxLVPVT4=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2czWA9hqErK/tracks",
+          "total": 80
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX2czWA9hqErK"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX82GYcclJ3Ug"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX82GYcclJ3Ug",
+        "id": "37i9dQZF1DX82GYcclJ3Ug",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/07bec01c7a8665a4370ce253ba997b7c80cfb02b",
+            "width": 300
+          }
+        ],
+        "name": "Digging Now",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "KyuMNGymwAeoPN+8/MHVPOu+Hj23YzpKtgNxMQRZxzN49h2MnVPbakhXVQvsf6oCCGr9xG75Jt0=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX82GYcclJ3Ug/tracks",
+          "total": 86
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX82GYcclJ3Ug"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWVxqA801UP5W"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWVxqA801UP5W",
+        "id": "37i9dQZF1DWVxqA801UP5W",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/de241f3d1f02075c557e48bb98550e253f94c8e7",
+            "width": 300
+          }
+        ],
+        "name": "Massive Pop Remixes",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "7ejDaJBq1MnaJK0Dleq5eOX/4YCLey/rhfXXagl6HFL4GZ9PP7WbAVaVSmD/zismajRaBQkImMY=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWVxqA801UP5W/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWVxqA801UP5W"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX2Nc3B70tvx0"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2Nc3B70tvx0",
+        "id": "37i9dQZF1DX2Nc3B70tvx0",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/fe2082b6f7e76d2fc8699d0a35748ed9c6a811ff",
+            "width": 300
+          }
+        ],
+        "name": "Ultimate Indie",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "GHOyWpnnOaPFNyaDefpQNd6UZ6qCjYLaj3f+OwtY7ejH74xS2HLabhPAWE0x5VOSgtbd8qAp47c=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX2Nc3B70tvx0/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX2Nc3B70tvx0"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX9XIFQuFvzM4"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX9XIFQuFvzM4",
+        "id": "37i9dQZF1DX9XIFQuFvzM4",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/489c047090d5691837316bf5ca282e408ce9886f",
+            "width": 300
+          }
+        ],
+        "name": "Feelin' Good",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "pDUBd8KX8+zpVjUkF5bDz37SncBiWWI7uFyYM5HlSNbgUCf9cwzq9UN/2nEUAXH+5uTY8UhZE+8=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX9XIFQuFvzM4/tracks",
+          "total": 100
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX9XIFQuFvzM4"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWZoF06RIo9el"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWZoF06RIo9el",
+        "id": "37i9dQZF1DWZoF06RIo9el",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/7dcdd05cf2c89310236bdc9c82f27c025b664937",
+            "width": 300
+          }
+        ],
+        "name": "Radar Latino",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "T818bVaAww88BbBB6gUQf1ez6VUsVc4dL8mG7kR0aDazhIp7LAVAGe7d+a0L68fNjIPNa4u9zT4=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWZoF06RIo9el/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWZoF06RIo9el"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DWYBF1dYDPlHw"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWYBF1dYDPlHw",
+        "id": "37i9dQZF1DWYBF1dYDPlHw",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/e9efc595f6c30ba4e2011b2860ce369e44b15d6d",
+            "width": 300
+          }
+        ],
+        "name": "Sing-Along Indie Hits",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "eOBS9lF8Ll9ednI20mVJNd6UZ6qCjYLaEoj37BTlkBWMSmirBMjmgm4qIxLmiEPBpsHxu9ugjVU=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DWYBF1dYDPlHw/tracks",
+          "total": 50
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DWYBF1dYDPlHw"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX7K31D69s4M1"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX7K31D69s4M1",
+        "id": "37i9dQZF1DX7K31D69s4M1",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/d0075a4f0be60c0b3056ed2b8cfc1ae4d8263936",
+            "width": 300
+          }
+        ],
+        "name": "Piano in the Background",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "itewoDMtcj3yVZQNTY3pT5GTTrFsadHq72NjA2nK+HRPDng3tTiVuO+7Xb1hXkEyYXpJn1yGtoA=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX7K31D69s4M1/tracks",
+          "total": 126
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX7K31D69s4M1"
+      },
+      {
+        "collaborative": false,
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZF1DX8vwRmUsEIMT"
+        },
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8vwRmUsEIMT",
+        "id": "37i9dQZF1DX8vwRmUsEIMT",
+        "images": [
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/5d387e466ccc1bc588545e2e26ff37d04b221762",
+            "width": 300
+          }
+        ],
+        "name": "All New All Now",
+        "owner": {
+          "external_urls": {
+            "spotify": "http://open.spotify.com/user/spotify"
+          },
+          "href": "https://api.spotify.com/v1/users/spotify",
+          "id": "spotify",
+          "type": "user",
+          "uri": "spotify:user:spotify"
+        },
+        "public": null,
+        "snapshot_id": "sqGeN4FExqQlX+eMeFhhg+oWipRNqLhhQB40wR0GbsFJ2Wg3X7Ln8P2zhmKT3lPgx6QhqjKnGKQ=",
+        "tracks": {
+          "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZF1DX8vwRmUsEIMT/tracks",
+          "total": 30
+        },
+        "type": "playlist",
+        "uri": "spotify:user:spotify:playlist:37i9dQZF1DX8vwRmUsEIMT"
+      }
+    ],
+    "limit": 20,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 18
+  }
+}
