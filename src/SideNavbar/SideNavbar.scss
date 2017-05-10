@@ -1,12 +1,13 @@
 @import "../colors";
 
 .SideNavbar-nav {
-  background-color: rgba($spotify-black, 0.5);
+  background-color: rgba($spotify-black, 0.9);
   color: $spotify-gray;
   font-size: 16px;
   font-weight: bold;
   height: 100vh;
   padding: 24px 24px 95px 24px;
+  position: fixed;
   width: 100%;
   max-width: 220px;
 
@@ -17,6 +18,10 @@
   & hr {
     color: $spotify-gray;
   }
+}
+
+.SideNavbar__link {
+  color: $spotify-gray;
 }
 
 .selected {

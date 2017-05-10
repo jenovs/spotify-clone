@@ -1,0 +1,28 @@
+.Playlist__container {
+  background-color: rgb(26, 18, 22);
+  display: flex;
+  flex-direction: row;
+  color: white;
+  // font-weight: bold;
+  margin-left: 220px;
+  // overflow: auto;
+}
+
+.Playlist__description {
+  position: fixed;
+  width: 100%;
+  max-width: 400px;
+  // height: 100vh;
+}
+
+.Playlist__tracks {
+
+  font-size: 2rem;
+  margin-left: 400px;
+  flex: 1;
+  // display: flex;
+  overflow: auto;
+  // height: 200vh;
+  // backface-visibility: hidden;
+  // will-change: overflow;
+}

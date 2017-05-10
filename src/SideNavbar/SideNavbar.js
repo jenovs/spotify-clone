@@ -14,7 +14,7 @@ class SideNavbar extends Component {
         <hr/>
         <p style={{cursor: "not-allowed"}}>Search</p>
         <hr/>
-        <NavLink to="/browse/featured" className="selected">Browse</NavLink>
+        <NavLink to="/browse" className="SideNavbar__link" activeClassName="selected">Browse</NavLink>
         <hr/>
       </nav>
     )

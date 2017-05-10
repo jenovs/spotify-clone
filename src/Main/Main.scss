@@ -3,10 +3,13 @@
 .Main-container {
   font-size: 12.8px;
   font-weight: bold;
+  height: 100vh;
   letter-spacing: 1px;
   margin: auto;
   width: 100%;
   & nav {
+    margin-left: 220px;
+    min-width: 515px;
     height: 84px;
     display: flex;
     flex-direction: column;

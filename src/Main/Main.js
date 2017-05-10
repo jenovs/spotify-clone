@@ -8,10 +8,11 @@ import './Main.css';
 
 class Main extends Component {
   render() {
+    console.log('Main', this.props);
     return (
       <div className="Main-container">
         <nav>
-          <Redirect from="/browse" to="/browse/featured" />
+          {/* <Redirect from="/browse" to="/browse/featured" /> */}
           <ul className="Main-nav-ul">
             <li>
               <NavLink to="/browse/featured" className="Main-nav" activeClassName="Main-nav--selected">FEATURED</NavLink>
@@ -27,7 +28,7 @@ class Main extends Component {
             </li>
           </ul>
         </nav>
-        <Route path="/browse/featured" component={Featured} />
+        <Route path="/browse/featured" component={Featured} props={{...this.props}}/>
         <Route path="/browse/genres" component={Genres} />
       </div>
 

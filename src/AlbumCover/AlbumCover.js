@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
+// import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
+
+// import history from '../history';
 
 import './AlbumCover.css';
 
@@ -26,13 +28,15 @@ class AlbumCover extends Component {
 
   handleClick(e) {
     if (e.target.nodeName === 'DIV') {
-      console.log('album clicked', this.props.playlistId);
+      console.log('album clicked', this.props);
+      this.props.history.push('/playlist', this.props.playlistId);
     } else if (e.target.nodeName === 'I') {
       console.log('play clicked');
     }
   }
 
   render() {
+    // console.log('AlbumCover, props', this.props);
     const images = document.getElementsByClassName('AlbumCover__image');
     let width = 0;
     let height = 0;
@@ -46,6 +50,7 @@ class AlbumCover extends Component {
         className="AlbumCover__container"
         onMouseEnter={this.showPlayBtn.bind(this)}
         onMouseLeave={this.hidePlayBtn.bind(this)}
+        onMouseOver={this.showPlayBtn.bind(this)}
       >
         <img
           className="AlbumCover__image"

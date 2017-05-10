@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+// import { Route, Link } from 'react-router-dom';
 
 import AlbumCover from '../AlbumCover';
 
@@ -16,7 +16,7 @@ class Featured extends Component {
   }
 
   render() {
-    // console.log(this.state.res);
+    console.log('Featured, props', this.props);
     const { res } = this.state;
     return (
       <div className="Featured">
@@ -32,6 +32,7 @@ class Featured extends Component {
                   playlistId={item.id}
                   image={item.images[0].url}
                   name={item.name}
+                  history={this.props.history}
                 />
               )
             }
