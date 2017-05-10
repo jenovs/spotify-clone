@@ -1,16 +1,17 @@
 @import "../colors";
+@import "../layout";
 
 .Main-container {
   font-size: 12.8px;
   font-weight: bold;
-  height: 100vh;
+  // height: 100vh;
   letter-spacing: 1px;
   margin: auto;
+  // margin-left: $sidebar-width;
   width: 100%;
   & nav {
-    margin-left: 220px;
     min-width: 515px;
-    height: 84px;
+    // height: 84px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,6 +52,8 @@
 
   & li {
     margin: 10px;
+    margin-top: 0;
     padding: 10px;
+    padding-top: 0;
   }
 }

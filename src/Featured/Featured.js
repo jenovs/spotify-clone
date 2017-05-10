@@ -36,6 +36,7 @@ class Featured extends Component {
                 />
               )
             }
+            return null;
           })}
         </div>
       </div>

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom';
-
-// import history from '../history';
 
 import './AlbumCover.css';
 
@@ -36,7 +33,6 @@ class AlbumCover extends Component {
   }
 
   render() {
-    // console.log('AlbumCover, props', this.props);
     const images = document.getElementsByClassName('AlbumCover__image');
     let width = 0;
     let height = 0;
@@ -54,7 +50,9 @@ class AlbumCover extends Component {
       >
         <img
           className="AlbumCover__image"
-          src={this.props.image}/>
+          src={this.props.image}
+          alt={this.props.name}
+        />
         <div>
           {this.state.showPlayBtn && (
             <div

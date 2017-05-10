@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 
 import Featured from '../Featured';
 import Genres from '../Genres';
@@ -12,7 +12,6 @@ class Main extends Component {
     return (
       <div className="Main-container">
         <nav>
-          {/* <Redirect from="/browse" to="/browse/featured" /> */}
           <ul className="Main-nav-ul">
             <li>
               <NavLink to="/browse/featured" className="Main-nav" activeClassName="Main-nav--selected">FEATURED</NavLink>

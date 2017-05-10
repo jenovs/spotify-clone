@@ -4,6 +4,10 @@ html, body, div, nav, p, a, ul, li, section {
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100vh;
+}
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

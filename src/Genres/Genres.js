@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, NavLink } from 'react-router-dom';
+// import { Redirect, Route, NavLink } from 'react-router-dom';
 
 import './Genres.css';
 

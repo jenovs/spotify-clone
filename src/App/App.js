@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Link, Switch } from 'react-router-dom';
-// import history from '../history';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import Main from '../Main';
 import SideNavbar from '../SideNavbar';
@@ -10,18 +9,16 @@ import './App.css';
 
 
 class App extends Component {
-  componentWillReciveProps(nextProps) {
-    console.log('componentWillReciveProps', nextProps);
-  }
 
   render() {
+
     return (
-      // <Router history={history}>
       <Router>
         <div className="App">
-          <div className="container">
+          <div className="App__background"></div>
+          <div className="App__container">
             <SideNavbar />
-            <section>
+            <section className="App__section">
               <Switch>
                 <Redirect exact from="/" to="/browse/featured" />
                 <Redirect exact from="/browse" to="/browse/featured" />
