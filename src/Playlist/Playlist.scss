@@ -1,12 +1,8 @@
 .Playlist__container {
-  // background-color: rgb(26, 18, 22);
-  // position: fixed;
   display: flex;
   flex-direction: row;
   color: white;
-  // height: auto;
-  // max-height: 100vh;
-  // overflow-y: hidden;
+
   & h2 {
     font-size: 26px;
   }
@@ -22,32 +18,26 @@
 
 .Playlist__description-container {
   position: fixed;
-
-  // top: 10px;
-  width: 30vw;
-  max-width: 400px;
-  // height: 100vh;
-  & img {
-    max-width: 255px;
-    max-height: 255px;
-    width: 100%;
-  }
-
-
+  max-width: 20vw;
 }
 
 .Playlist__image-container {
+  text-align: center;
   margin-right: 40px;
+  width: 100%;
+
+  & img {
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+  }
 }
 
 .Playlist__tracks {
   font-size: 2rem;
-  // margin-left: 400px;
   flex: 1;
-  // display: flex;
   position: relative;
-  // width: 50%;
-  margin-left: 400px;
+  margin-left: 22vw;
 
 }
 
