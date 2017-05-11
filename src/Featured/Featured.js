@@ -1,41 +1,83 @@
 import React, { Component } from 'react';
 // import { Route, Link } from 'react-router-dom';
+import { getToken } from '../helpers';
 
 import AlbumCover from '../AlbumCover';
 
 import './Featured.css';
-import res from '../featured-response.json';
+// import res from '../featured-response.json';
 
 class Featured extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      res,
+      // res,
       elements: 0,
       showAll: false,
     }
+
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.setElementCount();
-    });
+    console.log('componentDidMount called');
+    window.addEventListener('resize', this.handleResize);
     this.setElementCount();
+
+    this.fetchFeatured();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.setElementCount.bind(this)();
+  }
+
+  fetchFeatured() {
+    // TODO Add token age check
+    const token = JSON.parse(localStorage.getItem('token')).access_token;
+    console.log('token', token);
+    fetch('https://api.spotify.com/v1/browse/featured-playlists', {
+      headers: new Headers({
+        Authorization: "Bearer " + token,
+      })
+    })
+    .then(res => res.json())
+    .then(json => {
+      this.setState(() => ({
+        res: json,
+      }))
+    })
+    .catch(err => {
+      console.log('>>>>>>Error', err)
+      getToken();
+
+      // TODO Temporary solution
+      setTimeout(() => {this.fetchFeatured()}, 500)
+    });
   }
 
   setElementCount() {
     const w = window.innerWidth;
     const { elements } = this.state;
 
-    if (w <= 786 && elements !== 4) this.setState(() => ({elements: 4}));
-    else if (w < 1200 && w > 786 && elements !== 6) this.setState(() => ({elements: 6}));
-    else if (w < 1500 && w >= 1200 && elements !== 8) this.setState(() => ({elements: 8}));
-    else if (w >= 1500 && elements !== 12) this.setState(() => ({elements: 12}));
+    if (elements === 1000) return;
+
+    if (w <= 786 && elements !== 4) this.setState({elements: 4});
+    else if (w < 1200 && w > 786 && elements !== 6) this.setState({elements: 6});
+    else if (w < 1500 && w >= 1200 && elements !== 8) this.setState({elements: 8});
+    else if (w >= 1500 && elements !== 12) this.setState({elements: 12});
+    // if (w <= 786 && elements !== 4) this.setState(() => ({elements: 4}));
+    // else if (w < 1200 && w > 786 && elements !== 6) this.setState(() => ({elements: 6}));
+    // else if (w < 1500 && w >= 1200 && elements !== 8) this.setState(() => ({elements: 8}));
+    // else if (w >= 1500 && elements !== 12) this.setState(() => ({elements: 12}));
   }
 
-  showMore() {
-    console.log('showMore clicked');
+  showAll() {
+    console.log('showAll clicked');
     this.setState(() => ({
       elements: 1000, // magic number :)
       showAll: true,
@@ -43,8 +85,9 @@ class Featured extends Component {
   }
 
   render() {
-    console.log('Featured, props', this.props);
+    console.log('Featured, state', this.state);
     const { res } = this.state;
+    if (!res) return <div style={{color: "white"}}>Loading...</div>
     return (
       <div className="Featured">
         <h2>
@@ -68,7 +111,7 @@ class Featured extends Component {
         </div>
         {!this.state.showAll &&
           <a
-            onClick={this.showMore.bind(this)}
+            onClick={this.showAll.bind(this)}
             className="Featured__view-more"
           >SHOW ALL</a>
         }

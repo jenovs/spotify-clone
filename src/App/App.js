@@ -5,13 +5,18 @@ import Main from '../Main';
 import SideNavbar from '../SideNavbar';
 import Playlist from '../Playlist';
 
-import './App.css';
+import { getToken } from '../helpers';
 
+import './App.css';
 
 class App extends Component {
 
-  render() {
+  componentDidMount() {
+    // const token = JSON.parse(localStorage.getItem('token'))
+    if (!localStorage.getItem('token')) getToken();
+  }
 
+  render() {
     return (
       <Router>
         <div className="App">
