@@ -11,13 +11,17 @@ class Playlist extends Component {
     console.log('Playlist', this.props.location.state);
     return (
         <div className="Playlist__container">
-          <div className="Playlist__description">
-            <div>
+          <div className="Playlist__description-container">
+            <div className="Playlist__image-container">
               <img src={res.images[0].url} alt={res.name}/><br/>
-              {res.name}<br/>
-              Description: {res.description}<br/>
-              {res.tracks.items.length} songs
-              <hr/>
+            </div>
+            <div className="Playlist__description">
+              <h2>{res.name}</h2>
+              <p>{res.description}</p>
+              <p>{res.tracks.items.length} songs</p>
+              <div>
+                <button>PLAY</button>
+              </div>
             </div>
           </div>
           <div className="Playlist__tracks">
