@@ -27,7 +27,12 @@ class Main extends Component {
             </li>
           </ul>
         </nav>
-        <Route path="/browse/featured" component={Featured} props={{...this.props}}/>
+        <Route
+          path="/browse/featured"
+          render={routeProps => <Featured {...routeProps} handlePlay={this.props.handlePlay} />}
+          // component={Featured}
+          // props={{...this.props}}
+        />
         <Route path="/browse/genres" component={Genres} />
       </div>
 

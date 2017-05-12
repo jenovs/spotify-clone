@@ -5,7 +5,9 @@ import Main from '../Main';
 import SideNavbar from '../SideNavbar';
 import Playlist from '../Playlist';
 
-import { getToken } from '../helpers';
+import store from '../../store';
+
+import { getToken } from '../../helpers';
 
 import './App.css';
 
@@ -14,6 +16,17 @@ class App extends Component {
   componentDidMount() {
     // const token = JSON.parse(localStorage.getItem('token'))
     if (!localStorage.getItem('token')) getToken();
+
+    this.state = {
+      playing: false,
+      playlist: null,
+    }
+
+    this.handlePlay = this.handlePlay.bind(this);
+  }
+
+  handlePlay(pl) {
+    console.log('handlePlaylist', pl);
   }
 
   render() {
@@ -28,8 +41,12 @@ class App extends Component {
                 <Redirect exact from="/" to="/browse/featured" />
                 <Redirect exact from="/browse" to="/browse/featured" />
                 <Route path="/playlist" component={Playlist} />
+                {/* <Route path="/browse/featured" component={Main} handlePlay={this.handlePlay} /> */}
+                <Route
+                  path="/browse/featured"
+                  render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay}/>}
+                />
                 <Route path="/browse" component={Main} />
-                <Route path="/browse/featured" component={Main} />
               </Switch>
             </section>
           </div>

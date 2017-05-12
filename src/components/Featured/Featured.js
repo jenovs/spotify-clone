@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Route, Link } from 'react-router-dom';
-import { getToken } from '../helpers';
+import { getToken } from '../../helpers';
 
 import AlbumCover from '../AlbumCover';
 
@@ -66,14 +66,14 @@ class Featured extends Component {
 
     if (elements === 1000) return;
 
-    if (w <= 786 && elements !== 4) this.setState({elements: 4});
-    else if (w < 1200 && w > 786 && elements !== 6) this.setState({elements: 6});
-    else if (w < 1500 && w >= 1200 && elements !== 8) this.setState({elements: 8});
-    else if (w >= 1500 && elements !== 12) this.setState({elements: 12});
-    // if (w <= 786 && elements !== 4) this.setState(() => ({elements: 4}));
-    // else if (w < 1200 && w > 786 && elements !== 6) this.setState(() => ({elements: 6}));
-    // else if (w < 1500 && w >= 1200 && elements !== 8) this.setState(() => ({elements: 8}));
-    // else if (w >= 1500 && elements !== 12) this.setState(() => ({elements: 12}));
+    // if (w <= 786 && elements !== 4) this.setState({elements: 4});
+    // else if (w < 1200 && w > 786 && elements !== 6) this.setState({elements: 6});
+    // else if (w < 1500 && w >= 1200 && elements !== 8) this.setState({elements: 8});
+    // else if (w >= 1500 && elements !== 12) this.setState({elements: 12});
+    if (w <= 786 && elements !== 4) this.setState(() => ({elements: 4}));
+    else if (w < 1200 && w > 786 && elements !== 6) this.setState(() => ({elements: 6}));
+    else if (w < 1500 && w >= 1200 && elements !== 8) this.setState(() => ({elements: 8}));
+    else if (w >= 1500 && elements !== 12) this.setState(() => ({elements: 12}));
   }
 
   showAll() {
@@ -86,6 +86,7 @@ class Featured extends Component {
 
   render() {
     console.log('Featured, state', this.state);
+    console.log('Featured, props', this.props);
     const { res } = this.state;
     if (!res) return <div style={{color: "white"}}>Loading...</div>
     return (
@@ -103,6 +104,7 @@ class Featured extends Component {
                   image={item.images[0].url}
                   name={item.name}
                   history={this.props.history}
+                  handlePlay={this.props.handlePlay.bind(null, item.id)}
                 />
               )
             }

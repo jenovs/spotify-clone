@@ -29,6 +29,8 @@ class AlbumCover extends Component {
       this.props.history.push('/playlist', this.props.playlistId);
     } else if (e.target.nodeName === 'I') {
       console.log('play clicked');
+      this.props.handlePlay(this.props.playlistId)
+
     }
   }
 
