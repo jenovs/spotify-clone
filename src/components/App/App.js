@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import Main from '../Main';
 import SideNavbar from '../SideNavbar';
@@ -17,12 +18,14 @@ class App extends Component {
     // const token = JSON.parse(localStorage.getItem('token'))
     if (!localStorage.getItem('token')) getToken();
 
-    this.state = {
-      playing: false,
-      playlist: null,
-    }
+    // this.state = {
+    //   playing: false,
+    //   playlist: null,
+    // }
 
     this.handlePlay = this.handlePlay.bind(this);
+
+    console.log('store', store.getState());
   }
 
   handlePlay(pl) {
@@ -31,27 +34,29 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <div className="App__background"></div>
-          <div className="App__container">
-            <SideNavbar />
-            <section className="App__section">
-              <Switch>
-                <Redirect exact from="/" to="/browse/featured" />
-                <Redirect exact from="/browse" to="/browse/featured" />
-                <Route path="/playlist" component={Playlist} />
-                {/* <Route path="/browse/featured" component={Main} handlePlay={this.handlePlay} /> */}
-                <Route
-                  path="/browse/featured"
-                  render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay}/>}
-                />
-                <Route path="/browse" component={Main} />
-              </Switch>
-            </section>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <div className="App__background"></div>
+            <div className="App__container">
+              <SideNavbar />
+              <section className="App__section">
+                <Switch>
+                  <Redirect exact from="/" to="/browse/featured" />
+                  <Redirect exact from="/browse" to="/browse/featured" />
+                  <Route path="/playlist" component={Playlist} />
+                  {/* <Route path="/browse/featured" component={Main} handlePlay={this.handlePlay} /> */}
+                  <Route
+                    path="/browse/featured"
+                    render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay}/>}
+                  />
+                  <Route path="/browse" component={Main} />
+                </Switch>
+              </section>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </Provider>
     );
   }
 }

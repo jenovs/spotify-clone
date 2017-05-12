@@ -21,7 +21,6 @@ class Featured extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount called');
     window.addEventListener('resize', this.handleResize);
     this.setElementCount();
 
@@ -39,7 +38,6 @@ class Featured extends Component {
   fetchFeatured() {
     // TODO Add token age check
     const token = JSON.parse(localStorage.getItem('token')).access_token;
-    console.log('token', token);
     fetch('https://api.spotify.com/v1/browse/featured-playlists', {
       headers: new Headers({
         Authorization: "Bearer " + token,
@@ -85,8 +83,8 @@ class Featured extends Component {
   }
 
   render() {
-    console.log('Featured, state', this.state);
-    console.log('Featured, props', this.props);
+    // console.log('Featured, state', this.state);
+    // console.log('Featured, props', this.props);
     const { res } = this.state;
     if (!res) return <div style={{color: "white"}}>Loading...</div>
     return (

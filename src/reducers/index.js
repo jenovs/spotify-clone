@@ -1,9 +1,15 @@
-const playReducer = (state = {}, action) => {
+const initState = {
+  playing: false,
+  playlistId: null,
+  songId: null,
+}
+
+const playReducer = (state = initState, action) => {
   switch (action.type) {
     case 'SET_PLAYING':
-      return Object.assign({}, {...state}, {playing: true});
-      break;
+      return {...state, playing: true, playlistId: action.id}
     default:
+      return state;
   }
 }
 
