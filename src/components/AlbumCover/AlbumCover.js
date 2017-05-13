@@ -1,91 +1,92 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setPlaying } from '../../actions';
-import './AlbumCover.css';
+import AlbumActionButton from '../stateless/AlbumActionButton';
+import AlbumCoverContainer from '../stateless/AlbumCoverContainer';
+import AlbumCoverImage from '../stateless/AlbumCoverImage';
+import AlbumCoverName from '../stateless/AlbumCoverName';
+
+import { setPlaying, setPause } from '../../actions';
 
 class AlbumCover extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showPlayBtn: false,
+      showActionBtn: false,
+    }
+
+    this.hidePlayBtn = this.hidePlayBtn.bind(this);
+    this.showPlayBtn = this.showPlayBtn.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const images = document.getElementsByClassName('AlbumCoverImage');
+    if (images.length) {
+      this.setState(() => ({
+        width: images[0].width,
+        height: images[0].width,
+      }));
     }
   }
 
   showPlayBtn() {
     this.setState(() => ({
-      showPlayBtn: true,
-    }))
+      showActionBtn: true,
+    }));
   }
 
   hidePlayBtn() {
     this.setState(() => ({
-      showPlayBtn: false,
-    }))
+      showActionBtn: false,
+    }));
   }
 
   handleClick(e) {
     if (e.target.nodeName === 'DIV') {
-      console.log('album clicked', this.props);
       this.props.history.push('/playlist', this.props.playlistId);
     } else if (e.target.nodeName === 'I') {
-      console.log('play clicked');
-      // this.props.handlePlay(this.props.playlistId)
-      this.props.setPlaying(this.props.playlistId);
-      // console.log('props====', this.props);
-
+      if (e.target.id === 'play') {
+        this.props.setPlaying(this.props.playlistId);
+      } else if (e.target.id === 'pause') {
+        this.props.setPause();
+      }
     }
   }
 
   render() {
-    const images = document.getElementsByClassName('AlbumCover__image');
-    let width = 0;
-    let height = 0;
-    if (images.length) {
-      width = images[0].width;
-      height = images[0].height;
-    }
-
-    const playButton = <i className="fa fa-play-circle-o" aria-hidden="true" title="PLAY"></i>
-    // const pauseButton = <i className="fa fa-pause-circle-o" aria-hidden="true" title="PAUSE"></i>
-
-    const actionButton = playButton;
+    const { isPlaying, playingPlaylistId, playlistId } = this.props;
+    const { showActionBtn, width, height } = this.state;
+    const isThisPlaying = isPlaying && (playingPlaylistId === playlistId)
+    const actionButton = isThisPlaying ? 'pause' : 'play';
 
     return (
-      <div
-        className="AlbumCover__container"
-        onMouseEnter={this.showPlayBtn.bind(this)}
-        onMouseLeave={this.hidePlayBtn.bind(this)}
-        onMouseOver={this.showPlayBtn.bind(this)}
+      <AlbumCoverContainer
+        onMouseLeave={this.hidePlayBtn}
+        onMouseOver={this.showPlayBtn}
       >
-        <img
-          className="AlbumCover__image"
-          src={this.props.image}
-          alt={this.props.name}
+        <AlbumCoverImage
+          image={this.props.image}
+          name={this.props.name}
         />
-        <div>
-          {this.state.showPlayBtn && (
-            <div
-              style={{width, height}}
-              className="AlbumCover__play-button"
-              onClick={this.handleClick.bind(this)}
-            >
-              {/* <i className="fa fa-play-circle-o" aria-hidden="true" title="PLAY"></i> */}
-              {actionButton}
-            </div>
-          )}
-          <div className="AlbumCover__name">
-            {this.props.name}
-          </div>
-        </div>
-      </div>
+        {(showActionBtn || isThisPlaying) && (
+          <AlbumActionButton
+            width={width}
+            height={height}
+            onClick={this.handleClick}
+            actionButton={actionButton}
+          />
+        )}
+        <AlbumCoverName name={this.props.name} />
+      </AlbumCoverContainer>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  playing: state.playing,
+  isPlaying: state.isPlaying,
+  isPaused: state.isPaused,
   playingPlaylistId: state.playlistId,
 });
 
@@ -93,8 +94,9 @@ const mapDispatchToProps = dispatch => ({
   setPlaying: id => {
     dispatch(setPlaying(id));
   },
+  setPause: id => {
+    dispatch(setPause(id));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlbumCover);
-
-// export default AlbumCover;

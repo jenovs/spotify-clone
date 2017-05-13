@@ -1,0 +1,22 @@
+.AlbumActionButton {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 8px;
+
+  & i {
+    font-size: 4.6rem;
+    font-weight: 100;
+    opacity: 0.8;
+    transition: font-size 0.3s cubic-bezier(0, 0, 0, 2.41);
+
+    &:hover {
+      font-size: 5.6rem;
+    }
+  }
+}

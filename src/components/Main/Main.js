@@ -8,7 +8,7 @@ import './Main.css';
 
 class Main extends Component {
   render() {
-    console.log('Main', this.props);
+    // console.log('Main', this.props);
     return (
       <div className="Main-container">
         <nav>

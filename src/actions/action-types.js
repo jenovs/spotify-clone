@@ -1,0 +1,4 @@
+export const SET_PLAYING = 'SET_PLAYING';
+export const SET_PAUSE = 'SET_PAUSE';
+export const SAVE_PLAYER_STATUS = 'SAVE_PLAYER_STATUS';
+export const SAVE_CURRENT_TIME = 'SAVE_CURRENT_TIME';
