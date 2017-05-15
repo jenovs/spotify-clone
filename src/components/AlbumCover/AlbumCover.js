@@ -19,9 +19,19 @@ class AlbumCover extends Component {
     this.hidePlayBtn = this.hidePlayBtn.bind(this);
     this.showPlayBtn = this.showPlayBtn.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.updateImageSize = this.updateImageSize.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateImageSize);
+    this.updateImageSize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateImageSize);
+  }
+
+  updateImageSize() {
     const images = document.getElementsByClassName('AlbumCoverImage');
     if (images.length) {
       this.setState(() => ({
