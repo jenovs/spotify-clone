@@ -6,7 +6,7 @@ import AlbumCoverContainer from '../stateless/AlbumCoverContainer';
 import AlbumCoverImage from '../stateless/AlbumCoverImage';
 import AlbumCoverName from '../stateless/AlbumCoverName';
 
-import { setPlaying, setPause } from '../../actions';
+import * as actions from '../../actions';
 
 class AlbumCover extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class AlbumCover extends Component {
       this.props.history.push('/playlist', this.props.playlistId);
     } else if (e.target.nodeName === 'I') {
       if (e.target.id === 'play') {
-        this.props.setPlaying(this.props.playlistId);
+        this.props.startPlaying(this.props.playlistId, this.props.fetchedPlaylistId);
       } else if (e.target.id === 'pause') {
         this.props.setPause();
       }
@@ -66,9 +66,9 @@ class AlbumCover extends Component {
   }
 
   render() {
-    const { isPlaying, playingPlaylistId, playlistId } = this.props;
+    const { isPlaying, fetchedPlaylistId, playlistId } = this.props;
     const { showActionBtn, width, height } = this.state;
-    const isThisPlaying = isPlaying && (playingPlaylistId === playlistId)
+    const isThisPlaying = isPlaying && (fetchedPlaylistId === playlistId)
     const actionButton = isThisPlaying ? 'pause' : 'play';
 
     return (
@@ -96,16 +96,15 @@ class AlbumCover extends Component {
 
 const mapStateToProps = (state) => ({
   isPlaying: state.isPlaying,
-  isPaused: state.isPaused,
-  playingPlaylistId: state.playlistId,
+  fetchedPlaylistId: state.fetchedPlaylistId,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setPlaying: id => {
-    dispatch(setPlaying(id));
+  startPlaying: (id, playlistId) => {
+    dispatch(actions.startPlaying(id, playlistId));
   },
   setPause: id => {
-    dispatch(setPause(id));
+    dispatch(actions.setPause(id));
   },
 });
 

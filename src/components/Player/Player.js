@@ -1,110 +1,76 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { savePlayerStatus, saveCurrentTime } from '../../actions';
+import {
+  setPause,
+  playNextTrack,
+} from '../../actions';
 
 import './Player.css';
 
 class Player extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      playlist: null,
-      audioSrc: null,
-    }
-  }
-
-  // playlistId, songInd, currSongPos
-
+  audioEl = new Audio();
 
   componentDidMount() {
-    const { playing, playlistId } = this.props;
-    if (playing && playlistId) {
-      this.fetchPlaylist(playlistId);
-    }
+    this.audioEl.addEventListener('ended', this.handleEnded.bind(this));
   }
 
-  componentWillReceiveProps(p) {
-    console.log('componentWillReceiveProps', p);
-    const { playing, playlistId } = p;
-    if (playing && playlistId) {
-      this.fetchPlaylist(playlistId);
-    } else if (!playing) {
-      this.pauseSong();
-    }
+  componentWillUnmount() {
+    this.audioEl.removeEventListener('ended', this.handleEnded.bind(this));
   }
 
-  fetchPlaylist(playlistId) {
-    const token = JSON.parse(localStorage.getItem('token')).access_token;
+  playTrack() {
+    const { currSongPos, playlist, songInd } = this.props;
 
-    fetch(`https://api.spotify.com/v1/users/spotify/playlists/${playlistId}`, {
-      headers: {Authorization: "Bearer " + token}
-    })
-    .then(res => res.json())
-    .then(json => {
-      this.setState(() => ({playlist: json}), this.playSong)
-    })
-    .catch(err => console.log('>>>>>Error', err));
+    if (!~songInd) return this.pauseTrack();
+
+    this.audioEl.src = playlist.tracks.items[songInd].track.preview_url;
+    this.audioEl.volume = 0.1;
+    this.audioEl.currentTime = currSongPos;
+    this.audioEl.play();
   }
 
-  playSong() {
-    // console.log('playSong, state.playing', this.props.playing);
-    // if (this.props.playing) {
-    //   console.log('in if');
-    //   return this.pauseSong();
-    // }
-    let trackNumber = 0;
-    const audioEl = document.getElementsByTagName('audio')[0];
-
-    while (!this.state.playlist.tracks.items[trackNumber].track.preview_url) trackNumber++;
-
-    audioEl.src = this.state.playlist.tracks.items[trackNumber].track.preview_url;
-
-    audioEl.volume = 0.1;
-    audioEl.currentTime = this.props.currSongPos;
-
-    audioEl.play();
-    // this.props.savePlayerStatus(0, trackNumber);
+  pauseTrack() {
+    this.audioEl.pause();
   }
 
-  pauseSong() {
-    console.log('pauseSong');
-    const audioEl = document.getElementsByTagName('audio')[0];
-    // console.log(audioEl.currentTime);
-    this.props.saveCurrentTime(audioEl.currentTime);
-    // console.log(audioEl);
-    audioEl.pause();
+  handleEnded() {
+    const { playlist, songInd, playNextTrack } = this.props;
+    playNextTrack(playlist, songInd);
   }
 
   render() {
-    // console.log('Player', this.props);
+    const { isPlaying, playlist, songInd } = this.props;
+
+    if (playlist && isPlaying) this.playTrack();
+    if (this.audioEl.src && !isPlaying) this.pauseTrack();
+
     return (
       <footer className="Player__container">
-        Playing: {this.props.playing.toString()}
+        Playing: {isPlaying.toString()}
         <br/>
-        Playlist ID: {this.props.playlistId}
+        Playlist length: {playlist && playlist.tracks.items.length}
         <br/>
-        Playlist length: {this.state.playlist && this.state.playlist.tracks.items.length}
-        <audio src={null}/>
+        Song: {playlist && ~songInd && playlist.tracks.items[songInd].track.name}
       </footer>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  playing: state.isPlaying,
-  playlistId: state.playlistId,
+  isPlaying: state.isPlaying,
+  playlist: state.playlist,
+  songInd: state.songInd,
   currSongPos: state.currSongPos,
 });
 
 const mapDispatchToProps = dispatch => ({
-  savePlayerStatus: (currSongPos, songInd) => {
-    dispatch(savePlayerStatus(currSongPos, songInd));
+  setPause: () => {
+    dispatch(setPause());
   },
-  saveCurrentTime: currSongPos => {
-    dispatch(saveCurrentTime(currSongPos));
-  },
+  playNextTrack: (playlist, songInd) => {
+    dispatch(playNextTrack(playlist, songInd));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

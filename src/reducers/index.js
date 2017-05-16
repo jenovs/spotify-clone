@@ -1,36 +1,38 @@
 import * as types from '../actions/action-types';
 
 const initState = {
-  playing: false,
   isPlaying: false,
-  isPaused: false,
-  playlistId: null,
+  fetchedPlaylistId: null,
   songInd: 0,
-  currSongPos: 0,
+  currSongPos: 25,
   paused: false,
+  playlist: null,
 }
 
 const playReducer = (state = initState, action) => {
   switch (action.type) {
 
-    case types.SET_PLAYING:
-      return {...state, isPlaying: true, playlistId: action.id};
+    case types.PLAY_TRACKS:
+      return {...state, isPlaying: true};
 
     case types.SET_PAUSE:
-      // return {...state, isPlaying: false, playlistId: action.id};
-      return {...state, isPlaying: false, isPaused: true};
+      return {...state, isPlaying: false};
 
-    case types.SAVE_PLAYER_STATUS:
+    case types.UPDATE_PLAYLIST_AND_PLAY:
       return {
         ...state,
-        currSongPos: action.currSongPos,
+        playlist: action.playlist,
         songInd: action.songInd,
-      };
+        fetchedPlaylistId: action.id,
+        isPlaying: true,
+      }
 
-    case types.SAVE_CURRENT_TIME:
+    case types.PLAY_NEXT_TRACK:
       return {
         ...state,
-        currSongPos: action.currSongPos,
+        songInd: action.songInd,
+        currSongPos: 25,
+        isPlaying: true,
       }
 
     default:
