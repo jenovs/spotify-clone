@@ -1,4 +1,7 @@
 import * as types from './action-types';
+import { getToken } from '../helpers';
+
+if (!localStorage.getItem('token')) getToken();
 
 const token = JSON.parse(localStorage.getItem('token')).access_token;
 

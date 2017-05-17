@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { Provider } from 'react-redux';
 
 import Main from '../Main';
-import Player from '../Player';
+import PlayerContainer from '../../containers/PlayerContainer';
 import Playlist from '../Playlist';
 import SideNavbar from '../SideNavbar';
 
@@ -54,7 +54,7 @@ class App extends Component {
                   <Route path="/browse" component={Main} />
                 </Switch>
               </section>
-              <Player />
+              <PlayerContainer />
             </div>
           </div>
         </Router>
