@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 
 import NowPlaying from '../../components/NowPlaying';
 import Player from '../../components/Player';
+import PlayerControls from '../../components/PlayerControls';
 
 import logo from '../../../public/Spotify_Icon_RGB_White.png';
 
-import {
-  setPause,
-  playNextTrack,
-} from '../../actions';
+import * as actions from '../../actions';
 
 import './main.css';
 
@@ -44,6 +42,16 @@ class PlayerContainer extends Component {
     playNextTrack(playlist, songInd);
   }
 
+  handlePlay() {
+    const { playlistId, startPlaying } = this.props;
+    if (!playlistId) return;
+    startPlaying(playlistId, playlistId);
+  }
+
+  handlePause() {
+    this.props.setPause();
+  }
+
   render() {
     const { isPlaying, playlist, songInd } = this.props;
 
@@ -59,16 +67,12 @@ class PlayerContainer extends Component {
           title={currentTrack ? currentTrack.name : 'Nothing selected'}
           src={currentTrack ? currentTrack.album.images[2].url : logo}
         />
-        {/* Playing: {isPlaying.toString()}
-        <br/> */}
-        {/* <img src={playlist && ~songInd && playlist.tracks.items[songInd].track.album.images[2].url}/> */}
-        {/* <div>
-          Playlist length: {playlist && playlist.tracks.items.length}
-          <br/>
-          Artist: {playlist && ~songInd && playlist.tracks.items[songInd].track.artists[0].name}
-          <br/>
-          Song: {playlist && ~songInd && playlist.tracks.items[songInd].track.name}
-        </div> */}
+        <PlayerControls
+          isPlaying={isPlaying}
+          handlePlay={this.handlePlay.bind(this)}
+          handlePause={this.handlePause.bind(this)}
+          handleNext={this.handleEnded.bind(this)}
+        />
       </Player>
     )
   }
@@ -79,14 +83,18 @@ const mapStateToProps = state => ({
   playlist: state.playlist,
   songInd: state.songInd,
   currSongPos: state.currSongPos,
+  playlistId: state.fetchedPlaylistId,
 });
 
 const mapDispatchToProps = dispatch => ({
+  startPlaying: (id, playlistId) => {
+    dispatch(actions.startPlaying(id, playlistId));
+  },
   setPause: () => {
-    dispatch(setPause());
+    dispatch(actions.setPause());
   },
   playNextTrack: (playlist, songInd) => {
-    dispatch(playNextTrack(playlist, songInd));
+    dispatch(actions.playNextTrack(playlist, songInd));
   }
 });
 
