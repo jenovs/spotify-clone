@@ -1,9 +1,5 @@
 import * as types from './action-types';
-import { getToken } from '../helpers';
-
-if (!localStorage.getItem('token')) getToken();
-
-const token = JSON.parse(localStorage.getItem('token')).access_token;
+export * from './fetch-actions';
 
 export const setPause = (id) => ({
   type: types.SET_PAUSE,
@@ -22,14 +18,15 @@ export const playNextTrack = (playlist, songInd) => ({
 const updatePlaylistAndPlay = (playlist, id, songInd) => ({
   type: types.UPDATE_PLAYLIST_AND_PLAY,
   id,
-  songInd: skipUnavailableTracks(playlist, songInd),
   playlist,
+  songInd: skipUnavailableTracks(playlist, songInd),
 });
 
-export const startPlaying = (id, playlistId) => dispatch => {
+export const startPlaying = (id, playlistId) => (dispatch, getState) => {
+  const { token } = getState();
   if (id !== playlistId) {
     fetch(`https://api.spotify.com/v1/users/spotify/playlists/${id}`, {
-      headers: {Authorization: "Bearer " + token}
+      headers: {Authorization: "Bearer " + token.access_token}
     })
     .then(res => res.json())
     .then(json => {

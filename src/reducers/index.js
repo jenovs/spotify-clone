@@ -7,6 +7,8 @@ const initState = {
   currSongPos: 25,
   paused: false,
   playlist: null,
+  token: null,
+  featured: null,
 }
 
 const playReducer = (state = initState, action) => {
@@ -35,9 +37,23 @@ const playReducer = (state = initState, action) => {
         isPlaying: true,
       }
 
+    case types.TOKEN_SET:
+      return {
+        ...state,
+        token: action.token,
+      }
+
+    case types.FEATURED_SET:
+      return {
+        ...state,
+        featured: action.featured,
+      }
+
     default:
       return state;
   }
 }
+
+// export const getToken = () => playReducer;
 
 export default playReducer;

@@ -8,26 +8,11 @@ import Playlist from '../Playlist';
 import SideNavbar from '../SideNavbar';
 
 import store from '../../store';
-
-import { getToken } from '../../helpers';
+import * as actions from '../../actions';
 
 import './App.css';
 
 class App extends Component {
-
-  componentDidMount() {
-    // const token = JSON.parse(localStorage.getItem('token'))
-    if (!localStorage.getItem('token')) getToken();
-
-    // this.state = {
-    //   playing: false,
-    //   playlist: null,
-    // }
-
-    this.handlePlay = this.handlePlay.bind(this);
-
-    console.log('store', store.getState());
-  }
 
   handlePlay(pl) {
     console.log('handlePlaylist', pl);
@@ -46,10 +31,9 @@ class App extends Component {
                   <Redirect exact from="/" to="/browse/featured" />
                   <Redirect exact from="/browse" to="/browse/featured" />
                   <Route path="/playlist" component={Playlist} />
-                  {/* <Route path="/browse/featured" component={Main} handlePlay={this.handlePlay} /> */}
                   <Route
                     path="/browse/featured"
-                    render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay}/>}
+                    render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay.bind(this)}/>}
                   />
                   <Route path="/browse" component={Main} />
                 </Switch>
@@ -62,5 +46,12 @@ class App extends Component {
     );
   }
 }
+
+// Inital API call
+store.dispatch(actions.fetchToken())
+.then(() => {
+  const token = store.getState().token;
+  store.dispatch(actions.fetchFeatured(token));
+});
 
 export default App;

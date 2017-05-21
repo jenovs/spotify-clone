@@ -35,7 +35,6 @@ class Main extends Component {
         />
         <Route path="/browse/genres" component={Genres} />
       </div>
-
     )
   }
 }
