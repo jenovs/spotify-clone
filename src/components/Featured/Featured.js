@@ -42,7 +42,7 @@ class Featured extends Component {
   render() {
     const { featured } = this.props;
 
-    if (!featured) return <div style={{color: "white"}}>Loading...</div>
+    if (!featured) return <div style={{color: "white"}}>Loading.....</div>
 
     return (
       <div className="Featured">

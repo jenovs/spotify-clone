@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-// import { Redirect, Route, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// import res from '../playlist-response.json';
+import * as actions from '../../actions';
+
 import Track from '../Track';
 
 import './Playlist.css';
@@ -17,25 +18,14 @@ class Playlist extends Component {
   }
 
   componentDidMount() {
-    if (!this.state.playlistId) return this.props.history.push('/');
+    if (!this.state.playlistId || !this.props.token) return this.props.history.push('/');
 
-    this.fetchPlaylist.bind(this)();
-  }
-
-  fetchPlaylist() {
-    const token = JSON.parse(localStorage.getItem('token')).access_token;
-
-    fetch(`https://api.spotify.com/v1/users/spotify/playlists/${this.state.playlistId}`, {
-      headers: {Authorization: "Bearer " + token}
-    })
-    .then(res => res.json())
-    .then(json => this.setState(() => ({res: json})))
-    .catch(err => console.log('>>>>>Error', err));
+    this.props.fetchPlaylist(this.state.playlistId)
   }
 
   render() {
     console.log('Playlist', this.state.playlistId);
-    const { res } = this.state;
+    const { res } = this.props;
 
     if (!res) return <div>Loading...</div>
 
@@ -66,4 +56,17 @@ class Playlist extends Component {
   }
 }
 
-export default Playlist;
+const mapStateToProps = state => ({
+  res: state.playlistShow,
+  
+  // temp HACK
+  token: state.token,
+});
+
+const mapDispatchToProps = (dispatch, getState) => ({
+  fetchPlaylist: (id) => {
+    dispatch(actions.fetchPlaylist(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);

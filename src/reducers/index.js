@@ -9,6 +9,8 @@ const initState = {
   playlist: null,
   token: null,
   featured: null,
+  tokenFetchCount: 0,
+  playlistShow: null,
 }
 
 const playReducer = (state = initState, action) => {
@@ -41,6 +43,13 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         token: action.token,
+        tokenFetchCount: 0,
+      }
+
+    case types.TOKEN_FETCH_COUNT:
+      return {
+        ...state,
+        tokenFetchCount: 1,
       }
 
     case types.FEATURED_SET:
@@ -49,11 +58,15 @@ const playReducer = (state = initState, action) => {
         featured: action.featured,
       }
 
+    case types.PLAYLIST_SET:
+      return {
+        ...state,
+        playlistShow: action.playlist,
+      }
+
     default:
       return state;
   }
 }
-
-// export const getToken = () => playReducer;
 
 export default playReducer;
