@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
 
-import Track from '../Track';
+import TrackContainer from '../TrackContainer';
 
-import './Playlist.css';
+import './main.css';
 
-class Playlist extends Component {
+class PlaylistContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -47,7 +47,7 @@ class Playlist extends Component {
           <div className="Playlist__tracks">
             {
               res.tracks.items.map((item, i) => {
-                return <Track key={i} nr={i+1} name={item.track.name} />
+                return <TrackContainer key={i} nr={i} track={item.track} />
               })
             }
           </div>
@@ -58,7 +58,6 @@ class Playlist extends Component {
 
 const mapStateToProps = state => ({
   res: state.playlistShow,
-  
   // temp HACK
   token: state.token,
 });
@@ -69,4 +68,4 @@ const mapDispatchToProps = (dispatch, getState) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistContainer);

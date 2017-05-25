@@ -9,7 +9,6 @@ const initState = {
   playlist: null,
   token: null,
   featured: null,
-  tokenFetchCount: 0,
   playlistShow: null,
   volume: 0.1,
 }

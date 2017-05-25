@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 
 import Main from '../../components/Main';
 import PlayerContainer from '../PlayerContainer';
-import Playlist from '../../components/Playlist';
+import PlaylistContainer from '../PlaylistContainer';
 import SideNavbar from '../../components/SideNavbar';
 
 import store from '../../store';
 import * as actions from '../../actions';
 
-import './App.css';
+import './main.css';
 
 // Get a token and fetch a list of featured playlists
 store.dispatch(actions.fetchToken())
@@ -46,7 +46,7 @@ class App extends Component {
                 <Switch>
                   <Redirect exact from="/" to="/browse/featured" />
                   <Redirect exact from="/browse" to="/browse/featured" />
-                  <Route path="/playlist" component={Playlist} />
+                  <Route path="/playlist" component={PlaylistContainer} />
                   <Route
                     path="/browse/featured"
                     render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay.bind(this)}/>}

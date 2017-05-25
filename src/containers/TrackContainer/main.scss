@@ -1,4 +1,4 @@
-.Track__container {
+.track-container {
   font-size: 16px;
   height: 70px;
   color: rgba(255, 255, 255, 0.5);
@@ -12,14 +12,16 @@
   }
 }
 
-.Track__number {
+.track-container__number {
+  font-size: 20px;
   padding-right: 16px;
+  width: 48px;
 }
 
-.Track__description {
+.track-container__description {
   flex: 1;
 }
 
-.Track__name {
+.track-container__name {
   color: #fff;
 }
