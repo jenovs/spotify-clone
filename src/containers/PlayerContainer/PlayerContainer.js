@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import NowPlaying from '../../components/NowPlaying';
 import Player from '../../components/Player';
 import PlayerControls from '../../components/PlayerControls';
+import VolumeControl from '../../components/VolumeControl';
 
 import logo from '../../../public/Spotify_Icon_RGB_White.png';
 
@@ -13,6 +14,7 @@ import './main.css';
 
 class PlayerContainer extends Component {
   audioEl = new Audio();
+  volumeTimeout = null;
 
   componentDidMount() {
     this.audioEl.addEventListener('ended', this.handleEnded.bind(this));
@@ -23,12 +25,12 @@ class PlayerContainer extends Component {
   }
 
   playTrack() {
-    const { currSongPos, playlist, songInd } = this.props;
+    const { currSongPos, playlist, songInd, volume } = this.props;
 
     if (!~songInd) return this.pauseTrack();
 
     this.audioEl.src = playlist.tracks.items[songInd].track.preview_url;
-    this.audioEl.volume = 0.1;
+    this.audioEl.volume = volume;
     this.audioEl.currentTime = currSongPos;
     this.audioEl.play();
   }
@@ -52,8 +54,18 @@ class PlayerContainer extends Component {
     this.props.setPause();
   }
 
+  handleVolumeChange(e) {
+    if (this.volumeTimeout) return;
+    const value = e.target.value;
+
+    this.volumeTimeout = setTimeout(() => {
+      this.props.changeVolume(value, this.audioEl.currentTime);
+      this.volumeTimeout = null;
+    }, 100);
+  }
+
   render() {
-    const { isPlaying, playlist, songInd } = this.props;
+    const { isPlaying, playlist, songInd, volume } = this.props;
 
     if (playlist && isPlaying) this.playTrack();
     if (this.audioEl.src && !isPlaying) this.pauseTrack();
@@ -73,6 +85,10 @@ class PlayerContainer extends Component {
           handlePause={this.handlePause.bind(this)}
           handleNext={this.handleEnded.bind(this)}
         />
+        <VolumeControl
+          volume={volume}
+          handleChange={this.handleVolumeChange.bind(this)}
+        />
       </Player>
     )
   }
@@ -84,6 +100,7 @@ const mapStateToProps = state => ({
   songInd: state.songInd,
   currSongPos: state.currSongPos,
   playlistId: state.fetchedPlaylistId,
+  volume: state.volume,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -95,7 +112,10 @@ const mapDispatchToProps = dispatch => ({
   },
   playNextTrack: (playlist, songInd) => {
     dispatch(actions.playNextTrack(playlist, songInd));
-  }
+  },
+  changeVolume: (volume, currSongPos) => {
+    dispatch(actions.changeVolume(volume, currSongPos));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerContainer);

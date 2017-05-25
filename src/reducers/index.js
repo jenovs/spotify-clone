@@ -11,6 +11,7 @@ const initState = {
   featured: null,
   tokenFetchCount: 0,
   playlistShow: null,
+  volume: 0.1,
 }
 
 const playReducer = (state = initState, action) => {
@@ -43,13 +44,6 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         token: action.token,
-        tokenFetchCount: 0,
-      }
-
-    case types.TOKEN_FETCH_COUNT:
-      return {
-        ...state,
-        tokenFetchCount: 1,
       }
 
     case types.FEATURED_SET:
@@ -62,6 +56,13 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         playlistShow: action.playlist,
+      }
+
+    case types.VOLUME_CHANGE:
+      return {
+        ...state,
+        volume: action.volume,
+        currSongPos: action.currSongPos,
       }
 
     default:

@@ -1,5 +1,6 @@
 import * as types from './action-types';
 export * from './fetch-actions';
+export * from './player-control-actions';
 
 export const setPause = (id) => ({
   type: types.SET_PAUSE,
