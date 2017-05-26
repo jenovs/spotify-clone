@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import * as actions from '../../actions';
+
+import TrackControlButton from '../../components/TrackControlButton';
 
 import './main.css';
 
@@ -45,26 +48,45 @@ class TrackContainer extends Component {
 
   render() {
     const props = this.props;
+    const { isActivePlaylist, songInd, isPlaying, track, nr } = this.props;
     const { cursor, showPlayButton } = this.state;
+
+    const activeTrack = isActivePlaylist ? songInd : null;
+
+    const trackContainerClass = classNames({
+      'track-container': true,
+      'track-container--active': activeTrack === props.nr,
+    });
 
     return (
       <div
-        className="track-container"
-        title={props.track.preview_url ? '' : 'No preview'}
+        className={trackContainerClass}
+        title={props.track.preview_url ? '' : 'No preview available'}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div
+        <TrackControlButton
+          isHovered={showPlayButton}
+          isPlaying={isPlaying}
+          hasPreview={track.preview_url}
+          nr={nr}
+        />
+        {/* <div
           className="track-container__number"
           style={{cursor}}
           >
           {showPlayButton ? playButton : props.nr + 1 + '.'}
-        </div>
+        </div> */}
         <div className="track-container__description">
-         <div className="track-container__name">
+         <div
+           className="track-container__name"
+          >
          {props.track.name}
         </div>
-        <div>{props.track.album.name}</div>
+        <div
+          className="track-container__artist"
+          >{props.track.artists.map(artist => artist.name).join(', ')} • {props.track.album.name}</div>
+        {/* <div>{this.props.isActivePlaylist.toString()}</div> */}
         </div>
         <div>{formatDuration(props.track.duration_ms)}</div>
       </div>
@@ -72,8 +94,9 @@ class TrackContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  // activePlaylist: (state.playlist !== null) && state.playlist.id,
+const mapStateToProps = (state, props) => ({
+  songInd: state.songInd,
+  isPlaying: state.isPlaying && props.isActivePlaylist && (state.songInd === props.nr),
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({

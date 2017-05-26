@@ -25,7 +25,7 @@ class PlaylistContainer extends Component {
 
   render() {
     console.log('Playlist', this.state.playlistId);
-    const { res } = this.props;
+    const { res, isActivePlaylist } = this.props;
 
     if (!res) return <div>Loading...</div>
 
@@ -47,7 +47,14 @@ class PlaylistContainer extends Component {
           <div className="Playlist__tracks">
             {
               res.tracks.items.map((item, i) => {
-                return <TrackContainer key={i} nr={i} track={item.track} />
+                return (
+                  <TrackContainer
+                    key={i}
+                    nr={i}
+                    track={item.track}
+                    isActivePlaylist={isActivePlaylist}
+                  />
+                )
               })
             }
           </div>
@@ -58,7 +65,9 @@ class PlaylistContainer extends Component {
 
 const mapStateToProps = state => ({
   res: state.playlistShow,
+  isActivePlaylist: state.fetchedPlaylistId === (state.playlistShow && state.playlistShow.id),
   // temp HACK
+  // after page reload on non-featured page doesn't redirect to homepage
   token: state.token,
 });
 
