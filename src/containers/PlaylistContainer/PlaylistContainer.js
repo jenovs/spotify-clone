@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import TrackContainer from '../TrackContainer';
+import PlaylistPlayButton from '../../components/PlaylistPlayButton';
 
 import './main.css';
 
@@ -25,7 +26,14 @@ class PlaylistContainer extends Component {
 
   render() {
     console.log('Playlist', this.state.playlistId);
-    const { res, isActivePlaylist } = this.props;
+    const {
+      res,
+      isActivePlaylist,
+      isPlaying,
+      setPause,
+      startPlaying,
+      songInd,
+    } = this.props;
 
     if (!res) return <div>Loading...</div>
 
@@ -39,9 +47,12 @@ class PlaylistContainer extends Component {
               <h2>{res.name}</h2>
               <p>{res.description}</p>
               <p>{res.tracks.items.length} songs</p>
-              <div>
-                <button>PLAY</button>
-              </div>
+              <PlaylistPlayButton
+                isPlaying={isPlaying}
+                isActivePlaylist={isActivePlaylist}
+                handlePlay={startPlaying.bind(this, res.id, 0, isActivePlaylist ? songInd : 0)}
+                handlePause={setPause}
+              />
             </div>
           </div>
           <div className="Playlist__tracks">
@@ -66,6 +77,8 @@ class PlaylistContainer extends Component {
 const mapStateToProps = state => ({
   res: state.playlistShow,
   isActivePlaylist: state.fetchedPlaylistId === (state.playlistShow && state.playlistShow.id),
+  isPlaying: state.isPlaying,
+  songInd: state.songInd,
   // temp HACK
   // after page reload on non-featured page doesn't redirect to homepage
   token: state.token,
@@ -74,6 +87,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, getState) => ({
   fetchPlaylist: (id) => {
     dispatch(actions.fetchPlaylist(id));
+  },
+  startPlaying: (id, playlistId, songInd) => {
+    dispatch(actions.startPlaying(id, playlistId, songInd));
+  },
+  setPause: () => {
+    dispatch(actions.setPause());
   },
 });
 

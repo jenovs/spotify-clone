@@ -19,7 +19,7 @@ const updatePlaylistAndPlay = (playlist, id, songInd) => ({
   type: types.UPDATE_PLAYLIST_AND_PLAY,
   id,
   playlist,
-  songInd: skipUnavailableTracks(playlist, songInd),
+  songInd,
 });
 
 export const startPlaying = (id, playlistId, songInd = 0) => (dispatch, getState) => {
@@ -31,7 +31,11 @@ export const startPlaying = (id, playlistId, songInd = 0) => (dispatch, getState
     })
     .then(res => res.json())
     .then(json => {
-      dispatch(updatePlaylistAndPlay(json, id, songInd));
+      const ind = skipUnavailableTracks(json, songInd);
+      console.log('songInd', songInd, ind);
+      if (~ind) {
+        dispatch(updatePlaylistAndPlay(json, id, ind));
+      }
     })
     .catch(err => console.log('>>>>> Error:', err));
   } else {
