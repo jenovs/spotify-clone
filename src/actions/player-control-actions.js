@@ -5,3 +5,8 @@ export const changeVolume = (volume, currSongPos) => ({
   volume,
   currSongPos,
 });
+
+export const updateTrackTime = time => ({
+  type: types.TRACK_TIME_UPDATE,
+  time,
+})

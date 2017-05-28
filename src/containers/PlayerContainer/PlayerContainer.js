@@ -19,7 +19,6 @@ class PlayerContainer extends Component {
   componentDidMount() {
     this.audioEl.addEventListener('ended', this.handleEnded.bind(this));
   }
-
   componentWillUnmount() {
     this.audioEl.removeEventListener('ended', this.handleEnded.bind(this));
   }
@@ -37,6 +36,7 @@ class PlayerContainer extends Component {
 
   pauseTrack() {
     this.audioEl.pause();
+    this.props.updateTrackTime(this.audioEl.currentTime);
   }
 
   handleEnded() {
@@ -64,11 +64,14 @@ class PlayerContainer extends Component {
     }, 100);
   }
 
+  componentWillReceiveProps(p) {
+    if (this.audioEl.src && !p.isPlaying) this.pauseTrack();
+  }
+
   render() {
     const { isPlaying, playlist, songInd, volume } = this.props;
 
     if (playlist && isPlaying) this.playTrack();
-    if (this.audioEl.src && !isPlaying) this.pauseTrack();
 
     const currentTrack = (playlist && ~songInd) ? playlist.tracks.items[songInd].track : null;
 
@@ -116,6 +119,9 @@ const mapDispatchToProps = dispatch => ({
   changeVolume: (volume, currSongPos) => {
     dispatch(actions.changeVolume(volume, currSongPos));
   },
+  updateTrackTime: time => {
+    dispatch(actions.updateTrackTime(time));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerContainer);

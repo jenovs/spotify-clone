@@ -10,3 +10,5 @@ export const FEATURED_SET = 'FEATURED_SET';
 export const PLAYLIST_SET = 'PLAYLIST_SET';
 
 export const VOLUME_CHANGE = 'VOLUME_CHANGE';
+
+export const TRACK_TIME_UPDATE = 'TRACK_TIME_UPDATE';

@@ -64,6 +64,12 @@ const playReducer = (state = initState, action) => {
         currSongPos: action.currSongPos,
       }
 
+    case types.TRACK_TIME_UPDATE:
+      return {
+        ...state,
+        currSongPos: action.time,
+      }
+
     default:
       return state;
   }
