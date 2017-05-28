@@ -2,9 +2,8 @@ import * as types from './action-types';
 export * from './fetch-actions';
 export * from './player-control-actions';
 
-export const setPause = (id) => ({
+export const setPause = () => ({
   type: types.SET_PAUSE,
-  id,
 });
 
 const playTracks = () => ({
@@ -23,7 +22,8 @@ const updatePlaylistAndPlay = (playlist, id, songInd) => ({
   songInd: skipUnavailableTracks(playlist, songInd),
 });
 
-export const startPlaying = (id, playlistId) => (dispatch, getState) => {
+export const startPlaying = (id, playlistId, songInd = 0) => (dispatch, getState) => {
+  console.log('startPlaying', id, playlistId, songInd);
   const { token } = getState();
   if (id !== playlistId) {
     fetch(`https://api.spotify.com/v1/users/spotify/playlists/${id}`, {
@@ -31,7 +31,7 @@ export const startPlaying = (id, playlistId) => (dispatch, getState) => {
     })
     .then(res => res.json())
     .then(json => {
-      dispatch(updatePlaylistAndPlay(json, id, 0));
+      dispatch(updatePlaylistAndPlay(json, id, songInd));
     })
     .catch(err => console.log('>>>>> Error:', err));
   } else {

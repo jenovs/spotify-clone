@@ -16,9 +16,6 @@ const formatDuration = ms => {
   return `${min}:${sec}`
 }
 
-const playButton = <i id="play" className="fa fa-play-circle-o" aria-hidden="true" title="Play"></i>
-// const pauseButton = <i id="pause" className="fa fa-pause-circle-o" aria-hidden="true" title="Pause"></i>
-
 class TrackContainer extends Component {
   constructor(props) {
     super(props);
@@ -48,20 +45,29 @@ class TrackContainer extends Component {
 
   render() {
     const props = this.props;
-    const { isActivePlaylist, songInd, isPlaying, track, nr } = this.props;
+    const {
+      isActivePlaylist,
+      songInd,
+      isPlaying,
+      track,
+      nr,
+      startPlaying,
+      playlistShow,
+      setPause,
+    } = this.props;
     const { cursor, showPlayButton } = this.state;
 
     const activeTrack = isActivePlaylist ? songInd : null;
 
     const trackContainerClass = classNames({
       'track-container': true,
-      'track-container--active': activeTrack === props.nr,
+      'track-container--active': activeTrack === nr,
     });
 
     return (
       <div
         className={trackContainerClass}
-        title={props.track.preview_url ? '' : 'No preview available'}
+        title={track.preview_url ? '' : 'No preview available'}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
@@ -70,25 +76,21 @@ class TrackContainer extends Component {
           isPlaying={isPlaying}
           hasPreview={track.preview_url}
           nr={nr}
+          handlePlay={startPlaying.bind(this, playlistShow.id, 0, nr)}
+          handlePause={setPause}
         />
-        {/* <div
-          className="track-container__number"
-          style={{cursor}}
-          >
-          {showPlayButton ? playButton : props.nr + 1 + '.'}
-        </div> */}
         <div className="track-container__description">
          <div
            className="track-container__name"
           >
-         {props.track.name}
+         {track.name}
         </div>
         <div
           className="track-container__artist"
-          >{props.track.artists.map(artist => artist.name).join(', ')} • {props.track.album.name}</div>
+          >{track.artists.map(artist => artist.name).join(', ')} • {track.album.name}</div>
         {/* <div>{this.props.isActivePlaylist.toString()}</div> */}
         </div>
-        <div>{formatDuration(props.track.duration_ms)}</div>
+        <div>{formatDuration(track.duration_ms)}</div>
       </div>
     )
   }
@@ -97,15 +99,16 @@ class TrackContainer extends Component {
 const mapStateToProps = (state, props) => ({
   songInd: state.songInd,
   isPlaying: state.isPlaying && props.isActivePlaylist && (state.songInd === props.nr),
+  playlistShow: state.playlistShow,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
-  startPlaying: (id, playlistId) => {
-    dispatch(actions.startPlaying(id, playlistId));
+  startPlaying: (id, playlistId, songInd) => {
+    dispatch(actions.startPlaying(id, playlistId, songInd));
   },
-  // setPause: () => {
-  //   dispatch(actions.setPause());
-  // },
+  setPause: () => {
+    dispatch(actions.setPause());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrackContainer);
