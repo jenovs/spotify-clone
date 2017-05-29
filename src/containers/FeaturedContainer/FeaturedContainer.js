@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AlbumCover from '../AlbumCover';
+import AlbumCoverContainer from '../AlbumCoverContainer';
 
-import './Featured.css';
+import './main.css';
 
-class Featured extends Component {
+class FeaturedContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -53,7 +53,7 @@ class Featured extends Component {
           {featured.playlists.items.map((item, i) => {
             if (i < this.state.elements) {
               return (
-                <AlbumCover
+                <AlbumCoverContainer
                   key={item.id}
                   playlistId={item.id}
                   image={item.images[0].url}
@@ -75,4 +75,4 @@ const mapStateToProps = state => ({
   featured: state.featured,
 });
 
-export default connect(mapStateToProps)(Featured);
+export default connect(mapStateToProps)(FeaturedContainer);

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 
-import Featured from '../Featured';
-import Genres from '../Genres';
+import FeaturedContainer from '../FeaturedContainer';
+import GenresContainer from '../GenresContainer';
 
-import './Main.css';
+import './main.css';
 
-class Main extends Component {
+class MainContainer extends Component {
   render() {
-    // console.log('Main', this.props);
     return (
       <div className="Main-container">
         <nav>
@@ -29,14 +28,12 @@ class Main extends Component {
         </nav>
         <Route
           path="/browse/featured"
-          render={routeProps => <Featured {...routeProps} handlePlay={this.props.handlePlay} />}
-          // component={Featured}
-          // props={{...this.props}}
+          render={routeProps => <FeaturedContainer {...routeProps} handlePlay={this.props.handlePlay} />}
         />
-        <Route path="/browse/genres" component={Genres} />
+        <Route path="/browse/genres" component={GenresContainer} />
       </div>
     )
   }
 }
 
-export default Main;
+export default MainContainer;

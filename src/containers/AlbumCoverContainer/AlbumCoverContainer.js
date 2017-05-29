@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AlbumActionButton from '../AlbumActionButton';
-import AlbumCoverContainer from '../AlbumCoverContainer';
-import AlbumCoverImage from '../AlbumCoverImage';
-import AlbumCoverName from '../AlbumCoverName';
+import AlbumActionButton from '../../components/AlbumActionButton';
+import AlbumCoverContainer from '../../components/AlbumCoverWrapper';
+import AlbumCoverImage from '../../components/AlbumCoverImage';
+import AlbumCoverName from '../../components/AlbumCoverName';
 
 import * as actions from '../../actions';
 

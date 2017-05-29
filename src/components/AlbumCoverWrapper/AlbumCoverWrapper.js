@@ -2,10 +2,9 @@ import React from 'react';
 
 import './main.css';
 
-const AlbumCoverContainer = (props) => (
+const AlbumCoverWrapper = (props) => (
   <div
-    className="AlbumCoverContainer"
-    // className="AlbumCover__container"
+    className="album-cover-wrapper"
     onMouseLeave={props.onMouseLeave}
     onMouseOver={props.onMouseOver}
   >
@@ -13,4 +12,4 @@ const AlbumCoverContainer = (props) => (
   </div>
 );
 
-export default AlbumCoverContainer;
+export default AlbumCoverWrapper;

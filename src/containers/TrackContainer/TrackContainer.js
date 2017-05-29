@@ -44,7 +44,6 @@ class TrackContainer extends Component {
   }
 
   render() {
-    const props = this.props;
     const {
       isActivePlaylist,
       songInd,
@@ -55,7 +54,7 @@ class TrackContainer extends Component {
       playlistShow,
       setPause,
     } = this.props;
-    const { cursor, showPlayButton } = this.state;
+    const { showPlayButton } = this.state;
 
     const activeTrack = isActivePlaylist ? songInd : null;
 

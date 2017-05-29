@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './main.css';
 
@@ -14,6 +15,12 @@ const AlbumActionButton = (props) => (
     {props.actionButton === 'play' && playButton}
     {props.actionButton === 'pause' && pauseButton}
   </div>
-)
+);
+
+AlbumActionButton.propTypes = {
+  actionButton: PropTypes.oneOf(['play', 'pause']).isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+}
 
 export default AlbumActionButton;

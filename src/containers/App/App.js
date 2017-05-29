@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Main from '../../components/Main';
+import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
 import PlaylistContainer from '../PlaylistContainer';
 import SideNavbar from '../../components/SideNavbar';
@@ -49,9 +49,9 @@ class App extends Component {
                   <Route path="/playlist" component={PlaylistContainer} />
                   <Route
                     path="/browse/featured"
-                    render={routeProps => <Main {...routeProps} handlePlay={this.handlePlay.bind(this)}/>}
+                    render={routeProps => <MainContainer {...routeProps} handlePlay={this.handlePlay.bind(this)}/>}
                   />
-                  <Route path="/browse" component={Main} />
+                  <Route path="/browse" component={MainContainer} />
                 </Switch>
               </section>
               <PlayerContainer />
