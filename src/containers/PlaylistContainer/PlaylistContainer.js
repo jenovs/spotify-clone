@@ -5,6 +5,7 @@ import * as actions from '../../actions';
 
 import TrackContainer from '../TrackContainer';
 import PlaylistPlayButton from '../../components/PlaylistPlayButton';
+import PlaylistWrapper from '../../components/PlaylistWrapper';
 
 import './main.css';
 
@@ -38,7 +39,7 @@ class PlaylistContainer extends Component {
     if (!res) return <div>Loading...</div>
 
     return (
-        <div className="Playlist__container">
+        <PlaylistWrapper>
           <div className="Playlist__description-container">
             <div className="Playlist__image-container">
               <img src={res.images[0].url} alt={res.name}/><br/>
@@ -69,7 +70,7 @@ class PlaylistContainer extends Component {
               })
             }
           </div>
-        </div>
+        </PlaylistWrapper>
     )
   }
 }

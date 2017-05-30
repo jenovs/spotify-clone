@@ -1,21 +1,3 @@
-.Playlist__container {
-  display: flex;
-  flex-direction: row;
-  color: white;
-
-  & h2 {
-    font-size: 26px;
-  }
-
-  & p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 15px;
-    font-weight: 200;
-    padding-bottom: 10px;
-  }
-
-}
-
 .Playlist__description-container {
   position: fixed;
   max-width: 20vw;
@@ -42,15 +24,6 @@
 }
 
 @media (max-width: 1200px) {
-  .Playlist__container {
-    display: flex;
-    flex-direction: column;
-    // min-height: 220px;
-    min-width: 515px;
-    width: 100%;
-
-  }
-
   .Playlist__description-container {
     display: flex;
     flex-direction: row;
@@ -78,11 +51,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-
-    }
-    & button {
-      height: 2rem;
-      width: 5rem;
     }
   }
 
