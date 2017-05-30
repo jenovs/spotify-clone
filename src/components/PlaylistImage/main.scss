@@ -1,0 +1,21 @@
+.playlist-image {
+  text-align: center;
+  margin-right: 40px;
+  width: 100%;
+
+  & img {
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .playlist-image {
+    width: 20vw;
+    min-width: 160px;
+    & img {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.playlist-tracks-wrapper {
+  font-size: 2rem;
+  flex: 1;
+  position: relative;
+  margin-left: 22vw;
+}
+
+@media (max-width: 1200px) {
+  .playlist-tracks-wrapper {
+    margin-left: 0;
+  }
+}

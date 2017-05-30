@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import './main.css';
 
-const PlaylistWrapper = ({children}) => (
-  <div className="playlist-wrapper">
+const PlaylistTracksWrapper = ({ children }) => (
+  <div className="playlist-tracks-wrapper">
     {children}
   </div>
 );
 
-PlaylistWrapper.propTypes = {
+PlaylistTracksWrapper.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 }
 
-export default PlaylistWrapper;
+export default PlaylistTracksWrapper;

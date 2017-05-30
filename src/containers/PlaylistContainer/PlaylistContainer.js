@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
 
-import TrackContainer from '../TrackContainer';
+import PlaylistDescription from '../../components/PlaylistDescription';
+import PlaylistDescriptionWrapper from '../../components/PlaylistDescriptionWrapper';
+import PlaylistImage from '../../components/PlaylistImage';
 import PlaylistPlayButton from '../../components/PlaylistPlayButton';
+import PlaylistTracksWrapper from '../../components/PlaylistTracksWrapper';
 import PlaylistWrapper from '../../components/PlaylistWrapper';
-
-import './main.css';
+import TrackContainer from '../TrackContainer';
 
 class PlaylistContainer extends Component {
 
@@ -40,25 +42,26 @@ class PlaylistContainer extends Component {
 
     return (
         <PlaylistWrapper>
-          <div className="Playlist__description-container">
-            <div className="Playlist__image-container">
-              <img src={res.images[0].url} alt={res.name}/><br/>
-            </div>
-            <div className="Playlist__description">
-              <h2>{res.name}</h2>
-              <p>{res.description}</p>
-              <p>{res.tracks.items.length} songs</p>
+          <PlaylistDescriptionWrapper>
+            <PlaylistImage
+              src={res.images[0].url}
+              alt={res.name}
+            />
+            <PlaylistDescription
+              name={res.name}
+              description={res.description}
+              length={res.tracks.items.length}
+            >
               <PlaylistPlayButton
                 isPlaying={isPlaying}
                 isActivePlaylist={isActivePlaylist}
                 handlePlay={startPlaying.bind(this, res.id, 0, isActivePlaylist ? songInd : 0)}
                 handlePause={setPause}
               />
-            </div>
-          </div>
-          <div className="Playlist__tracks">
-            {
-              res.tracks.items.map((item, i) => {
+            </PlaylistDescription>
+          </PlaylistDescriptionWrapper>
+          <PlaylistTracksWrapper>
+            {res.tracks.items.map((item, i) => {
                 return (
                   <TrackContainer
                     key={i}
@@ -69,7 +72,7 @@ class PlaylistContainer extends Component {
                 )
               })
             }
-          </div>
+          </PlaylistTracksWrapper>
         </PlaylistWrapper>
     )
   }
