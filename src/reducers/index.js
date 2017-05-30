@@ -4,6 +4,7 @@ const initState = {
   isPlaying: false,
   fetchedPlaylistId: null,
   songInd: 0,
+  prevTracks: [],
   currSongPos: 25,
   paused: false,
   playlist: null,

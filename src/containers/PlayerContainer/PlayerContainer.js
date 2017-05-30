@@ -10,8 +10,6 @@ import logo from '../../../public/Spotify_Icon_RGB_White.png';
 
 import * as actions from '../../actions';
 
-import './main.css';
-
 class PlayerContainer extends Component {
   audioEl = new Audio();
   volumeTimeout = null;
@@ -54,6 +52,11 @@ class PlayerContainer extends Component {
     this.props.setPause();
   }
 
+  handlePrev() {
+    const { playlist, songInd, playPrevTrack } = this.props;
+    playPrevTrack(playlist, songInd);
+  }
+
   handleVolumeChange(e) {
     if (this.volumeTimeout) return;
     const value = e.target.value;
@@ -87,6 +90,7 @@ class PlayerContainer extends Component {
           handlePlay={this.handlePlay.bind(this)}
           handlePause={this.handlePause.bind(this)}
           handleNext={this.handleEnded.bind(this)}
+          handlePrev={this.handlePrev.bind(this)}
         />
         <VolumeControl
           volume={volume}
@@ -115,6 +119,9 @@ const mapDispatchToProps = dispatch => ({
   },
   playNextTrack: (playlist, songInd) => {
     dispatch(actions.playNextTrack(playlist, songInd));
+  },
+  playPrevTrack: (playlist, songInd) => {
+    dispatch(actions.playPrevTrack(playlist, songInd));
   },
   changeVolume: (volume, currSongPos) => {
     dispatch(actions.changeVolume(volume, currSongPos));

@@ -12,6 +12,7 @@ const PlayerControls = props => (
     <div className="player-controls__buttons">
       <button
         className="player-controls__buttons--skip"
+        onClick={props.handlePrev}
       >
         {prevButton}
       </button>
@@ -39,9 +40,9 @@ const PlayerControls = props => (
       </button>
     </div>
     <div>
-      <div>
+      {/* <div>
         _____
-      </div>
+      </div> */}
     </div>
   </div>
 );

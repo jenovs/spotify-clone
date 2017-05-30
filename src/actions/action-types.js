@@ -1,5 +1,6 @@
 export const SET_PAUSE = 'SET_PAUSE';
 export const PLAY_NEXT_TRACK = 'PLAY_NEXT_TRACK';
+export const PLAY_PREV_TRACK = 'PLAY_PREV_TRACK';
 export const UPDATE_PLAYLIST_AND_PLAY = 'UPDATE_PLAYLIST_AND_PLAY';
 export const PLAY_TRACKS = 'PLAY_TRACKS';
 

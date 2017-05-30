@@ -2,17 +2,14 @@ import * as types from './action-types';
 export * from './fetch-actions';
 export * from './player-control-actions';
 
+import { skipUnavailableTracks } from '../utils';
+
 export const setPause = () => ({
   type: types.SET_PAUSE,
 });
 
 const playTracks = () => ({
   type: types.PLAY_TRACKS,
-});
-
-export const playNextTrack = (playlist, songInd) => ({
-  type: types.PLAY_NEXT_TRACK,
-  songInd: skipUnavailableTracks(playlist, songInd + 1),
 });
 
 const updatePlaylistAndPlay = (playlist, id, songInd) => ({
@@ -41,15 +38,4 @@ export const startPlaying = (id, playlistId, songInd = 0) => (dispatch, getState
   } else {
     dispatch(playTracks());
   }
-}
-
-function skipUnavailableTracks(playlist, trackNumber) {
-  if (!playlist) return 0;
-  if (trackNumber >= playlist.tracks.items.length) return -1;
-
-  while (!playlist.tracks.items[trackNumber].track.preview_url) {
-    trackNumber++;
-    if (trackNumber >= playlist.tracks.items.length) return -1;
-  }
-  return trackNumber;
 }
