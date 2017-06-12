@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import AlbumActionButton from '../../components/AlbumActionButton';
-import AlbumCoverContainer from '../../components/AlbumCoverWrapper';
+import AlbumCoverWrapper from '../../components/AlbumCoverWrapper';
 import AlbumCoverImage from '../../components/AlbumCoverImage';
 import AlbumCoverName from '../../components/AlbumCoverName';
 
@@ -14,6 +14,8 @@ class AlbumCover extends Component {
 
     this.state = {
       showActionBtn: false,
+      height: 0,
+      width: 0,
     }
 
     this.hidePlayBtn = this.hidePlayBtn.bind(this);
@@ -24,7 +26,11 @@ class AlbumCover extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.updateImageSize);
-    this.updateImageSize();
+
+    // Fix initial rendering in Firefox
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
   }
 
   componentWillUnmount() {
@@ -35,8 +41,8 @@ class AlbumCover extends Component {
     const images = document.getElementsByClassName('AlbumCoverImage');
     if (images.length) {
       this.setState(() => ({
-        width: images[0].width,
-        height: images[0].width,
+        width: images[0].width + 1,
+        height: images[0].width + 1,
       }));
     }
   }
@@ -72,24 +78,25 @@ class AlbumCover extends Component {
     const actionButton = isThisPlaying ? 'pause' : 'play';
 
     return (
-      <AlbumCoverContainer
+      <AlbumCoverWrapper
         onMouseLeave={this.hidePlayBtn}
         onMouseOver={this.showPlayBtn}
       >
         <AlbumCoverImage
           image={this.props.image}
           name={this.props.name}
-        />
-        {(showActionBtn || isThisPlaying) && (
-          <AlbumActionButton
-            width={width}
-            height={height}
-            onClick={this.handleClick}
-            actionButton={actionButton}
-          />
-        )}
+        >
+          {(showActionBtn || isThisPlaying) && (
+            <AlbumActionButton
+              width={width}
+              height={height}
+              onClick={this.handleClick}
+              actionButton={actionButton}
+            />
+          )}
+        </AlbumCoverImage>
         <AlbumCoverName name={this.props.name} />
-      </AlbumCoverContainer>
+      </AlbumCoverWrapper>
     )
   }
 }

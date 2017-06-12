@@ -3,11 +3,15 @@ import React from 'react';
 import './main.css';
 
 const AlbumCoverImage = (props) => (
-  <img
+  <div
     className="AlbumCoverImage"
-    src={props.image}
-    alt={props.name}
-  />
+    >
+    <img
+      src={props.image}
+      alt={props.name}
+    />
+    {props.children}
+  </div>
 );
 
 export default AlbumCoverImage;

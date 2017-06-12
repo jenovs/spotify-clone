@@ -8,8 +8,7 @@ const pauseButton = <i id="pause" className="fa fa-pause-circle-o" aria-hidden="
 
 const AlbumActionButton = (props) => (
   <div
-    style={{width: props.width, height: props.height}}
-    className="AlbumActionButton"
+    className="album-action-button"
     onClick={props.onClick}
   >
     {props.actionButton === 'play' && playButton}
@@ -19,8 +18,6 @@ const AlbumActionButton = (props) => (
 
 AlbumActionButton.propTypes = {
   actionButton: PropTypes.oneOf(['play', 'pause']).isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
 }
 
 export default AlbumActionButton;
