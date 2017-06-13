@@ -16,7 +16,7 @@ const setPlaylist = playlist => ({
 })
 
 export const fetchToken = () => dispatch => {
-  return fetch('http://localhost:3001')
+  return fetch('https://spotify.jenovs.com')
   .then(res => res.json())
   .then(token => dispatch(setToken(token)))
   .catch(err => console.log('Error fetching Token', err)); // TODO add error handling
