@@ -36,7 +36,7 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         songInd: action.songInd,
-        currSongPos: 25,
+        currSongPos: 0,
         isPlaying: true,
       }
 
