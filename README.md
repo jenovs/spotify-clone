@@ -8,4 +8,4 @@ Back-end part to obtain the authentication token is written on Go and hosted on 
 Front-end part is temporary hosted on GitHub Pages (there are some issues with client side routing when using GitHub Pages, therefore I'm planning to host also the front-end code on AWS.)  
 
 ### Installation
-Clone the repo and run `yarn install` and then `yarn run-all`.
+Clone the repo and run `yarn install` and then `yarn start-all`.
