@@ -5,13 +5,13 @@ const initState = {
   fetchedPlaylistId: null,
   songInd: 0,
   prevTracks: [],
-  currSongPos: 25,
+  currSongPos: 0,
   paused: false,
   playlist: null,
   token: null,
   featured: null,
   playlistShow: null,
-  volume: 0.1,
+  volume: 0.3,
 }
 
 const playReducer = (state = initState, action) => {
