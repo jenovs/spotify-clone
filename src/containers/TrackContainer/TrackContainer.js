@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 
 import * as actions from '../../actions';
 
 import TrackControlButton from '../../components/TrackControlButton';
 
-import './main.css';
+import { Artist, Description, TrackName, Wrapper } from './styled';
 
 const formatDuration = ms => {
   let sec = Math.floor(ms / 1000);
   const min = Math.floor(sec / 60);
-  sec = (sec - min * 60) + '';
+  sec = sec - min * 60 + '';
   sec = sec.length < 2 ? 0 + sec : sec;
-  return `${min}:${sec}`
-}
+  return `${min}:${sec}`;
+};
 
 class TrackContainer extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class TrackContainer extends Component {
     this.state = {
       cursor: 'default',
       showPlayButton: false,
-    }
+    };
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -40,7 +39,7 @@ class TrackContainer extends Component {
     this.setState(() => ({
       cursor: 'default',
       showPlayButton: false,
-    }))
+    }));
   }
 
   render() {
@@ -58,14 +57,9 @@ class TrackContainer extends Component {
 
     const activeTrack = isActivePlaylist ? songInd : null;
 
-    const trackContainerClass = classNames({
-      'track-container': true,
-      'track-container--active': activeTrack === nr,
-    });
-
     return (
-      <div
-        className={trackContainerClass}
+      <Wrapper
+        active={activeTrack === nr}
         title={track.preview_url ? '' : 'No preview available'}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
@@ -78,26 +72,23 @@ class TrackContainer extends Component {
           handlePlay={startPlaying.bind(this, playlistShow.id, 0, nr)}
           handlePause={setPause}
         />
-        <div className="track-container__description">
-         <div
-           className="track-container__name"
-          >
-         {track.name}
-        </div>
-        <div
-          className="track-container__artist"
-          >{track.artists.map(artist => artist.name).join(', ')} • {track.album.name}</div>
-        {/* <div>{this.props.isActivePlaylist.toString()}</div> */}
-        </div>
+        <Description>
+          <TrackName>{track.name}</TrackName>
+          <Artist>
+            {track.artists.map(artist => artist.name).join(', ')} •{' '}
+            {track.album.name}
+          </Artist>
+        </Description>
         <div>{formatDuration(track.duration_ms)}</div>
-      </div>
-    )
+      </Wrapper>
+    );
   }
 }
 
 const mapStateToProps = (state, props) => ({
   songInd: state.songInd,
-  isPlaying: state.isPlaying && props.isActivePlaylist && (state.songInd === props.nr),
+  isPlaying:
+    state.isPlaying && props.isActivePlaylist && state.songInd === props.nr,
   playlistShow: state.playlistShow,
 });
 

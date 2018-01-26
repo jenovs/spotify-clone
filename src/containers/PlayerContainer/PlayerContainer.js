@@ -6,7 +6,7 @@ import Player from '../../components/Player';
 import PlayerControls from '../../components/PlayerControls';
 import VolumeControl from '../../components/VolumeControl';
 
-import logo from '../../../public/Spotify_Icon_RGB_White.png';
+import logo from '../../images/Spotify_Icon_RGB_White.png';
 
 import * as actions from '../../actions';
 
@@ -76,7 +76,8 @@ class PlayerContainer extends Component {
 
     if (playlist && isPlaying) this.playTrack();
 
-    const currentTrack = (playlist && ~songInd) ? playlist.tracks.items[songInd].track : null;
+    const currentTrack =
+      playlist && ~songInd ? playlist.tracks.items[songInd].track : null;
 
     return (
       <Player>
@@ -97,7 +98,7 @@ class PlayerContainer extends Component {
           handleChange={this.handleVolumeChange.bind(this)}
         />
       </Player>
-    )
+    );
   }
 }
 
@@ -128,7 +129,7 @@ const mapDispatchToProps = dispatch => ({
   },
   updateTrackTime: time => {
     dispatch(actions.updateTrackTime(time));
-  }
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerContainer);

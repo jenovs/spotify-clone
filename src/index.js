@@ -8,7 +8,4 @@ import './index.css';
 // Disable right click to match Spotify behaviour
 window.oncontextmenu = () => false;
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
