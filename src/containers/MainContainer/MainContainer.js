@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import FeaturedContainer from '../FeaturedContainer';
 import GenresContainer from '../GenresContainer';
 
-import './main.css';
+import { Container, ListWrapper, NavItem } from './styled';
 
 class MainContainer extends Component {
   render() {
     return (
-      <div className="Main-container">
+      <Container>
         <nav>
-          <ul className="Main-nav-ul">
+          <ListWrapper>
             <li>
-              <NavLink to="/browse/featured" className="Main-nav" activeClassName="Main-nav--selected">FEATURED</NavLink>
+              <NavItem to="/browse/featured">FEATURED</NavItem>
             </li>
             <li>
-              <NavLink to="/browse/genres" className="Main-nav" activeClassName="Main-nav--selected">GENRES & MOODS</NavLink>
+              <NavItem to="/browse/genres">GENRES & MOODS</NavItem>
             </li>
             <li>
-              <NavLink to="/browse/newreleases" className="Main-nav" activeClassName="Main-nav--selected">NEW RELEASES</NavLink>
+              <NavItem to="/browse/newreleases">NEW RELEASES</NavItem>
             </li>
             <li>
-              <NavLink to="/browse/discover" className="Main-nav" activeClassName="Main-nav--selected">DISCOVER</NavLink>
+              <NavItem to="/browse/discover">DISCOVER</NavItem>
             </li>
-          </ul>
+          </ListWrapper>
         </nav>
         <Route
           path="/browse/featured"
-          render={routeProps => <FeaturedContainer {...routeProps} handlePlay={this.props.handlePlay} />}
+          render={routeProps => <FeaturedContainer {...routeProps} />}
         />
         <Route path="/browse/genres" component={GenresContainer} />
-      </div>
-    )
+      </Container>
+    );
   }
 }
 
