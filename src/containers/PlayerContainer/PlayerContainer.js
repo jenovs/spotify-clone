@@ -12,7 +12,6 @@ import * as actions from '../../actions';
 
 class PlayerContainer extends Component {
   audioEl = new Audio();
-  volumeTimeout = null;
 
   componentDidMount() {
     this.audioEl.addEventListener('ended', this.handleEnded.bind(this));
@@ -57,15 +56,9 @@ class PlayerContainer extends Component {
     playPrevTrack(playlist, songInd);
   }
 
-  handleVolumeChange(e) {
-    if (this.volumeTimeout) return;
-    const value = e.target.value;
-
-    this.volumeTimeout = setTimeout(() => {
-      this.props.changeVolume(value, this.audioEl.currentTime);
-      this.volumeTimeout = null;
-    }, 100);
-  }
+  handleVolumeChange = value => {
+    this.props.changeVolume(value, this.audioEl.currentTime);
+  };
 
   componentWillReceiveProps(p) {
     if (this.audioEl.src && !p.isPlaying) this.pauseTrack();
@@ -93,10 +86,7 @@ class PlayerContainer extends Component {
           handleNext={this.handleEnded.bind(this)}
           handlePrev={this.handlePrev.bind(this)}
         />
-        <VolumeControl
-          volume={volume}
-          handleChange={this.handleVolumeChange.bind(this)}
-        />
+        <VolumeControl volume={volume} handleChange={this.handleVolumeChange} />
       </Player>
     );
   }
