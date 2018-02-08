@@ -7,6 +7,23 @@ import GenresContainer from '../GenresContainer';
 import { Container, ListWrapper, NavItem } from './styled';
 
 class MainContainer extends Component {
+  state = {
+    windowWidth: window.innerWidth - 220,
+  };
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize = e => {
+    const windowWidth = e.target.innerWidth - 220; // magic number 220 is sidebar width
+    this.setState(() => ({ windowWidth }));
+  };
+
   render() {
     return (
       <Container>
