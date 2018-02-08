@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import FeaturedContainer from '../FeaturedContainer';
-import GenresContainer from '../GenresContainer';
+import GenresView from '../../components/GenresView';
 
 import { Container, ListWrapper, NavItem } from './styled';
 
@@ -47,7 +47,12 @@ class MainContainer extends Component {
           path="/browse/featured"
           render={routeProps => <FeaturedContainer {...routeProps} />}
         />
-        <Route path="/browse/genres" component={GenresContainer} />
+        <Route
+          path="/browse/genres"
+          render={routeProps => (
+            <GenresView windowWidth={this.state.windowWidth} />
+          )}
+        />
       </Container>
     );
   }
