@@ -6,9 +6,6 @@ import * as actions from '../../actions';
 import GenreCard from './GenreCard';
 import { Header, Wrapper } from './styled';
 
-import d from './categories-response.json';
-const genres = d.categories.items;
-
 const gridTemplateColumns = w => {
   switch (true) {
     case w <= 547:
