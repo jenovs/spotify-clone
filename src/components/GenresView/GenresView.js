@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 import GenreCard from './GenreCard';
 import { Header, Wrapper } from './styled';
@@ -20,7 +23,12 @@ const gridTemplateColumns = w => {
 };
 
 class Genres extends React.Component {
+  componentDidMount() {
+    this.props.fetchGenres();
+  }
+
   render() {
+    const { genres } = this.props;
     return (
       <React.Fragment>
         <Header>Genres & Moods</Header>
@@ -32,4 +40,14 @@ class Genres extends React.Component {
   }
 }
 
-export default Genres;
+const mapStateToProps = state => ({
+  genres: state.genres,
+});
+
+const mapDispatchToProps = (dispatch, getState) => ({
+  fetchGenres: () => {
+    dispatch(actions.fetchGenres());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Genres);
