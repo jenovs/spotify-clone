@@ -17,23 +17,35 @@ import * as actions from '../../actions';
 
 import { Background, Section, Wrapper } from './styled';
 
-// Get a token and fetch a list of featured playlists
-store.dispatch(actions.fetchToken()).then(() => {
-  const token = store.getState().token;
-  store.dispatch(actions.fetchFeatured(token));
-});
-
-// Update the token once an hour
-const tokenInterval = setInterval(() => {
-  store.dispatch(actions.fetchToken());
-}, 3500 * 1000);
-
 class App extends Component {
+  state = {
+    tokenLoaded: false,
+  };
+
+  // Update the token once an hour
+  tokenInterval = setInterval(() => {
+    store.dispatch(actions.fetchToken());
+  }, 3500 * 1000);
+
+  componentDidMount() {
+    // Get a token and fetch a list of featured playlists
+    store.dispatch(actions.fetchToken()).then(() => {
+      const token = store.getState().token;
+      this.setState(() => ({ tokenLoaded: true }));
+      store.dispatch(actions.fetchFeatured(token));
+    });
+  }
+
   componentWillUnmount() {
-    clearInterval(tokenInterval);
+    clearInterval(this.tokenInterval);
   }
 
   render() {
+    // TODO Add Loading component
+    if (!this.state.tokenLoaded) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <Provider store={store}>
         <Router>
