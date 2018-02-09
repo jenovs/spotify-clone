@@ -3,6 +3,7 @@ import * as types from '../actions/action-types';
 const initState = {
   isPlaying: false,
   fetchedPlaylistId: null,
+  genres: [],
   songInd: 0,
   prevTracks: [],
   currSongPos: 0,
@@ -49,6 +50,12 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         featured: action.featured,
+      };
+
+    case types.GENRES_SET:
+      return {
+        ...state,
+        genres: action.genres,
       };
 
     case types.PLAYLIST_SET:

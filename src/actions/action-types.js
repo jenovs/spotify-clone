@@ -8,6 +8,8 @@ export const TOKEN_SET = 'TOKEN_SET';
 
 export const FEATURED_SET = 'FEATURED_SET';
 
+export const GENRES_SET = 'GENRES_SET';
+
 export const PLAYLIST_SET = 'PLAYLIST_SET';
 
 export const VOLUME_CHANGE = 'VOLUME_CHANGE';
