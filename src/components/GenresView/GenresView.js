@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
 
-import GenreCard from './GenreCard';
+import CoverArt from '../CoverArt';
 import { Header, Wrapper } from './styled';
 
 const gridTemplateColumns = w => {
@@ -24,13 +24,26 @@ class Genres extends React.Component {
     this.props.fetchGenres();
   }
 
+  navigate = id => {
+    const { history } = this.props;
+    history.push(`/view/${id}`);
+  };
+
   render() {
     const { genres } = this.props;
     return (
       <React.Fragment>
         <Header>Genres & Moods</Header>
         <Wrapper template={gridTemplateColumns(this.props.windowWidth)}>
-          {genres.map(genre => <GenreCard key={genre.id} {...genre} />)}
+          {genres.map(genre => (
+            <CoverArt
+              key={genre.id}
+              icon={genre.icons[0].url}
+              handleClick={this.navigate}
+              playBtn={false}
+              {...genre}
+            />
+          ))}
         </Wrapper>
       </React.Fragment>
     );
