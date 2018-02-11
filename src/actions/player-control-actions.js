@@ -2,12 +2,6 @@ import * as types from '../actions/action-types';
 
 import { skipUnavailableTracks, searchPrevTrack } from '../utils';
 
-export const changeVolume = (volume, currSongPos) => ({
-  type: types.VOLUME_CHANGE,
-  volume,
-  currSongPos,
-});
-
 export const updateTrackTime = time => ({
   type: types.TRACK_TIME_UPDATE,
   time,

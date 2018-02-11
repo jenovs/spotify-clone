@@ -21,12 +21,12 @@ class PlayerContainer extends Component {
   }
 
   playTrack() {
-    const { currSongPos, playlist, songInd, volume } = this.props;
+    const { currSongPos, playlist, songInd } = this.props;
 
     if (!~songInd) return this.pauseTrack();
 
     this.audioEl.src = playlist.tracks.items[songInd].track.preview_url;
-    this.audioEl.volume = volume;
+    this.audioEl.volume = 0.3;
     this.audioEl.currentTime = currSongPos;
     this.audioEl.play();
   }
@@ -57,7 +57,7 @@ class PlayerContainer extends Component {
   }
 
   handleVolumeChange = value => {
-    this.props.changeVolume(value, this.audioEl.currentTime);
+    this.audioEl.volume = value;
   };
 
   componentWillReceiveProps(p) {
@@ -65,7 +65,7 @@ class PlayerContainer extends Component {
   }
 
   render() {
-    const { isPlaying, playlist, songInd, volume } = this.props;
+    const { isPlaying, playlist, songInd } = this.props;
 
     if (playlist && isPlaying) this.playTrack();
 
@@ -86,7 +86,7 @@ class PlayerContainer extends Component {
           handleNext={this.handleEnded.bind(this)}
           handlePrev={this.handlePrev.bind(this)}
         />
-        <VolumeControl volume={volume} handleChange={this.handleVolumeChange} />
+        <VolumeControl handleChange={this.handleVolumeChange} />
       </Player>
     );
   }
@@ -113,9 +113,6 @@ const mapDispatchToProps = dispatch => ({
   },
   playPrevTrack: (playlist, songInd) => {
     dispatch(actions.playPrevTrack(playlist, songInd));
-  },
-  changeVolume: (volume, currSongPos) => {
-    dispatch(actions.changeVolume(volume, currSongPos));
   },
   updateTrackTime: time => {
     dispatch(actions.updateTrackTime(time));

@@ -13,7 +13,6 @@ const initState = {
   token: null,
   featured: null,
   playlistShow: null,
-  volume: 0.3,
 };
 
 const playReducer = (state = initState, action) => {
@@ -75,13 +74,6 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         categoryPlaylist: null,
-      };
-
-    case types.VOLUME_CHANGE:
-      return {
-        ...state,
-        volume: action.volume,
-        currSongPos: action.currSongPos,
       };
 
     case types.TRACK_TIME_UPDATE:
