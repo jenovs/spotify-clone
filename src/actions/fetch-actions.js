@@ -1,8 +1,13 @@
 import * as types from '../actions/action-types';
+import { skipUnavailableTracks } from '../utils';
 
 const setToken = token => ({
   type: types.TOKEN_SET,
   token,
+});
+
+const playTracks = () => ({
+  type: types.PLAY_TRACKS,
 });
 
 const setFeatured = featured => ({
@@ -25,12 +30,19 @@ const setCategoryPlaylist = categoryPlaylist => ({
   categoryPlaylist,
 });
 
+const updatePlaylistAndPlay = (playlist, id, songInd) => ({
+  type: types.UPDATE_PLAYLIST_AND_PLAY,
+  id,
+  playlist,
+  songInd,
+});
+
 const fetchWithToken = (url, token) => {
   return fetch(url, {
     headers: new Headers({
       Authorization: 'Bearer ' + token.access_token,
     }),
-  });
+  }).then(res => res.json());
 };
 
 export const clearCategoryPlaylist = () => ({
@@ -46,13 +58,9 @@ export const fetchToken = () => dispatch => {
 
 export const fetchFeatured = () => (dispatch, getState) => {
   const { token } = getState();
+  const url = 'https://api.spotify.com/v1/browse/featured-playlists';
 
-  return fetch('https://api.spotify.com/v1/browse/featured-playlists', {
-    headers: new Headers({
-      Authorization: 'Bearer ' + token.access_token,
-    }),
-  })
-    .then(res => res.json())
+  return fetchWithToken(url, token)
     .then(data => {
       if (data.error) throw data.error.message;
       dispatch(setFeatured(data));
@@ -65,7 +73,6 @@ export const fetchGenres = () => (dispatch, getState) => {
   const url = 'https://api.spotify.com/v1/browse/categories?limit=50';
 
   fetchWithToken(url, token)
-    .then(res => res.json())
     .then(data => {
       if (data.error) throw data.error.message;
       dispatch(setGenres(data.categories.items));
@@ -78,7 +85,6 @@ export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
   const url = `https://api.spotify.com/v1/browse/categories/${category_id}/playlists?limit=50`;
 
   fetchWithToken(url, token)
-    .then(res => res.json())
     .then(data => {
       if (data.error) throw data.error.message;
       dispatch(setCategoryPlaylist(data.playlists.items));
@@ -88,14 +94,33 @@ export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
 
 export const fetchPlaylist = id => (dispatch, getState) => {
   const { token } = getState();
+  const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
 
-  fetch(`https://api.spotify.com/v1/users/spotify/playlists/${id}`, {
-    headers: { Authorization: 'Bearer ' + token.access_token },
-  })
-    .then(res => res.json())
+  fetchWithToken(url, token)
     .then(data => {
       if (data.error) throw data.error.message;
       dispatch(setPlaylist(data));
     })
     .catch(err => console.log('Error fetching Playlist', err)); // TODO add error handling
+};
+
+export const startPlaying = (id, playlistId, songInd = 0) => (
+  dispatch,
+  getState
+) => {
+  const { token } = getState();
+  const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
+
+  if (id !== playlistId) {
+    fetchWithToken(url, token)
+      .then(json => {
+        const ind = skipUnavailableTracks(json, songInd);
+        if (~ind) {
+          dispatch(updatePlaylistAndPlay(json, id, ind));
+        }
+      })
+      .catch(err => console.log('>>>>> Error:', err));
+  } else {
+    dispatch(playTracks());
+  }
 };

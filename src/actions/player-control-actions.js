@@ -22,3 +22,7 @@ export const playPrevTrack = (playlist, songInd) => ({
   type: types.PLAY_NEXT_TRACK,
   songInd: searchPrevTrack(playlist, songInd),
 });
+
+export const setPause = () => ({
+  type: types.SET_PAUSE,
+});
