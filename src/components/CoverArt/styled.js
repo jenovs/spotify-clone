@@ -7,6 +7,7 @@ export const Card = styled.div`
 `;
 
 export const Clipart = styled.div`
+  backface-visibility: hidden;
   background-image: url('${props => props.icon}');
   background-size: cover;
   filter: brightness(1);
