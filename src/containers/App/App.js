@@ -11,6 +11,7 @@ import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
 import PlaylistContainer from '../PlaylistContainer';
 import SideNavbar from '../../components/SideNavbar';
+import CategoryView from '../../components/CategoryView';
 
 import store from '../../store';
 import * as actions from '../../actions';
@@ -78,6 +79,15 @@ class App extends Component {
                     />
                   )}
                 />
+                <Route
+                  path="/view/:id"
+                  render={routeProps => (
+                    <CategoryView
+                      {...routeProps}
+                      windowWidth={this.state.windowWidth}
+                    />
+                  )}
+                />;
               </Switch>
             </Section>
             <PlayerContainer />
