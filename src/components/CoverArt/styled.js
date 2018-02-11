@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const Card = styled.div`
   cursor: pointer;
   margin-bottom: 35px;
+  position: relative;
 `;
 
 export const Clipart = styled.div`
@@ -22,12 +23,18 @@ export const Clipart = styled.div`
     `};
 `;
 
+export const ClipartWrapper = styled.div`
+  box-shadow: ${p => (p.shrink ? '0 0 0' : '0 0 10px rgba(0, 0, 0, 0.3)')};
+  transform: scale(${p => (p.shrink ? 0.95 : 1)});
+  transition: transform 0.1s ease;
+`;
+
 export const Title = styled.p`
   color: #fff;
   display: block;
   font-size: 14px;
   font-weight: 400;
-  height: 20;
+  height: 20px;
   margin: 12px 0 4px;
   text-align: center;
 `;

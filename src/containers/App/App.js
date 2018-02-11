@@ -11,6 +11,7 @@ import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
 import PlaylistContainer from '../PlaylistContainer';
 import SideNavbar from '../../components/SideNavbar';
+import CategoryView from '../../components/CategoryView';
 
 import store from '../../store';
 import * as actions from '../../actions';
@@ -20,6 +21,7 @@ import { Background, Section, Wrapper } from './styled';
 class App extends Component {
   state = {
     tokenLoaded: false,
+    windowWidth: window.innerWidth - 220,
   };
 
   // Update the token once an hour
@@ -28,6 +30,7 @@ class App extends Component {
   }, 3500 * 1000);
 
   componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
     // Get a token and fetch a list of featured playlists
     store.dispatch(actions.fetchToken()).then(() => {
       const token = store.getState().token;
@@ -37,8 +40,14 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
     clearInterval(this.tokenInterval);
   }
+
+  handleResize = e => {
+    const windowWidth = e.target.innerWidth - 220; // magic number 220 is sidebar width
+    this.setState(() => ({ windowWidth }));
+  };
 
   render() {
     // TODO Add Loading component
@@ -61,7 +70,24 @@ class App extends Component {
                   path="/browse/featured"
                   render={routeProps => <MainContainer {...routeProps} />}
                 />
-                <Route path="/browse" component={MainContainer} />
+                <Route
+                  path="/browse"
+                  render={routeProps => (
+                    <MainContainer
+                      {...routeProps}
+                      windowWidth={this.state.windowWidth}
+                    />
+                  )}
+                />
+                <Route
+                  path="/view/:id"
+                  render={routeProps => (
+                    <CategoryView
+                      {...routeProps}
+                      windowWidth={this.state.windowWidth}
+                    />
+                  )}
+                />;
               </Switch>
             </Section>
             <PlayerContainer />

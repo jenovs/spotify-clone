@@ -20,6 +20,11 @@ const setPlaylist = playlist => ({
   playlist,
 });
 
+const setCategoryPlaylist = categoryPlaylist => ({
+  type: types.CATEGORY_PLAYLIST_SET,
+  categoryPlaylist,
+});
+
 const fetchWithToken = (url, token) => {
   return fetch(url, {
     headers: new Headers({
@@ -27,6 +32,10 @@ const fetchWithToken = (url, token) => {
     }),
   });
 };
+
+export const clearCategoryPlaylist = () => ({
+  type: types.CATEGORY_PLAYLIST_CLEAR,
+});
 
 export const fetchToken = () => dispatch => {
   return fetch('https://spotify.jenovs.com')
@@ -60,6 +69,19 @@ export const fetchGenres = () => (dispatch, getState) => {
     .then(data => {
       if (data.error) throw data.error.message;
       dispatch(setGenres(data.categories.items));
+    })
+    .catch(err => console.error(err));
+};
+
+export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
+  const { token } = getState();
+  const url = `https://api.spotify.com/v1/browse/categories/${category_id}/playlists?limit=50`;
+
+  fetchWithToken(url, token)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) throw data.error.message;
+      dispatch(setCategoryPlaylist(data.playlists.items));
     })
     .catch(err => console.error(err));
 };
