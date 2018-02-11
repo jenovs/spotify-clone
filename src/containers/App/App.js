@@ -68,7 +68,12 @@ class App extends Component {
                 <Route path="/playlist" component={PlaylistContainer} />
                 <Route
                   path="/browse/featured"
-                  render={routeProps => <MainContainer {...routeProps} />}
+                  render={routeProps => (
+                    <MainContainer
+                      {...routeProps}
+                      windowWidth={this.state.windowWidth}
+                    />
+                  )}
                 />
                 <Route
                   path="/browse"

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import FeaturedContainer from '../FeaturedContainer';
+import FeaturedView from '../../components/FeaturedView';
 import GenresView from '../../components/GenresView';
 
 import { Container, ListWrapper, NavItem } from './styled';
@@ -28,7 +28,12 @@ class MainContainer extends Component {
         </nav>
         <Route
           path="/browse/featured"
-          render={routeProps => <FeaturedContainer {...routeProps} />}
+          render={routeProps => (
+            <FeaturedView
+              windowWidth={this.props.windowWidth}
+              {...routeProps}
+            />
+          )}
         />
         <Route
           path="/browse/genres"

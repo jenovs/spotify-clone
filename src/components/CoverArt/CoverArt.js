@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 import PlayButton from './PlayButton';
 import { Card, Clipart, ClipartWrapper, Title, Wrapper } from './styled';
@@ -41,16 +44,32 @@ class CoverArt extends React.Component {
 
   handleClick = e => {
     const name = e.target.dataset.name;
+    const {
+      fetchedPlaylistId,
+      handleClick,
+      id,
+      isPlaying,
+      startPlaying,
+      setPause,
+    } = this.props;
     if (name === 'play') {
-      this.setState(({ showPlay }) => ({
-        showPlay: !showPlay,
-      }));
+      console.log(id);
+      if (isPlaying && fetchedPlaylistId === id) {
+        return setPause(id);
+      } else {
+        return startPlaying(id);
+      }
     }
-    const { handleClick, id } = this.props;
+
+    if (this.props.history) {
+      return this.props.history.push('/playlist', id);
+    }
     handleClick(id);
   };
 
   render() {
+    const { isPlaying, fetchedPlaylistId, id } = this.props;
+    const showPlayBtn = fetchedPlaylistId === id && isPlaying;
     const { shrink, hover } = this.state;
     const { icon, name, playBtn } = this.props;
 
@@ -68,9 +87,7 @@ class CoverArt extends React.Component {
           >
             <Clipart hover={hover} icon={icon} />
             {playBtn &&
-              hover && (
-                <PlayButton dataName="play" showPlay={this.state.showPlay} />
-              )}
+              hover && <PlayButton dataName="play" showPlay={!showPlayBtn} />}
           </ClipartWrapper>
           <Title>{name}</Title>
         </Card>
@@ -82,4 +99,18 @@ class CoverArt extends React.Component {
 CoverArt.propTypes = propTypes;
 CoverArt.defaultProps = defaultProps;
 
-export default CoverArt;
+const mapStateToProps = state => ({
+  isPlaying: state.isPlaying,
+  fetchedPlaylistId: state.fetchedPlaylistId,
+});
+
+const mapDispatchToProps = dispatch => ({
+  startPlaying: (id, playlistId) => {
+    dispatch(actions.startPlaying(id, playlistId));
+  },
+  setPause: id => {
+    dispatch(actions.setPause(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoverArt);

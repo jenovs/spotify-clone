@@ -29,7 +29,7 @@ class CategoryView extends React.Component {
   }
 
   navigate = id => {
-    console.log(id);
+    this.props.history.push('/playlist', id);
   };
 
   render() {
