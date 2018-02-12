@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import CoverArt from '../../components/CoverArt';
+import * as actions from '../../actions';
 
+import CoverArt from '../../components/CoverArt';
 import { Header, Wrapper } from './styled';
 
 const gridTemplateColumns = w => {
@@ -19,8 +20,24 @@ const gridTemplateColumns = w => {
 };
 
 class FeaturedView extends Component {
+  handleClick = (id, playClicked) => {
+    const { fetchedPlaylistId, isPlaying, startPlaying, setPause } = this.props;
+
+    if (playClicked) {
+      if (isPlaying && fetchedPlaylistId === id) {
+        return setPause(id);
+      } else {
+        return startPlaying(id);
+      }
+    }
+
+    if (this.props.history) {
+      return this.props.history.push({ pathname: '/playlist', state: { id } });
+    }
+  };
+
   render() {
-    const { featured, windowWidth } = this.props;
+    const { featured, fetchedPlaylistId, isPlaying, windowWidth } = this.props;
 
     if (!featured) return <div style={{ color: 'white' }}>Loading.....</div>;
 
@@ -31,13 +48,12 @@ class FeaturedView extends Component {
           {featured.playlists.items.map(item => {
             return (
               <CoverArt
-                handleClick={() => {}}
-                history={this.props.history}
+                key={item.id}
+                handleClick={this.handleClick}
                 icon={item.images[0].url}
                 id={item.id}
-                key={item.id}
                 name={item.name}
-                playlistId={item.id}
+                showPlayBtn={fetchedPlaylistId === item.id && isPlaying}
               />
             );
           })}
@@ -49,6 +65,17 @@ class FeaturedView extends Component {
 
 const mapStateToProps = state => ({
   featured: state.featured,
+  fetchedPlaylistId: state.fetchedPlaylistId,
+  isPlaying: state.isPlaying,
 });
 
-export default connect(mapStateToProps)(FeaturedView);
+const mapDispatchToProps = dispatch => ({
+  startPlaying: (id, playlistId) => {
+    dispatch(actions.startPlaying(id, playlistId));
+  },
+  setPause: id => {
+    dispatch(actions.setPause(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeaturedView);
