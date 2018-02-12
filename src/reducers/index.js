@@ -1,23 +1,22 @@
 import * as types from '../actions/action-types';
 
 const initState = {
-  albumPlaylist: [],
   categoryPlaylist: null,
-  isPlaying: false,
+  currSongPos: 0,
+  featured: null,
   fetchedPlaylistId: null,
   genres: [],
+  isPlaying: false,
   newReleases: null,
-  songInd: 0,
-  prevTracks: [],
-  currSongPos: 0,
   paused: false,
   playlist: null,
   playlistDescription: '',
-  token: null,
-  featured: null,
   playlistImageUrl: '',
   playlistName: '',
   playlistShow: null,
+  prevTracks: [],
+  songInd: 0,
+  token: null,
   tracklist: [],
 };
 
