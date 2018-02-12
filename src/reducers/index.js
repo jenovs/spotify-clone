@@ -15,7 +15,10 @@ const initState = {
   playlistDescription: '',
   token: null,
   featured: null,
+  playlistImageUrl: '',
+  playlistName: '',
   playlistShow: null,
+  tracklist: [],
 };
 
 const playReducer = (state = initState, action) => {
@@ -77,6 +80,10 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         playlistShow: action.playlist,
+        playlistDescription: action.description,
+        playlistImageUrl: action.imageUrl,
+        playlistName: action.name,
+        tracklist: action.tracklist,
       };
 
     case types.CATEGORY_PLAYLIST_SET:
