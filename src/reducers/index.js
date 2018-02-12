@@ -70,12 +70,6 @@ const playReducer = (state = initState, action) => {
         newReleases: action.albums,
       };
 
-    case types.ALBUM_PLAYLIST_SET:
-      return {
-        ...state,
-        albumPlaylist: action.albumPlaylist,
-      };
-
     case types.PLAYLIST_SET:
       return {
         ...state,

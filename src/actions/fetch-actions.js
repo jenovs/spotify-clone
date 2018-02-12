@@ -128,18 +128,22 @@ export const fetchNewReleases = () => (dispatch, getState) => {
   fetchWithToken(url, token).then(albums => dispatch(setNewReleases(albums)));
 };
 
-const setAlbumPlaylist = albumPlaylist => ({
-  type: types.ALBUM_PLAYLIST_SET,
-  albumPlaylist,
-});
-
 export const fetchAlbumTracks = id => (dispatch, getState) => {
   const { token } = getState();
-  const url = `https://api.spotify.com/v1/albums/${id}/tracks?limit=50`;
+  const url = `https://api.spotify.com/v1/albums/${id}`;
 
   fetchWithToken(url, token)
     .then(data => {
-      dispatch(setAlbumPlaylist(data.items));
+      if (data.error) throw data.error.message;
+      dispatch(
+        setPlaylist({
+          playlist: data,
+          description: data.description,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          tracklist: data.tracks.items,
+        })
+      );
     })
     .catch(err => console.log('>>>>> Error:', err));
 };
