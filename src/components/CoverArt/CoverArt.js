@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import * as actions from '../../actions';
 
 import PlayButton from './PlayButton';
 import { Card, Clipart, ClipartWrapper, Title, Wrapper } from './styled';
@@ -43,35 +40,18 @@ class CoverArt extends React.Component {
   };
 
   handleClick = e => {
-    const name = e.target.dataset.name;
-    const {
-      fetchedPlaylistId,
-      handleClick,
-      id,
-      isPlaying,
-      startPlaying,
-      setPause,
-    } = this.props;
-    if (name === 'play') {
-      console.log(id);
-      if (isPlaying && fetchedPlaylistId === id) {
-        return setPause(id);
-      } else {
-        return startPlaying(id);
-      }
+    const { id, handleClick, name } = this.props;
+    const dataName = e.target.dataset.name;
+    let playClicked = false;
+    if (dataName === 'play') {
+      playClicked = true;
     }
-
-    if (this.props.history) {
-      return this.props.history.push('/playlist', id);
-    }
-    handleClick(id);
+    handleClick(id, playClicked, name);
   };
 
   render() {
-    const { isPlaying, fetchedPlaylistId, id } = this.props;
-    const showPlayBtn = fetchedPlaylistId === id && isPlaying;
     const { shrink, hover } = this.state;
-    const { icon, name, playBtn } = this.props;
+    const { icon, name, playBtn, showPlayBtn } = this.props;
 
     return (
       <Wrapper>
@@ -99,18 +79,4 @@ class CoverArt extends React.Component {
 CoverArt.propTypes = propTypes;
 CoverArt.defaultProps = defaultProps;
 
-const mapStateToProps = state => ({
-  isPlaying: state.isPlaying,
-  fetchedPlaylistId: state.fetchedPlaylistId,
-});
-
-const mapDispatchToProps = dispatch => ({
-  startPlaying: (id, playlistId) => {
-    dispatch(actions.startPlaying(id, playlistId));
-  },
-  setPause: id => {
-    dispatch(actions.setPause(id));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoverArt);
+export default CoverArt;
