@@ -28,12 +28,28 @@ class CategoryView extends React.Component {
     this.props.clearCategoryPlaylist();
   }
 
+  handleClick = (id, playClicked) => {
+    const { fetchedPlaylistId, isPlaying, startPlaying, setPause } = this.props;
+
+    if (playClicked) {
+      if (isPlaying && fetchedPlaylistId === id) {
+        return setPause(id);
+      } else {
+        return startPlaying(id);
+      }
+    }
+
+    if (this.props.history) {
+      return this.props.history.push({ pathname: '/playlist', state: { id } });
+    }
+  };
+
   navigate = id => {
     this.props.history.push('/playlist', id);
   };
 
   render() {
-    const { windowWidth } = this.props;
+    const { fetchedPlaylistId, isPlaying, windowWidth } = this.props;
     if (!this.props.playlist) {
       return <div style={{ color: 'lightgray' }}>Loading...</div>;
     }
@@ -48,7 +64,8 @@ class CategoryView extends React.Component {
                 key={p.id}
                 {...p}
                 icon={icon}
-                handleClick={this.navigate}
+                handleClick={this.handleClick}
+                showPlayBtn={fetchedPlaylistId === p.id && isPlaying}
               />
             );
           })}
@@ -60,6 +77,8 @@ class CategoryView extends React.Component {
 
 const mapStateToProps = state => ({
   playlist: state.categoryPlaylist,
+  fetchedPlaylistId: state.fetchedPlaylistId,
+  isPlaying: state.isPlaying,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
@@ -68,6 +87,12 @@ const mapDispatchToProps = (dispatch, getState) => ({
   },
   clearCategoryPlaylist: () => {
     dispatch(actions.clearCategoryPlaylist());
+  },
+  startPlaying: (id, playlistId) => {
+    dispatch(actions.startPlaying(id, playlistId));
+  },
+  setPause: id => {
+    dispatch(actions.setPause(id));
   },
 });
 

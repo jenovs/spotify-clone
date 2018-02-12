@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import FeaturedView from '../../components/FeaturedView';
 import GenresView from '../../components/GenresView';
+import AlbumsView from '../../components/AlbumsView';
 
 import { Container, ListWrapper, NavItem } from './styled';
 
@@ -39,6 +40,12 @@ class MainContainer extends Component {
           path="/browse/genres"
           render={routeProps => (
             <GenresView windowWidth={this.props.windowWidth} {...routeProps} />
+          )}
+        />
+        <Route
+          path="/browse/newreleases"
+          render={routeProps => (
+            <AlbumsView windowWidth={this.props.windowWidth} {...routeProps} />
           )}
         />
       </Container>

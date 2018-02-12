@@ -99,9 +99,38 @@ export const fetchPlaylist = id => (dispatch, getState) => {
   fetchWithToken(url, token)
     .then(data => {
       if (data.error) throw data.error.message;
+      console.log(data);
       dispatch(setPlaylist(data));
     })
     .catch(err => console.log('Error fetching Playlist', err)); // TODO add error handling
+};
+
+const setNewReleases = albums => ({
+  type: types.NEW_RELEASES_SET,
+  albums,
+});
+
+export const fetchNewReleases = () => (dispatch, getState) => {
+  const { token } = getState();
+  const url = 'https://api.spotify.com/v1/browse/new-releases?limit=50';
+
+  fetchWithToken(url, token).then(albums => dispatch(setNewReleases(albums)));
+};
+
+const setAlbumPlaylist = albumPlaylist => ({
+  type: types.ALBUM_PLAYLIST_SET,
+  albumPlaylist,
+});
+
+export const fetchAlbumTracks = id => (dispatch, getState) => {
+  const { token } = getState();
+  const url = `https://api.spotify.com/v1/albums/${id}/tracks?limit=50`;
+
+  fetchWithToken(url, token)
+    .then(data => {
+      dispatch(setAlbumPlaylist(data.items));
+    })
+    .catch(err => console.log('>>>>> Error:', err));
 };
 
 export const startPlaying = (id, playlistId, songInd = 0) => (
