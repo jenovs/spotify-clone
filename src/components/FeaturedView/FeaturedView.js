@@ -46,6 +46,7 @@ class FeaturedView extends Component {
         <Header>{featured.message}</Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
           {featured.playlists.items.map(item => {
+            if (!item.images.length) return null;
             return (
               <CoverArt
                 key={item.id}

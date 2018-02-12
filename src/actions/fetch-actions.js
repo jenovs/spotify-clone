@@ -20,11 +20,6 @@ const setGenres = genres => ({
   genres,
 });
 
-const setPlaylist = playlist => ({
-  type: types.PLAYLIST_SET,
-  playlist,
-});
-
 const setCategoryPlaylist = categoryPlaylist => ({
   type: types.CATEGORY_PLAYLIST_SET,
   categoryPlaylist,
@@ -92,6 +87,15 @@ export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
     .catch(err => console.error(err));
 };
 
+const setPlaylist = ({ playlist, description, imageUrl, name, tracklist }) => ({
+  type: types.PLAYLIST_SET,
+  playlist,
+  description,
+  imageUrl,
+  name,
+  tracklist,
+});
+
 export const fetchPlaylist = id => (dispatch, getState) => {
   const { token } = getState();
   const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
@@ -99,8 +103,15 @@ export const fetchPlaylist = id => (dispatch, getState) => {
   fetchWithToken(url, token)
     .then(data => {
       if (data.error) throw data.error.message;
-      console.log(data);
-      dispatch(setPlaylist(data));
+      dispatch(
+        setPlaylist({
+          playlist: data,
+          description: data.description,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          tracklist: data.tracks.items,
+        })
+      );
     })
     .catch(err => console.log('Error fetching Playlist', err)); // TODO add error handling
 };
@@ -117,18 +128,22 @@ export const fetchNewReleases = () => (dispatch, getState) => {
   fetchWithToken(url, token).then(albums => dispatch(setNewReleases(albums)));
 };
 
-const setAlbumPlaylist = albumPlaylist => ({
-  type: types.ALBUM_PLAYLIST_SET,
-  albumPlaylist,
-});
-
 export const fetchAlbumTracks = id => (dispatch, getState) => {
   const { token } = getState();
-  const url = `https://api.spotify.com/v1/albums/${id}/tracks?limit=50`;
+  const url = `https://api.spotify.com/v1/albums/${id}`;
 
   fetchWithToken(url, token)
     .then(data => {
-      dispatch(setAlbumPlaylist(data.items));
+      if (data.error) throw data.error.message;
+      dispatch(
+        setPlaylist({
+          playlist: data,
+          description: data.description,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          tracklist: data.tracks.items,
+        })
+      );
     })
     .catch(err => console.log('>>>>> Error:', err));
 };

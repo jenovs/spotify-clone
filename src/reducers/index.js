@@ -1,21 +1,23 @@
 import * as types from '../actions/action-types';
 
 const initState = {
-  albumPlaylist: [],
   categoryPlaylist: null,
-  isPlaying: false,
+  currSongPos: 0,
+  featured: null,
   fetchedPlaylistId: null,
   genres: [],
+  isPlaying: false,
   newReleases: null,
-  songInd: 0,
-  prevTracks: [],
-  currSongPos: 0,
   paused: false,
   playlist: null,
   playlistDescription: '',
-  token: null,
-  featured: null,
+  playlistImageUrl: '',
+  playlistName: '',
   playlistShow: null,
+  prevTracks: [],
+  songInd: 0,
+  token: null,
+  tracklist: [],
 };
 
 const playReducer = (state = initState, action) => {
@@ -67,16 +69,14 @@ const playReducer = (state = initState, action) => {
         newReleases: action.albums,
       };
 
-    case types.ALBUM_PLAYLIST_SET:
-      return {
-        ...state,
-        albumPlaylist: action.albumPlaylist,
-      };
-
     case types.PLAYLIST_SET:
       return {
         ...state,
         playlistShow: action.playlist,
+        playlistDescription: action.description,
+        playlistImageUrl: action.imageUrl,
+        playlistName: action.name,
+        tracklist: action.tracklist,
       };
 
     case types.CATEGORY_PLAYLIST_SET:
