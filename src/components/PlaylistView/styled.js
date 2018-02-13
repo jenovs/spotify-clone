@@ -1,4 +1,6 @@
-.playlist-wrapper {
+import styled from 'styled-components';
+
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   color: white;
@@ -13,13 +15,11 @@
     font-weight: 200;
     padding-bottom: 10px;
   }
-}
 
-@media (max-width: 1200px) {
-  .playlist-wrapper {
+  @media (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     min-width: 515px;
     width: 100%;
   }
-}
+`;
