@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
+import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../CoverArt';
 import { Header, Wrapper } from './styled';
@@ -24,9 +25,9 @@ class Genres extends React.Component {
     this.props.fetchGenres();
   }
 
-  navigate = id => {
+  navigate = url => {
     const { history } = this.props;
-    history.push(`/view/${id}`);
+    history.push(`/view/${idFromHref(url)}`);
   };
 
   render() {

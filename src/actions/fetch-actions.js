@@ -1,5 +1,6 @@
 import * as types from '../actions/action-types';
 import { skipUnavailableTracks } from '../utils';
+import idFromHref from '../utils/idFromHref';
 
 const setToken = token => ({
   type: types.TOKEN_SET,
@@ -156,6 +157,7 @@ export const startPlaying = (id, playlistId, songInd = 0) => (
   const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
 
   if (id !== playlistId) {
+  const id = idFromHref(url);
     fetchWithToken(url, token)
       .then(json => {
         const ind = skipUnavailableTracks(json, songInd);

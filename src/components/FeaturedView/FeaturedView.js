@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
+import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../../components/CoverArt';
 import { Header, Wrapper } from './styled';
@@ -22,6 +23,7 @@ const gridTemplateColumns = w => {
 class FeaturedView extends Component {
   handleClick = (id, playClicked) => {
     const { fetchedPlaylistId, isPlaying, startPlaying, setPause } = this.props;
+    const id = idFromHref(url);
 
     if (playClicked) {
       if (isPlaying && fetchedPlaylistId === id) {

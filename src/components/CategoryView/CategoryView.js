@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
+import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../CoverArt';
 import { Header, Wrapper } from './styled';
@@ -28,7 +29,8 @@ class CategoryView extends React.Component {
     this.props.clearCategoryPlaylist();
   }
 
-  handleClick = (id, playClicked) => {
+  handleClick = (href, playClicked) => {
+    const id = idFromHref(href);
     const { fetchedPlaylistId, isPlaying, startPlaying, setPause } = this.props;
 
     if (playClicked) {
