@@ -18,17 +18,27 @@ const defaultProps = {
 
 class CoverArt extends React.Component {
   state = {
-    hover: false,
+    hover: this.props.showPlayBtn,
     showPlay: true,
+    showPlayBtn: this.props.showPlayBtn,
     shrink: false,
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.showPlayBtn !== nextProps.showPlayBtn) {
+      this.setState(s => ({
+        showPlayBtn: nextProps.showPlayBtn,
+        hover: nextProps.showPlayBtn,
+      }));
+    }
+  }
 
   handleMouseOver = () => {
     this.setState(() => ({ hover: true }));
   };
 
   handleMouseLeave = () => {
-    this.setState(() => ({ hover: false }));
+    this.setState(s => ({ hover: false || s.showPlayBtn }));
   };
 
   handleMouseDown = () => {
@@ -50,8 +60,8 @@ class CoverArt extends React.Component {
   };
 
   render() {
-    const { shrink, hover } = this.state;
-    const { icon, name, playBtn, showPlayBtn } = this.props;
+    const { showPlayBtn, shrink, hover } = this.state;
+    const { icon, name, playBtn } = this.props;
 
     return (
       <Wrapper>
@@ -67,7 +77,9 @@ class CoverArt extends React.Component {
           >
             <Clipart hover={hover} icon={icon} />
             {playBtn &&
-              hover && <PlayButton dataName="play" showPlay={!showPlayBtn} />}
+              (hover || showPlayBtn) && (
+                <PlayButton dataName="play" showPlay={!showPlayBtn} />
+              )}
           </ClipartWrapper>
           <Title>{name}</Title>
         </Card>
