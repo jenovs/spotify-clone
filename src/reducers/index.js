@@ -1,45 +1,27 @@
 import * as types from '../actions/action-types';
 
 const initState = {
+  activeTrackId: -1,
   categoryPlaylist: null,
   currSongPos: 0,
   featured: null,
-  fetchedPlaylistId: null,
   genres: [],
   isPlaying: false,
   newReleases: null,
-  paused: false,
-  playlist: null,
-  playlistDescription: '',
-  playlistImageUrl: '',
-  playlistName: '',
-  playlistShow: null,
-  prevTracks: [],
-  songInd: 0,
+  noPreview: false,
+  playlist: {},
+  playlistView: {},
   token: null,
-  tracklist: [],
+  tracklist: null,
+  tracklistView: null,
 };
 
 const playReducer = (state = initState, action) => {
   switch (action.type) {
-    case types.PLAY_TRACKS:
-      return { ...state, isPlaying: true };
-
-    case types.SET_PAUSE:
-      return { ...state, isPlaying: false };
-
-    case types.UPDATE_PLAYLIST_AND_PLAY:
-      return {
-        ...state,
-        playlist: action.playlist,
-        songInd: action.songInd,
-        fetchedPlaylistId: action.id,
-        isPlaying: true,
-      };
-
     case types.PLAY_NEXT_TRACK:
       return {
         ...state,
+        activeTrackId: action.songInd,
         songInd: action.songInd,
         currSongPos: 0,
         isPlaying: true,
@@ -55,6 +37,7 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         featured: action.featured,
+        tracklist: action.tracklist,
       };
 
     case types.GENRES_SET:
@@ -67,16 +50,6 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         newReleases: action.albums,
-      };
-
-    case types.PLAYLIST_SET:
-      return {
-        ...state,
-        playlistShow: action.playlist,
-        playlistDescription: action.description,
-        playlistImageUrl: action.imageUrl,
-        playlistName: action.name,
-        tracklist: action.tracklist,
       };
 
     case types.CATEGORY_PLAYLIST_SET:
@@ -95,6 +68,91 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         currSongPos: action.time,
+      };
+
+    case types.ALBUM_UPDATE:
+      return {
+        ...state,
+        playlist: {
+          ...state.playlist,
+          ...action.playlist,
+        },
+        tracklist: action.tracks,
+      };
+
+    case types.PLAYLIST_SET:
+      return {
+        ...state,
+        playlist: {
+          ...state.playlist,
+          ...action.playlist,
+        },
+        tracklist: action.tracks,
+      };
+
+    case types.PLAY_TRACK:
+      return {
+        ...state,
+        isPlaying: true,
+        activeTrackId: action.trackId,
+        currSongPos: 0,
+      };
+
+    case types.SET_PAUSE:
+      return {
+        ...state,
+        isPlaying: false,
+      };
+
+    case types.COPY_TO_VIEW:
+      return {
+        ...state,
+        playlistView: { ...state.playlist },
+        tracklistView: [...state.tracklist],
+      };
+
+    case types.COPY_FROM_VIEW:
+      return {
+        ...state,
+        playlist: { ...state.playlistView },
+        tracklist: [...state.tracklistView],
+      };
+
+    case types.CLEAR_PLAYLIST_VIEW:
+      return {
+        ...state,
+        playlistView: {},
+        tracklistView: null,
+      };
+
+    case types.UNPAUSE:
+      return {
+        ...state,
+        isPlaying: true,
+      };
+
+    case types.SET_PLAYLIST_VIEW:
+      return {
+        ...state,
+        playlistView: action.playlist,
+        tracklistView: action.tracks,
+      };
+
+    case types.STOP_PLAY:
+      return {
+        ...state,
+        activeTrackId: -1,
+        currSongPos: 0,
+        isPlaying: false,
+        playlist: {},
+        tracklist: null,
+        noPreview: true,
+      };
+
+    case types.RESET_NO_PREVIEW:
+      return {
+        ...state,
+        noPreview: false,
       };
 
     default:

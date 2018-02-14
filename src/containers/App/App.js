@@ -65,8 +65,11 @@ class App extends Component {
               <Switch>
                 <Redirect exact from="/" to="/browse/featured" />
                 <Redirect exact from="/browse" to="/browse/featured" />
-                <Route path="/playlist/:id" component={PlaylistView} />
-                <Route path="/album/:id" component={PlaylistView} />
+                <Route
+                  path="/users/:username/playlists/:id"
+                  component={PlaylistView}
+                />
+                <Route path="/albums/:id" component={PlaylistView} />
                 <Route
                   path="/browse/featured"
                   render={routeProps => (

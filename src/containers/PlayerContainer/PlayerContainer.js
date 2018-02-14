@@ -16,35 +16,36 @@ class PlayerContainer extends Component {
   componentDidMount() {
     this.audioEl.addEventListener('ended', this.handleEnded.bind(this));
   }
+
   componentWillUnmount() {
     this.audioEl.removeEventListener('ended', this.handleEnded.bind(this));
   }
 
-  playTrack() {
+  playTrack = () => {
     const { currSongPos, playlist, songInd } = this.props;
 
     if (!~songInd) return this.pauseTrack();
 
-    this.audioEl.src = playlist.tracks.items[songInd].track.preview_url;
+    this.audioEl.src = playlist[songInd].track.preview_url;
     this.audioEl.volume = 0.3;
     this.audioEl.currentTime = currSongPos;
-    this.audioEl.play();
-  }
+    const playPromise = this.audioEl.play();
+    playPromise.catch(noop => noop);
+  };
 
   pauseTrack() {
     this.audioEl.pause();
     this.props.updateTrackTime(this.audioEl.currentTime);
   }
 
-  handleEnded() {
+  handleEnded = () => {
     const { playlist, songInd, playNextTrack } = this.props;
     playNextTrack(playlist, songInd);
-  }
+  };
 
   handlePlay() {
-    const { playlistId, startPlaying } = this.props;
-    if (!playlistId) return;
-    startPlaying(playlistId, playlistId);
+    if (!this.props.playlist) return;
+    this.props.unpause();
   }
 
   handlePause() {
@@ -64,26 +65,27 @@ class PlayerContainer extends Component {
     if (this.audioEl.src && !p.isPlaying) this.pauseTrack();
   }
 
+  componentDidUpdate() {
+    const { isPlaying, playlist } = this.props;
+    if (playlist && isPlaying) this.playTrack();
+  }
+
   render() {
     const { isPlaying, playlist, songInd } = this.props;
-
-    if (playlist && isPlaying) this.playTrack();
-
-    const currentTrack =
-      playlist && ~songInd ? playlist.tracks.items[songInd].track : null;
+    const currentTrack = playlist && ~songInd ? playlist[songInd].track : null;
 
     return (
       <Player>
         <NowPlaying
           artist={currentTrack ? currentTrack.artists[0].name : ''}
           title={currentTrack ? currentTrack.name : 'Nothing selected'}
-          src={currentTrack ? currentTrack.album.images[2].url : logo}
+          src={currentTrack ? currentTrack.album.images[0].url : logo}
         />
         <PlayerControls
           isPlaying={isPlaying}
           handlePlay={this.handlePlay.bind(this)}
-          handlePause={this.handlePause.bind(this)}
-          handleNext={this.handleEnded.bind(this)}
+          handlePause={this.props.setPause}
+          handleNext={this.handleEnded}
           handlePrev={this.handlePrev.bind(this)}
         />
         <VolumeControl handleChange={this.handleVolumeChange} />
@@ -94,16 +96,14 @@ class PlayerContainer extends Component {
 
 const mapStateToProps = state => ({
   isPlaying: state.isPlaying,
-  playlist: state.playlist,
-  songInd: state.songInd,
+  playlist: state.tracklist,
+  songInd: state.activeTrackId,
   currSongPos: state.currSongPos,
-  playlistId: state.fetchedPlaylistId,
-  volume: state.volume,
 });
 
 const mapDispatchToProps = dispatch => ({
-  startPlaying: (id, playlistId) => {
-    dispatch(actions.startPlaying(id, playlistId));
+  unpause: () => {
+    dispatch(actions.unpause());
   },
   setPause: () => {
     dispatch(actions.setPause());

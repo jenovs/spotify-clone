@@ -1,19 +1,9 @@
 import * as types from '../actions/action-types';
-import { skipUnavailableTracks } from '../utils';
-import idFromHref from '../utils/idFromHref';
+import skipUnavailableTracks from '../utils/skipUnavailableTracks';
 
 const setToken = token => ({
   type: types.TOKEN_SET,
   token,
-});
-
-const playTracks = () => ({
-  type: types.PLAY_TRACKS,
-});
-
-const setFeatured = featured => ({
-  type: types.FEATURED_SET,
-  featured,
 });
 
 const setGenres = genres => ({
@@ -24,13 +14,6 @@ const setGenres = genres => ({
 const setCategoryPlaylist = categoryPlaylist => ({
   type: types.CATEGORY_PLAYLIST_SET,
   categoryPlaylist,
-});
-
-const updatePlaylistAndPlay = (playlist, id, songInd) => ({
-  type: types.UPDATE_PLAYLIST_AND_PLAY,
-  id,
-  playlist,
-  songInd,
 });
 
 const fetchWithToken = (url, token) => {
@@ -59,7 +42,10 @@ export const fetchFeatured = () => (dispatch, getState) => {
   return fetchWithToken(url, token)
     .then(data => {
       if (data.error) throw data.error.message;
-      dispatch(setFeatured(data));
+      dispatch({
+        type: types.FEATURED_SET,
+        featured: data,
+      });
     })
     .catch(err => console.log('Error fetching Featured', err)); // TODO add error handling
 };
@@ -88,35 +74,6 @@ export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
     .catch(err => console.error(err));
 };
 
-const setPlaylist = ({ playlist, description, imageUrl, name, tracklist }) => ({
-  type: types.PLAYLIST_SET,
-  playlist,
-  description,
-  imageUrl,
-  name,
-  tracklist,
-});
-
-export const fetchPlaylist = id => (dispatch, getState) => {
-  const { token } = getState();
-  const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
-
-  fetchWithToken(url, token)
-    .then(data => {
-      if (data.error) throw data.error.message;
-      dispatch(
-        setPlaylist({
-          playlist: data,
-          description: data.description,
-          imageUrl: data.images[0].url,
-          name: data.name,
-          tracklist: data.tracks.items,
-        })
-      );
-    })
-    .catch(err => console.log('Error fetching Playlist', err)); // TODO add error handling
-};
-
 const setNewReleases = albums => ({
   type: types.NEW_RELEASES_SET,
   albums,
@@ -129,44 +86,149 @@ export const fetchNewReleases = () => (dispatch, getState) => {
   fetchWithToken(url, token).then(albums => dispatch(setNewReleases(albums)));
 };
 
-export const fetchAlbumTracks = id => (dispatch, getState) => {
-  const { token } = getState();
-  const url = `https://api.spotify.com/v1/albums/${id}`;
-
-  fetchWithToken(url, token)
-    .then(data => {
-      if (data.error) throw data.error.message;
-      dispatch(
-        setPlaylist({
-          playlist: data,
-          description: data.description,
-          imageUrl: data.images[0].url,
-          name: data.name,
-          tracklist: data.tracks.items,
-        })
-      );
-    })
-    .catch(err => console.log('>>>>> Error:', err));
+const normalizeTracks = (trackArray, images) => {
+  return trackArray.map((track, i) => {
+    return { track: { ...track, album: { images: [...images] } } };
+  });
 };
 
-export const startPlaying = (id, playlistId, songInd = 0) => (
-  dispatch,
-  getState
-) => {
-  const { token } = getState();
-  const url = `https://api.spotify.com/v1/users/spotify/playlists/${id}`;
+export const fetchAlbum = href => (dispatch, getState) => {
+  const { token, playlist } = getState();
 
-  if (id !== playlistId) {
-  const id = idFromHref(url);
-    fetchWithToken(url, token)
-      .then(json => {
-        const ind = skipUnavailableTracks(json, songInd);
-        if (~ind) {
-          dispatch(updatePlaylistAndPlay(json, id, ind));
-        }
-      })
-      .catch(err => console.log('>>>>> Error:', err));
+  // Check if playlist already fetched
+  if (href === playlist.href) return;
+
+  return fetchWithToken(href, token)
+    .then(data => {
+      dispatch({
+        type: types.ALBUM_UPDATE,
+        playlist: {
+          href,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          artists: data.artists,
+          date: data.release_date,
+        },
+        tracks: normalizeTracks(data.tracks.items, data.images),
+      });
+    })
+    .catch(err => console.error('Error fetching Album:', err));
+};
+
+export const fetchPlaylist = href => (dispatch, getState) => {
+  const { token } = getState();
+
+  return fetchWithToken(href, token)
+    .then(data => {
+      if (data.error) throw data.error.message;
+      dispatch({
+        type: types.PLAYLIST_SET,
+        playlist: {
+          href,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          owner: data.owner.display_name,
+          description: data.description,
+          type: data.type,
+        },
+        tracks: data.tracks.items,
+      });
+    })
+    .catch(err => console.log('Error fetching Playlist', err));
+};
+
+export const fetchPlaylistView = href => (dispatch, getState) => {
+  const { token, playlist } = getState();
+
+  if (href === playlist.href) {
+    dispatch({
+      type: types.COPY_TO_VIEW,
+    });
   } else {
-    dispatch(playTracks());
+    fetchWithToken(href, token).then(data => {
+      const tracks =
+        data.type === 'album'
+          ? normalizeTracks(data.tracks.items, data.images)
+          : data.tracks.items;
+      dispatch({
+        type: types.SET_PLAYLIST_VIEW,
+        playlist: {
+          href,
+          imageUrl: data.images[0].url,
+          name: data.name,
+          owner: data.owner && data.owner.display_name,
+          description: data.description,
+          type: data.type,
+        },
+        tracks,
+      });
+    });
   }
+};
+
+const play = (trackId, dispatch) => {
+  if (!~trackId) {
+    setTimeout(
+      () =>
+        dispatch({
+          type: types.RESET_NO_PREVIEW,
+        }),
+      2000
+    );
+
+    return { type: types.STOP_PLAY };
+  }
+  return {
+    type: types.PLAY_TRACK,
+    trackId,
+  };
+};
+
+// Fetches playlist if not in memory and starts it from first available track
+export const startPlaylist = ({ href }) => async (dispatch, getState) => {
+  const { playlist } = getState();
+
+  if (href !== playlist.href) {
+    await fetchPlaylist(href)(dispatch, getState);
+  }
+
+  const { tracklist } = getState();
+  const songInd = skipUnavailableTracks(tracklist, 0);
+  dispatch(play(songInd, dispatch));
+};
+
+// Fetches album if not in memory and starts it from first available track
+export const startAlbum = ({ href }) => async (dispatch, getState) => {
+  const { playlist } = getState();
+
+  if (href !== playlist.href) {
+    await fetchAlbum(href)(dispatch, getState);
+  }
+
+  const { tracklist } = getState();
+  const songInd = skipUnavailableTracks(tracklist, 0);
+
+  dispatch(play(songInd, dispatch));
+};
+
+export const clearPlaylistView = () => (dispatch, getState) => {
+  dispatch({
+    type: types.CLEAR_PLAYLIST_VIEW,
+  });
+};
+
+export const unpause = () => (dispatch, getState) => {
+  dispatch({
+    type: types.UNPAUSE,
+  });
+};
+
+export const startPlayFromTracklist = (track = 0) => (dispatch, getState) => {
+  dispatch({
+    type: types.COPY_FROM_VIEW,
+  });
+  const { tracklist } = getState();
+  const songInd = skipUnavailableTracks(tracklist, track);
+
+  dispatch(play(songInd, dispatch));
 };

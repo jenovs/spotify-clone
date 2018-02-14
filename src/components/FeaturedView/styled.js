@@ -14,4 +14,6 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: ${p => p.template};
   justify-content: center;
+  margin: auto;
+  max-width: 1480px;
 `;

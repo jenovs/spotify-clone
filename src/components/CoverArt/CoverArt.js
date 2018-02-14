@@ -50,13 +50,13 @@ class CoverArt extends React.Component {
   };
 
   handleClick = e => {
-    const { id, handleClick, name } = this.props;
+    const { href, handleClick } = this.props;
     const dataName = e.target.dataset.name;
     let playClicked = false;
     if (dataName === 'play') {
       playClicked = true;
     }
-    handleClick(id, playClicked, name);
+    handleClick(href, playClicked);
   };
 
   render() {

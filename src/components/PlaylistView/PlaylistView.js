@@ -9,96 +9,82 @@ import PlaylistImage from '../PlaylistImage';
 import PlaylistPlayButton from '../PlaylistPlayButton';
 import PlaylistTracksWrapper from '../PlaylistTracksWrapper';
 import TrackContainer from '../../containers/TrackContainer';
+import Loading from '../Loading';
 import { Wrapper } from './styled';
 
+import { rootUrl } from '../../variables';
+
 class PlaylistView extends Component {
-  constructor(props) {
-    super(props);
-
-    const [, type, id] = this.props.history.location.pathname.split('/');
-    this.state = {
-      playlistId: id,
-      type,
-    };
-  }
-
   componentDidMount() {
-    console.log(this.props);
-    // if (!this.props.href) {
-    //   this.props.history.push({ pathname: '/' });
-    // }
-    const { playlistId, type } = this.state;
-    if (type === 'album') {
-      return this.props.fetchAlbumTracks(playlistId);
-    } else if (type === 'playlist') {
-      return this.props.fetchPlaylist(playlistId);
-    }
+    this.props.fetchPlaylistView(this.props.currentPlaylistHref);
   }
 
   componentWillUnmount() {
-    this.props.clearTracklist();
+    this.props.clearPlaylistView();
   }
 
-  handlePlay = () => {
-    const { playlistId } = this.state;
-    const { activeTracklistId, activeTrackId, startPlaying, href } = this.props;
-    const isActivePlaylist = activeTracklistId === playlistId;
-    const playTrackId = isActivePlaylist ? activeTrackId : 0;
-
-    startPlaying(href, playTrackId);
+  handleButton = () => {
+    const {
+      isPlaying,
+      isActivePlaylist,
+      setPause,
+      unpause,
+      startPlay,
+    } = this.props;
+    if (isActivePlaylist && isPlaying) {
+      return setPause();
+    }
+    if (isActivePlaylist && !isPlaying) {
+      return unpause();
+    }
+    if (!isActivePlaylist) {
+      return startPlay();
+    }
   };
 
   render() {
     const {
-      activeTracklistId,
-      href,
-      imgUrl,
-      name,
-      description,
+      activeTrackId,
       isPlaying,
+      playlist,
       setPause,
+      startPlay,
       tracklist,
+      isActivePlaylist,
     } = this.props;
 
-    const isActivePlaylist = activeTracklistId === this.state.playlistId;
-
-    if (!tracklist) return <div>Loading...</div>;
-
-    if (this.props.playlistType !== 'playlist') {
-      return <Wrapper>Album playlist is not finished yet :(</Wrapper>;
-    }
-
-    console.log(tracklist);
+    if (!tracklist) return <Loading />;
 
     return (
       <Wrapper>
         <PlaylistDescriptionWrapper>
-          <PlaylistImage src={imgUrl} alt={name} />
+          <PlaylistImage src={playlist.imageUrl} alt={playlist.name} />
           <PlaylistDescription
-            name={name}
-            description={description}
-            length={tracklist.length}
+            name={playlist.name}
+            description={playlist.description}
+            length={Object.keys(tracklist).length}
           >
             <PlaylistPlayButton
-              isPlaying={isPlaying}
-              isActivePlaylist={isActivePlaylist}
-              handlePlay={this.handlePlay}
-              handlePause={setPause}
+              isPlaying={isPlaying && isActivePlaylist}
+              onClick={this.handleButton}
             />
           </PlaylistDescription>
         </PlaylistDescriptionWrapper>
         <PlaylistTracksWrapper>
-          {tracklist.map((item, i) => {
+          {Object.keys(tracklist).map(key => {
+            const item = tracklist[key].track;
             return (
               <TrackContainer
-                key={i}
-                // artists={item.track.artists}
-                artists={[]}
-                nr={i}
-                track={item.track || item}
-                href={href}
-                isActivePlaylist={isActivePlaylist}
-                startPlay={this.startPlay}
+                key={item.id}
+                artists={item.artists}
+                nr={+key}
+                track={item}
+                playlistId={playlist.id}
+                isPlaying={isPlaying}
+                isActiveTrack={isActivePlaylist && +key === activeTrackId}
+                playTrack={() => startPlay(+key)}
+                pauseTrack={() => setPause()}
+                activeTrackId={isActivePlaylist ? activeTrackId : null}
               />
             );
           })}
@@ -108,33 +94,31 @@ class PlaylistView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  activeTracklistId: state.activeTracklistId,
+const mapStateToProps = (state, props) => ({
   activeTrackId: state.activeTrackId,
-  description: state.playlistDescription,
-  href: state.playlistViewHref,
-  imgUrl: state.playlistImageUrl,
-  name: state.playlistName,
   isPlaying: state.isPlaying,
-  tracklist: state.tracklist,
-  playlistType: state.playlistType,
+  isActivePlaylist:
+    state.playlist.href === rootUrl + props.history.location.pathname,
+  playlist: state.playlistView,
+  tracklist: state.tracklistView,
+  currentPlaylistHref: rootUrl + props.history.location.pathname,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
-  clearTracklist: () => {
-    dispatch(actions.clearTracklist());
+  clearPlaylistView: () => {
+    dispatch(actions.clearPlaylistView());
   },
-  fetchPlaylist: id => {
-    dispatch(actions.fetchPlaylist(id));
+  fetchPlaylistView: href => {
+    dispatch(actions.fetchPlaylistView(href));
   },
-  fetchAlbumTracks: id => {
-    dispatch(actions.fetchAlbumTracks(id));
-  },
-  startPlaying: (id, playlistId, songInd) => {
-    dispatch(actions.startPlaying(id, playlistId, songInd));
+  startPlay: track => {
+    dispatch(actions.startPlayFromTracklist(track));
   },
   setPause: () => {
     dispatch(actions.setPause());
+  },
+  unpause: () => {
+    dispatch(actions.unpause());
   },
 });
 
