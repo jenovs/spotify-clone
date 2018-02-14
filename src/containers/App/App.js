@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
-import PlaylistContainer from '../PlaylistContainer';
+import PlaylistView from '../../components/PlaylistView';
 import SideNavbar from '../../components/SideNavbar';
 import CategoryView from '../../components/CategoryView';
 
@@ -65,7 +65,11 @@ class App extends Component {
               <Switch>
                 <Redirect exact from="/" to="/browse/featured" />
                 <Redirect exact from="/browse" to="/browse/featured" />
-                <Route path="/playlist" component={PlaylistContainer} />
+                <Route
+                  path="/users/:username/playlists/:id"
+                  component={PlaylistView}
+                />
+                <Route path="/albums/:id" component={PlaylistView} />
                 <Route
                   path="/browse/featured"
                   render={routeProps => (

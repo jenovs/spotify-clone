@@ -2,22 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
+import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../CoverArt';
+import Loading from '../Loading';
 import { Header, Wrapper } from './styled';
 
-const gridTemplateColumns = w => {
-  switch (true) {
-    case w <= 547:
-      return 'repeat(2, minmax(16px, 246px))';
-    case w >= 548 && w <= 771:
-      return 'repeat(3, minmax(164px, 239px))';
-    case w >= 772 && w <= 979:
-      return 'repeat(4, minmax(179px, 231px))';
-    default:
-      return 'repeat(6, minmax(154px, 240px))';
-  }
-};
+import { gridTemplateColumns, rootUrl } from '../../variables';
 
 class CategoryView extends React.Component {
   componentDidMount() {
@@ -28,33 +19,36 @@ class CategoryView extends React.Component {
     this.props.clearCategoryPlaylist();
   }
 
-  handleClick = (id, playClicked) => {
-    const { fetchedPlaylistId, isPlaying, startPlaying, setPause } = this.props;
+  handleClick = (href, playClicked) => {
+    const id = idFromHref(href);
+    const {
+      fetchedPlaylistId,
+      history,
+      isPlaying,
+      startPlaylist,
+      setPause,
+    } = this.props;
 
     if (playClicked) {
       if (isPlaying && fetchedPlaylistId === id) {
         return setPause(id);
       } else {
-        return startPlaying(id);
+        return startPlaylist(href);
       }
     }
 
-    if (this.props.history) {
-      return this.props.history.push({ pathname: '/playlist', state: { id } });
+    if (history) {
+      return history.push(`/${href.replace(rootUrl + '/', '')}`);
     }
-  };
-
-  navigate = id => {
-    this.props.history.push('/playlist', id);
   };
 
   render() {
     const { fetchedPlaylistId, isPlaying, windowWidth } = this.props;
     if (!this.props.playlist) {
-      return <div style={{ color: 'lightgray' }}>Loading...</div>;
+      return <Loading />;
     }
     return (
-      <div style={{ color: 'white' }}>
+      <React.Fragment>
         <Header>Popular Playlists</Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
           {this.props.playlist.map(p => {
@@ -70,14 +64,15 @@ class CategoryView extends React.Component {
             );
           })}
         </Wrapper>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
   playlist: state.categoryPlaylist,
-  fetchedPlaylistId: state.fetchedPlaylistId,
+  activePlaylistHref: state.playlist.href,
+  featured: state.featured,
   isPlaying: state.isPlaying,
 });
 
@@ -88,8 +83,8 @@ const mapDispatchToProps = (dispatch, getState) => ({
   clearCategoryPlaylist: () => {
     dispatch(actions.clearCategoryPlaylist());
   },
-  startPlaying: (id, playlistId) => {
-    dispatch(actions.startPlaying(id, playlistId));
+  startPlaylist: href => {
+    dispatch(actions.startPlaylist({ href }));
   },
   setPause: id => {
     dispatch(actions.setPause(id));

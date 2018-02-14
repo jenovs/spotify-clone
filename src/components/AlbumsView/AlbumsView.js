@@ -4,55 +4,64 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import CoverArt from '../../components/CoverArt';
+import Loading from '../Loading';
 import { Header, Wrapper } from './styled';
 
-const gridTemplateColumns = w => {
-  switch (true) {
-    case w <= 547:
-      return 'repeat(2, 1fr)';
-    case w >= 548 && w <= 771:
-      return 'repeat(3, 1fr)';
-    case w >= 772 && w <= 979:
-      return 'repeat(4, 1fr)';
-    default:
-      return 'repeat(6, 1fr)';
-  }
-};
+import { gridTemplateColumns, rootUrl } from '../../variables';
 
 class AlbumsView extends Component {
   componentDidMount() {
     this.props.fetchNewReleases();
   }
 
-  handleClick = (id, play, name) => {
-    console.log(id, 'play clicked:', play);
-    console.log(name);
-    this.props.fetchAlbumTracks(id);
-    // return this.props.history.push({
-    //   pathname: '/playlist',
-    //   state: { album: true, id },
-    // });
+  handleClick = (href, playClicked) => {
+    const {
+      activePlaylistHref,
+      history,
+      isPlaying,
+      setPause,
+      startAlbum,
+    } = this.props;
+    if (playClicked) {
+      if (isPlaying && href === activePlaylistHref) {
+        return setPause();
+      } else {
+        return startAlbum(href);
+      }
+    }
+    if (history) {
+      return history.push(`/${href.replace(rootUrl + '/', '')}`);
+    }
   };
 
   render() {
-    const { items, windowWidth } = this.props;
-
-    if (!items) return <div style={{ color: 'white' }}>Loading.....</div>;
+    const {
+      activePlaylistHref,
+      isPlaying,
+      items,
+      noPreview,
+      windowWidth,
+    } = this.props;
+    if (!items) return <Loading />;
 
     return (
       <div>
-        <Header>New Albums and Singles</Header>
+        <Header danger={noPreview}>
+          {noPreview ? 'No preview available :(' : 'New Albums and Singles'}
+        </Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
           {items.map(item => {
             return (
               <CoverArt
                 handleClick={this.handleClick}
                 history={this.props.history}
+                href={item.href}
                 icon={item.images[0].url}
                 id={item.id}
                 key={item.id}
                 name={item.name}
                 playlistId={item.id}
+                showPlayBtn={activePlaylistHref === item.href && isPlaying}
               />
             );
           })}
@@ -64,14 +73,23 @@ class AlbumsView extends Component {
 
 const mapStateToProps = state => ({
   items: state.newReleases ? state.newReleases.albums.items : [],
+  activePlaylistHref: state.playlist.href,
+  isPlaying: state.isPlaying,
+  noPreview: state.noPreview,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
   fetchNewReleases: () => {
     dispatch(actions.fetchNewReleases());
   },
-  fetchAlbumTracks: id => {
-    dispatch(actions.fetchAlbumTracks(id));
+  fetchAlbum: url => {
+    dispatch(actions.fetchAlbum(url));
+  },
+  startAlbum: href => {
+    dispatch(actions.startAlbum({ href }));
+  },
+  setPause: () => {
+    dispatch(actions.setPause());
   },
 });
 
