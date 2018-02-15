@@ -6,6 +6,7 @@ const initState = {
   currSongPos: 0,
   featured: null,
   genres: [],
+  isPaused: false,
   isPlaying: false,
   newReleases: null,
   noPreview: false,
@@ -25,6 +26,7 @@ const playReducer = (state = initState, action) => {
         songInd: action.songInd,
         currSongPos: 0,
         isPlaying: true,
+        isPaused: false,
       };
 
     case types.TOKEN_SET:
@@ -94,6 +96,7 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         isPlaying: true,
+        isPaused: false,
         activeTrackId: action.trackId,
         currSongPos: 0,
       };
@@ -101,7 +104,8 @@ const playReducer = (state = initState, action) => {
     case types.SET_PAUSE:
       return {
         ...state,
-        isPlaying: false,
+        isPlaying: true,
+        isPaused: true,
       };
 
     case types.COPY_TO_VIEW:
@@ -129,6 +133,7 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         isPlaying: true,
+        isPaused: false,
       };
 
     case types.SET_PLAYLIST_VIEW:
@@ -144,6 +149,7 @@ const playReducer = (state = initState, action) => {
         activeTrackId: -1,
         currSongPos: 0,
         isPlaying: false,
+        isPaused: false,
         playlist: {},
         tracklist: null,
         noPreview: true,

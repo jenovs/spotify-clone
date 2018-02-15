@@ -18,13 +18,15 @@ class AlbumsView extends Component {
     const {
       activePlaylistHref,
       history,
+      isPaused,
       isPlaying,
       setPause,
       startAlbum,
+      unpause,
     } = this.props;
     if (playClicked) {
       if (isPlaying && href === activePlaylistHref) {
-        return setPause();
+        return isPaused ? unpause() : setPause();
       } else {
         return startAlbum(href);
       }
@@ -37,6 +39,7 @@ class AlbumsView extends Component {
   render() {
     const {
       activePlaylistHref,
+      isPaused,
       isPlaying,
       items,
       noPreview,
@@ -61,7 +64,9 @@ class AlbumsView extends Component {
                 key={item.id}
                 name={item.name}
                 playlistId={item.id}
-                showPlayBtn={activePlaylistHref === item.href && isPlaying}
+                showPlayBtn={
+                  activePlaylistHref === item.href && isPlaying && !isPaused
+                }
               />
             );
           })}
@@ -74,6 +79,7 @@ class AlbumsView extends Component {
 const mapStateToProps = state => ({
   items: state.newReleases ? state.newReleases.albums.items : [],
   activePlaylistHref: state.playlist.href,
+  isPaused: state.isPaused,
   isPlaying: state.isPlaying,
   noPreview: state.noPreview,
 });
@@ -90,6 +96,9 @@ const mapDispatchToProps = (dispatch, getState) => ({
   },
   setPause: () => {
     dispatch(actions.setPause());
+  },
+  unpause: () => {
+    dispatch(actions.unpause());
   },
 });
 

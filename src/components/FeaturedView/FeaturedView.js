@@ -14,14 +14,16 @@ class FeaturedView extends Component {
     const {
       activePlaylistHref,
       history,
+      isPaused,
       isPlaying,
       setPause,
       startPlaylist,
+      unpause,
     } = this.props;
 
     if (playClicked) {
       if (isPlaying && href === activePlaylistHref) {
-        return setPause();
+        return isPaused ? unpause() : setPause();
       } else {
         return startPlaylist({ href });
       }
@@ -33,7 +35,13 @@ class FeaturedView extends Component {
   };
 
   render() {
-    const { featured, activePlaylistHref, isPlaying, windowWidth } = this.props;
+    const {
+      featured,
+      activePlaylistHref,
+      isPaused,
+      isPlaying,
+      windowWidth,
+    } = this.props;
 
     if (!featured) return <Loading />;
 
@@ -51,7 +59,9 @@ class FeaturedView extends Component {
                 icon={item.images[0].url}
                 id={item.id}
                 name={item.name}
-                showPlayBtn={activePlaylistHref === item.href && isPlaying}
+                showPlayBtn={
+                  activePlaylistHref === item.href && isPlaying && !isPaused
+                }
               />
             );
           })}
@@ -64,6 +74,7 @@ class FeaturedView extends Component {
 const mapStateToProps = state => ({
   activePlaylistHref: state.playlist.href,
   featured: state.featured,
+  isPaused: state.isPaused,
   isPlaying: state.isPlaying,
 });
 
@@ -73,6 +84,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setPause: () => {
     dispatch(actions.setPause());
+  },
+  unpause: () => {
+    dispatch(actions.unpause());
   },
 });
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
-import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../CoverArt';
 import Loading from '../Loading';
@@ -20,18 +19,19 @@ class CategoryView extends React.Component {
   }
 
   handleClick = (href, playClicked) => {
-    const id = idFromHref(href);
     const {
-      fetchedPlaylistId,
+      activePlaylistHref,
       history,
+      isPaused,
       isPlaying,
       startPlaylist,
       setPause,
+      unpause,
     } = this.props;
 
     if (playClicked) {
-      if (isPlaying && fetchedPlaylistId === id) {
-        return setPause(id);
+      if (isPlaying && href === activePlaylistHref) {
+        return isPaused ? unpause() : setPause();
       } else {
         return startPlaylist(href);
       }
@@ -43,7 +43,7 @@ class CategoryView extends React.Component {
   };
 
   render() {
-    const { fetchedPlaylistId, isPlaying, windowWidth } = this.props;
+    const { activePlaylistHref, isPaused, isPlaying, windowWidth } = this.props;
     if (!this.props.playlist) {
       return <Loading />;
     }
@@ -58,8 +58,11 @@ class CategoryView extends React.Component {
                 key={p.id}
                 {...p}
                 icon={icon}
+                href={p.href}
                 handleClick={this.handleClick}
-                showPlayBtn={fetchedPlaylistId === p.id && isPlaying}
+                showPlayBtn={
+                  activePlaylistHref === p.href && isPlaying && !isPaused
+                }
               />
             );
           })}
@@ -70,10 +73,10 @@ class CategoryView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  playlist: state.categoryPlaylist,
   activePlaylistHref: state.playlist.href,
-  featured: state.featured,
+  isPaused: state.isPaused,
   isPlaying: state.isPlaying,
+  playlist: state.categoryPlaylist,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
@@ -86,8 +89,11 @@ const mapDispatchToProps = (dispatch, getState) => ({
   startPlaylist: href => {
     dispatch(actions.startPlaylist({ href }));
   },
-  setPause: id => {
-    dispatch(actions.setPause(id));
+  setPause: () => {
+    dispatch(actions.setPause());
+  },
+  unpause: () => {
+    dispatch(actions.unpause());
   },
 });
 
