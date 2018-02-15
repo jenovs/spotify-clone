@@ -25,16 +25,17 @@ class PlaylistView extends Component {
 
   handleButton = () => {
     const {
+      isPaused,
       isPlaying,
       isActivePlaylist,
       setPause,
       unpause,
       startPlay,
     } = this.props;
-    if (isActivePlaylist && isPlaying) {
+    if (isActivePlaylist && isPlaying && !isPaused) {
       return setPause();
     }
-    if (isActivePlaylist && !isPlaying) {
+    if (isActivePlaylist && isPlaying && isPaused) {
       return unpause();
     }
     if (!isActivePlaylist) {
@@ -45,6 +46,7 @@ class PlaylistView extends Component {
   render() {
     const {
       activeTrackId,
+      isPaused,
       isPlaying,
       playlist,
       setPause,
@@ -65,7 +67,7 @@ class PlaylistView extends Component {
             length={Object.keys(tracklist).length}
           >
             <PlaylistPlayButton
-              isPlaying={isPlaying && isActivePlaylist}
+              isPlaying={isActivePlaylist && isPlaying && !isPaused}
               onClick={this.handleButton}
             />
           </PlaylistDescription>
@@ -96,6 +98,7 @@ class PlaylistView extends Component {
 
 const mapStateToProps = (state, props) => ({
   activeTrackId: state.activeTrackId,
+  isPaused: state.isPaused,
   isPlaying: state.isPlaying,
   isActivePlaylist:
     state.playlist.href === rootUrl + props.history.location.pathname,

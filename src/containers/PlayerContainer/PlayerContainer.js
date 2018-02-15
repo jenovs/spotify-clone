@@ -35,6 +35,7 @@ class PlayerContainer extends Component {
 
   pauseTrack() {
     this.audioEl.pause();
+    this.props.setPause();
     this.props.updateTrackTime(this.audioEl.currentTime);
   }
 
@@ -48,9 +49,10 @@ class PlayerContainer extends Component {
     this.props.unpause();
   }
 
-  handlePause() {
-    this.props.setPause();
-  }
+  handlePause = () => {
+    const { isPaused, setPause, unpause } = this.props;
+    isPaused ? unpause() : setPause();
+  };
 
   handlePrev() {
     const { playlist, songInd, playPrevTrack } = this.props;
@@ -66,12 +68,14 @@ class PlayerContainer extends Component {
   }
 
   componentDidUpdate() {
-    const { isPlaying, playlist } = this.props;
-    if (playlist && isPlaying) this.playTrack();
+    const { isPlaying, isPaused, playlist } = this.props;
+    if (playlist && isPlaying) {
+      isPaused ? this.pauseTrack() : this.playTrack();
+    }
   }
 
   render() {
-    const { isPlaying, playlist, songInd } = this.props;
+    const { isPlaying, isPaused, playlist, songInd } = this.props;
     const currentTrack = playlist && ~songInd ? playlist[songInd].track : null;
 
     return (
@@ -82,9 +86,9 @@ class PlayerContainer extends Component {
           src={currentTrack ? currentTrack.album.images[0].url : logo}
         />
         <PlayerControls
-          isPlaying={isPlaying}
+          isPlaying={!isPaused && isPlaying}
           handlePlay={this.handlePlay.bind(this)}
-          handlePause={this.props.setPause}
+          handlePause={this.handlePause}
           handleNext={this.handleEnded}
           handlePrev={this.handlePrev.bind(this)}
         />
@@ -96,6 +100,7 @@ class PlayerContainer extends Component {
 
 const mapStateToProps = state => ({
   isPlaying: state.isPlaying,
+  isPaused: state.isPaused,
   playlist: state.tracklist,
   songInd: state.activeTrackId,
   currSongPos: state.currSongPos,
