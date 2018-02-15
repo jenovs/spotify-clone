@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
-import idFromHref from '../../utils/idFromHref';
 
 import CoverArt from '../CoverArt';
 import Loading from '../Loading';
@@ -20,9 +19,7 @@ class CategoryView extends React.Component {
   }
 
   handleClick = (href, playClicked) => {
-    const id = idFromHref(href);
     const {
-      fetchedPlaylistId,
       activePlaylistHref,
       history,
       isPaused,
@@ -77,7 +74,6 @@ class CategoryView extends React.Component {
 
 const mapStateToProps = state => ({
   activePlaylistHref: state.playlist.href,
-  featured: state.featured,
   isPaused: state.isPaused,
   isPlaying: state.isPlaying,
   playlist: state.categoryPlaylist,
@@ -93,8 +89,9 @@ const mapDispatchToProps = (dispatch, getState) => ({
   startPlaylist: href => {
     dispatch(actions.startPlaylist({ href }));
   },
-  setPause: id => {
-    dispatch(actions.setPause(id));
+  setPause: () => {
+    dispatch(actions.setPause());
+  },
   unpause: () => {
     dispatch(actions.unpause());
   },
