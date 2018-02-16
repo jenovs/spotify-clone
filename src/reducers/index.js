@@ -80,6 +80,10 @@ const playReducer = (state = initState, action) => {
           ...action.playlist,
         },
         tracklist: action.tracks,
+        activeTrackId: action.activeTrackId,
+        isPlaying: true,
+        isPaused: false,
+        currSongPos: 0,
       };
 
     case types.PLAYLIST_SET:
