@@ -42,16 +42,13 @@ class AlbumsView extends Component {
       isPaused,
       isPlaying,
       items,
-      noPreview,
       windowWidth,
     } = this.props;
     if (!items) return <Loading />;
 
     return (
       <div>
-        <Header danger={noPreview}>
-          {noPreview ? 'No preview available :(' : 'New Albums and Singles'}
-        </Header>
+        <Header>New Albums and Singles</Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
           {items.map(item => {
             return (
@@ -81,15 +78,11 @@ const mapStateToProps = state => ({
   activePlaylistHref: state.playlist.href,
   isPaused: state.isPaused,
   isPlaying: state.isPlaying,
-  noPreview: state.noPreview,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
   fetchNewReleases: () => {
     dispatch(actions.fetchNewReleases());
-  },
-  fetchAlbum: url => {
-    dispatch(actions.fetchAlbum(url));
   },
   startAlbum: href => {
     dispatch(actions.startAlbum({ href }));

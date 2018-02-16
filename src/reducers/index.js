@@ -9,7 +9,6 @@ const initState = {
   isPaused: false,
   isPlaying: false,
   newReleases: null,
-  noPreview: false,
   playlist: {},
   playlistView: {},
   token: null,
@@ -156,13 +155,6 @@ const playReducer = (state = initState, action) => {
         isPaused: false,
         playlist: {},
         tracklist: null,
-        noPreview: true,
-      };
-
-    case types.RESET_NO_PREVIEW:
-      return {
-        ...state,
-        noPreview: false,
       };
 
     default:
