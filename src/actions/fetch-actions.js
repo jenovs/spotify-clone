@@ -92,29 +92,6 @@ const normalizeTracks = (trackArray, images) => {
   });
 };
 
-export const fetchAlbum = href => (dispatch, getState) => {
-  const { token, playlist } = getState();
-
-  // Check if playlist already fetched
-  if (href === playlist.href) return;
-
-  return fetchWithToken(href, token)
-    .then(data => {
-      dispatch({
-        type: types.ALBUM_UPDATE,
-        playlist: {
-          href,
-          imageUrl: data.images[0].url,
-          name: data.name,
-          artists: data.artists,
-          date: data.release_date,
-        },
-        tracks: normalizeTracks(data.tracks.items, data.images),
-      });
-    })
-    .catch(err => console.error('Error fetching Album:', err));
-};
-
 export const fetchPlaylist = href => (dispatch, getState) => {
   const { token } = getState();
 
@@ -166,18 +143,7 @@ export const fetchPlaylistView = href => (dispatch, getState) => {
   }
 };
 
-const play = (trackId, dispatch) => {
-  if (!~trackId) {
-    setTimeout(
-      () =>
-        dispatch({
-          type: types.RESET_NO_PREVIEW,
-        }),
-      2000
-    );
-
-    return { type: types.STOP_PLAY };
-  }
+const play = trackId => {
   return {
     type: types.PLAY_TRACK,
     trackId,
@@ -199,16 +165,33 @@ export const startPlaylist = ({ href }) => async (dispatch, getState) => {
 
 // Fetches album if not in memory and starts it from first available track
 export const startAlbum = ({ href }) => async (dispatch, getState) => {
-  const { playlist } = getState();
+  let { playlist, token, tracklist } = getState();
+  let tracks = tracklist;
 
   if (href !== playlist.href) {
-    await fetchAlbum(href)(dispatch, getState);
+    try {
+      const data = await fetchWithToken(href, token);
+      playlist = {
+        href,
+        imageUrl: data.images[0].url,
+        name: data.name,
+        artists: data.artists,
+        date: data.release_date,
+      };
+      tracks = normalizeTracks(data.tracks.items, data.images);
+    } catch (err) {
+      console.error('Error fetching Album:', err);
+    }
   }
 
-  const { tracklist } = getState();
-  const songInd = skipUnavailableTracks(tracklist, 0);
+  const activeTrackId = skipUnavailableTracks(tracks, 0);
 
-  dispatch(play(songInd, dispatch));
+  dispatch({
+    type: types.ALBUM_UPDATE,
+    playlist,
+    tracks,
+    activeTrackId,
+  });
 };
 
 export const clearPlaylistView = () => (dispatch, getState) => {
