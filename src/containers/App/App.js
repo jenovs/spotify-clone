@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+import Loading from '../../components/Loading';
 import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
 import PlaylistView from '../../components/PlaylistView';
@@ -50,9 +51,8 @@ class App extends Component {
   };
 
   render() {
-    // TODO Add Loading component
     if (!this.state.tokenLoaded) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
 
     return (
