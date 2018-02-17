@@ -10,12 +10,14 @@ import { Provider } from 'react-redux';
 import Loading from '../../components/Loading';
 import MainContainer from '../MainContainer';
 import PlayerContainer from '../PlayerContainer';
+import PlaylistSelectorView from '../../components/PlaylistSelectorView';
 import PlaylistView from '../../components/PlaylistView';
 import SideNavbar from '../../components/SideNavbar';
-import CategoryView from '../../components/CategoryView';
 
 import store from '../../store';
 import * as actions from '../../actions';
+
+import config from '../../config';
 
 import { Background, Section, Wrapper } from './styled';
 
@@ -32,11 +34,8 @@ class App extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    // Get a token and fetch a list of featured playlists
     store.dispatch(actions.fetchToken()).then(() => {
-      const token = store.getState().token;
       this.setState(() => ({ tokenLoaded: true }));
-      store.dispatch(actions.fetchFeatured(token));
     });
   }
 
@@ -91,9 +90,10 @@ class App extends Component {
                 <Route
                   path="/view/:id"
                   render={routeProps => (
-                    <CategoryView
+                    <PlaylistSelectorView
                       {...routeProps}
                       windowWidth={this.state.windowWidth}
+                      config={config.category}
                     />
                   )}
                 />;

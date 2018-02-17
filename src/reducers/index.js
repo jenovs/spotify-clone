@@ -8,6 +8,7 @@ const initState = {
   genres: [],
   isPaused: false,
   isPlaying: false,
+  sectionMessage: null,
   newReleases: null,
   playlist: {},
   playlistView: {},
@@ -39,6 +40,7 @@ const playReducer = (state = initState, action) => {
         ...state,
         featured: action.featured,
         tracklist: action.tracklist,
+        sectionMessage: action.sectionMessage,
       };
 
     case types.GENRES_SET:
@@ -51,6 +53,7 @@ const playReducer = (state = initState, action) => {
       return {
         ...state,
         newReleases: action.albums,
+        sectionMessage: null,
       };
 
     case types.CATEGORY_PLAYLIST_SET:

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import FeaturedView from '../../components/FeaturedView';
+import config from '../../config';
+
+import PlaylistSelectorView from '../../components/PlaylistSelectorView';
 import GenresView from '../../components/GenresView';
-import AlbumsView from '../../components/AlbumsView';
 
 import { Container, ListWrapper, NavItem } from './styled';
 
@@ -30,9 +31,10 @@ class MainContainer extends Component {
         <Route
           path="/browse/featured"
           render={routeProps => (
-            <FeaturedView
+            <PlaylistSelectorView
               windowWidth={this.props.windowWidth}
               {...routeProps}
+              config={config.featured}
             />
           )}
         />
@@ -45,7 +47,11 @@ class MainContainer extends Component {
         <Route
           path="/browse/newreleases"
           render={routeProps => (
-            <AlbumsView windowWidth={this.props.windowWidth} {...routeProps} />
+            <PlaylistSelectorView
+              windowWidth={this.props.windowWidth}
+              {...routeProps}
+              config={config.albums}
+            />
           )}
         />
       </Container>

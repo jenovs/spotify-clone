@@ -9,7 +9,17 @@ import { Header, Wrapper } from './styled';
 
 import { gridTemplateColumns, rootUrl } from '../../variables';
 
-class FeaturedView extends Component {
+class PlaylistSelectorView extends Component {
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    if (!this.props.selection) return this.props.config.onMount(id);
+  }
+
+  componentWillUnmount() {
+    const { onUnmount } = this.props.config;
+    onUnmount && onUnmount();
+  }
+
   handleClick = (href, playClicked) => {
     const {
       activePlaylistHref,
@@ -17,7 +27,6 @@ class FeaturedView extends Component {
       isPaused,
       isPlaying,
       setPause,
-      startPlaylist,
       unpause,
     } = this.props;
 
@@ -25,7 +34,7 @@ class FeaturedView extends Component {
       if (isPlaying && href === activePlaylistHref) {
         return isPaused ? unpause() : setPause();
       } else {
-        return startPlaylist({ href });
+        return this.props.config.initPlay(href);
       }
     }
 
@@ -36,20 +45,21 @@ class FeaturedView extends Component {
 
   render() {
     const {
-      featured,
+      selection,
       activePlaylistHref,
       isPaused,
       isPlaying,
+      message,
       windowWidth,
     } = this.props;
 
-    if (!featured) return <Loading />;
+    if (!selection) return <Loading />;
 
     return (
       <React.Fragment>
-        <Header>{featured.message}</Header>
+        <Header>{message}</Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
-          {featured.playlists.items.map(item => {
+          {selection.map(item => {
             if (!item.images.length) return null;
             return (
               <CoverArt
@@ -71,17 +81,15 @@ class FeaturedView extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   activePlaylistHref: state.playlist.href,
-  featured: state.featured,
   isPaused: state.isPaused,
   isPlaying: state.isPlaying,
+  message: state.sectionMessage || props.config.sectionMessage,
+  selection: state[props.config.selection],
 });
 
 const mapDispatchToProps = dispatch => ({
-  startPlaylist: ({ href }) => {
-    dispatch(actions.startPlaylist({ href }));
-  },
   setPause: () => {
     dispatch(actions.setPause());
   },
@@ -90,4 +98,6 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeaturedView);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  PlaylistSelectorView
+);

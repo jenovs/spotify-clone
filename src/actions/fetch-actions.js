@@ -44,7 +44,8 @@ export const fetchFeatured = () => (dispatch, getState) => {
       if (data.error) throw data.error.message;
       dispatch({
         type: types.FEATURED_SET,
-        featured: data,
+        featured: data.playlists.items,
+        sectionMessage: data.message,
       });
     })
     .catch(err => console.log('Error fetching Featured', err)); // TODO add error handling
@@ -83,7 +84,9 @@ export const fetchNewReleases = () => (dispatch, getState) => {
   const { token } = getState();
   const url = 'https://api.spotify.com/v1/browse/new-releases?limit=50';
 
-  fetchWithToken(url, token).then(albums => dispatch(setNewReleases(albums)));
+  fetchWithToken(url, token).then(data =>
+    dispatch(setNewReleases(data.albums.items))
+  );
 };
 
 const normalizeTracks = (trackArray, images) => {
