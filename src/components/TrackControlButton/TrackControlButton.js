@@ -7,12 +7,14 @@ const pauseIcon = <i className="fa fa-pause" aria-hidden="true" />;
 const speakerIcon = <i className="fa fa-volume-up" aria-hidden="true" />;
 
 const TrackControlButton = ({
+  isActive,
   isHovered,
   isPlaying,
   hasPreview,
   nr,
   handlePlay,
   handlePause,
+  unpause,
 }) => {
   let btn = ++nr + '.';
   let cursorStyle = 'default';
@@ -28,7 +30,7 @@ const TrackControlButton = ({
     <div
       className="track-control-button"
       style={{ cursor: cursorStyle }}
-      onClick={isPlaying ? handlePause : handlePlay}
+      onClick={!isActive ? handlePlay : isPlaying ? handlePause : unpause}
     >
       {btn}
     </div>

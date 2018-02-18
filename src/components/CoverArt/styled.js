@@ -33,13 +33,15 @@ export const ClipartWrapper = styled.div`
 export const Title = styled.p`
   color: #fff;
   display: block;
-  font-size: 14px;
-  font-weight: 400;
-  height: 20px;
+  font-size: ${p => (p.bigTitle ? '26px' : '14px')};
+  font-weight: ${p => (p.bigTitle ? 600 : 400)};
+  height: ${p => (p.bigTitle ? '36px' : '20px')};
   margin: 12px 0 4px;
   text-align: center;
 `;
 
 export const Wrapper = styled.div`
   padding: 0 8px;
+  max-width: 320px;
+  width: 100%;
 `;

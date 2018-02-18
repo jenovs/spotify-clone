@@ -6,28 +6,20 @@ import config from '../../config';
 import PlaylistSelectorView from '../../components/PlaylistSelectorView';
 import GenresView from '../../components/GenresView';
 
-import { Container, ListWrapper, NavItem } from './styled';
+import { Container, ListWrapper, Navbar, NavItem } from './styled';
 
 class MainContainer extends Component {
   render() {
     return (
       <Container>
-        <nav>
+        <Navbar>
           <ListWrapper>
-            <li>
-              <NavItem to="/browse/featured">FEATURED</NavItem>
-            </li>
-            <li>
-              <NavItem to="/browse/genres">GENRES & MOODS</NavItem>
-            </li>
-            <li>
-              <NavItem to="/browse/newreleases">NEW RELEASES</NavItem>
-            </li>
-            <li>
-              <NavItem to="/browse/discover">DISCOVER</NavItem>
-            </li>
+            <NavItem to="/browse/featured">FEATURED</NavItem>
+            <NavItem to="/browse/genres">GENRES & MOODS</NavItem>
+            <NavItem to="/browse/newreleases">NEW RELEASES</NavItem>
+            {/* <NavItem to="/browse/discover">DISCOVER</NavItem> */}
           </ListWrapper>
-        </nav>
+        </Navbar>
         <Route
           path="/browse/featured"
           render={routeProps => (

@@ -3,29 +3,38 @@ import * as types from '../actions/action-types';
 import searchPrevTrack from '../utils/searchPrevTrack';
 import skipUnavailableTracks from '../utils/skipUnavailableTracks';
 
-export const updateTrackTime = time => ({
-  type: types.TRACK_TIME_UPDATE,
-  time,
+export const stopPlay = () => ({
+  type: types.STOP_PLAY,
 });
 
-export const playNextTrack = (playlist, songInd) => {
+export const playNextTrack = (playlist, songInd) => dispatch => {
+  if (!~songInd) return;
+
   const nextSongInd = skipUnavailableTracks(playlist, songInd + 1);
 
-  if (!~nextSongInd) return { type: types.STOP_PLAY };
+  if (!~nextSongInd) return dispatch(stopPlay());
 
-  return {
-    type: types.PLAY_NEXT_TRACK,
-    songInd: skipUnavailableTracks(playlist, songInd + 1),
-  };
+  dispatch({ type: types.STOP_TRACK });
+
+  setTimeout(() => {
+    dispatch({
+      type: types.PLAY_NEXT_TRACK,
+      activeTrackId: skipUnavailableTracks(playlist, songInd + 1),
+    });
+  }, 0);
 };
 
-export const playPrevTrack = (playlist, songInd) => {
+export const playPrevTrack = (playlist, songInd) => dispatch => {
+  if (!~songInd) return;
   const prevSongInd = searchPrevTrack(playlist, songInd);
   if (!~prevSongInd) return { type: 'NOOP' };
-  return {
-    type: types.PLAY_NEXT_TRACK,
-    songInd: prevSongInd,
-  };
+  dispatch({ type: types.STOP_TRACK });
+  setTimeout(() => {
+    dispatch({
+      type: types.PLAY_NEXT_TRACK,
+      activeTrackId: prevSongInd,
+    });
+  }, 0);
 };
 
 export const setPause = () => {
@@ -33,3 +42,7 @@ export const setPause = () => {
     type: types.SET_PAUSE,
   };
 };
+
+export const unpause = () => ({
+  type: types.UNPAUSE,
+});

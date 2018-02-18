@@ -5,6 +5,7 @@ import PlayButton from './PlayButton';
 import { Card, Clipart, ClipartWrapper, Title, Wrapper } from './styled';
 
 const propTypes = {
+  bigTitle: PropTypes.bool,
   handleClick: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -13,6 +14,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  bigTitle: false,
   playBtn: true,
 };
 
@@ -61,7 +63,7 @@ class CoverArt extends React.Component {
 
   render() {
     const { showPlayBtn, shrink, hover } = this.state;
-    const { icon, name, playBtn } = this.props;
+    const { bigTitle, icon, name, playBtn } = this.props;
 
     return (
       <Wrapper>
@@ -81,7 +83,7 @@ class CoverArt extends React.Component {
                 <PlayButton dataName="play" showPlay={!showPlayBtn} />
               )}
           </ClipartWrapper>
-          <Title>{name}</Title>
+          <Title bigTitle={bigTitle}>{name}</Title>
         </Card>
       </Wrapper>
     );
