@@ -10,6 +10,7 @@ export const Container = styled.div`
   font-weight: bold;
   letter-spacing: 1px;
   margin: auto;
+  padding: 0 28px;
   width: 100%;
 `;
 

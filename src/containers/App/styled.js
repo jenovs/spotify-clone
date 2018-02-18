@@ -13,7 +13,6 @@ export const Background = styled.div`
 `;
 
 export const Section = styled.div`
-  padding: 40px 30px 0 30px;
   margin-left: ${sidebarWidth};
   margin-bottom: ${playerHeight};
 `;
