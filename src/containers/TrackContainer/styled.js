@@ -12,19 +12,23 @@ export const Description = styled.div`
 `;
 
 export const TrackName = styled.div`
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 200;
 `;
 
 export const Wrapper = styled.div`
-  font-size: 16px;
-  height: 70px;
+  align-items: center;
   color: ${p =>
     p.active
       ? spotifyGreenPlaying
       : p.hasPreview ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.3)'};
   display: flex;
   flex-direction: row;
-  padding: 16px;
+  font-size: 14px;
+  font-weight: 200;
+  height: 70px;
+  max-width: 1480px;
+  padding: 0 28px;
   transition: all 0.2s;
 
   &:hover {
