@@ -13,6 +13,7 @@ const PlayerControls = props => (
       <button
         className="player-controls__buttons--skip"
         onClick={props.handlePrev}
+        disabled={!props.hasPrevTrack}
       >
         {prevButton}
       </button>
@@ -35,6 +36,7 @@ const PlayerControls = props => (
       <button
         className="player-controls__buttons--skip"
         onClick={props.handleNext}
+        disabled={!props.hasNextTrack}
       >
         {nextButton}
       </button>
