@@ -42,4 +42,6 @@ export const Title = styled.p`
 
 export const Wrapper = styled.div`
   padding: 0 8px;
+  max-width: 320px;
+  width: 100%;
 `;
