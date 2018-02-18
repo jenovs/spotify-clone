@@ -3,7 +3,6 @@ import * as types from '../actions/action-types';
 const initState = {
   activeTrackId: -1,
   categoryPlaylist: null,
-  currSongPos: 0,
   featured: null,
   genres: [],
   isPaused: false,
@@ -22,12 +21,18 @@ const playReducer = (state = initState, action) => {
     case types.PLAY_NEXT_TRACK:
       return {
         ...state,
-        activeTrackId: action.songInd,
-        songInd: action.songInd,
-        currSongPos: 0,
+        activeTrackId: action.activeTrackId,
         isPlaying: true,
         isPaused: false,
       };
+
+    case types.STOP_TRACK: {
+      return {
+        ...state,
+        isPlaying: false,
+        isPaused: false,
+      };
+    }
 
     case types.TOKEN_SET:
       return {
@@ -68,12 +73,6 @@ const playReducer = (state = initState, action) => {
         categoryPlaylist: null,
       };
 
-    case types.TRACK_TIME_UPDATE:
-      return {
-        ...state,
-        currSongPos: action.time,
-      };
-
     case types.ALBUM_UPDATE:
       return {
         ...state,
@@ -85,7 +84,6 @@ const playReducer = (state = initState, action) => {
         activeTrackId: action.activeTrackId,
         isPlaying: true,
         isPaused: false,
-        currSongPos: 0,
       };
 
     case types.PLAYLIST_SET:
@@ -95,7 +93,10 @@ const playReducer = (state = initState, action) => {
           ...state.playlist,
           ...action.playlist,
         },
-        tracklist: action.tracks,
+        tracklist: [...action.tracks],
+        isPlaying: true,
+        isPaused: false,
+        activeTrackId: action.trackId,
       };
 
     case types.PLAY_TRACK:
@@ -104,7 +105,6 @@ const playReducer = (state = initState, action) => {
         isPlaying: true,
         isPaused: false,
         activeTrackId: action.trackId,
-        currSongPos: 0,
       };
 
     case types.SET_PAUSE:
@@ -121,11 +121,14 @@ const playReducer = (state = initState, action) => {
         tracklistView: [...state.tracklist],
       };
 
-    case types.COPY_FROM_VIEW:
+    case types.COPY_FROM_VIEW_AND_PLAY:
       return {
         ...state,
         playlist: { ...state.playlistView },
         tracklist: [...state.tracklistView],
+        isPlaying: true,
+        isPaused: false,
+        activeTrackId: action.trackId,
       };
 
     case types.CLEAR_PLAYLIST_VIEW:
@@ -145,15 +148,14 @@ const playReducer = (state = initState, action) => {
     case types.SET_PLAYLIST_VIEW:
       return {
         ...state,
-        playlistView: action.playlist,
-        tracklistView: action.tracks,
+        playlistView: { ...action.playlist },
+        tracklistView: [...action.tracks],
       };
 
     case types.STOP_PLAY:
       return {
         ...state,
         activeTrackId: -1,
-        currSongPos: 0,
         isPlaying: false,
         isPaused: false,
         playlist: {},

@@ -95,28 +95,6 @@ const normalizeTracks = (trackArray, images) => {
   });
 };
 
-export const fetchPlaylist = href => (dispatch, getState) => {
-  const { token } = getState();
-
-  return fetchWithToken(href, token)
-    .then(data => {
-      if (data.error) throw data.error.message;
-      dispatch({
-        type: types.PLAYLIST_SET,
-        playlist: {
-          href,
-          imageUrl: data.images[0].url,
-          name: data.name,
-          owner: data.owner.display_name,
-          description: data.description,
-          type: data.type,
-        },
-        tracks: data.tracks.items,
-      });
-    })
-    .catch(err => console.log('Error fetching Playlist', err));
-};
-
 export const fetchPlaylistView = href => (dispatch, getState) => {
   const { token, playlist } = getState();
 
@@ -146,24 +124,32 @@ export const fetchPlaylistView = href => (dispatch, getState) => {
   }
 };
 
-const play = trackId => {
-  return {
-    type: types.PLAY_TRACK,
-    trackId,
-  };
-};
-
 // Fetches playlist if not in memory and starts it from first available track
 export const startPlaylist = ({ href }) => async (dispatch, getState) => {
-  const { playlist } = getState();
+  let { playlist, tracklist: tracks, token } = getState();
+  dispatch({ type: types.STOP_PLAY });
 
   if (href !== playlist.href) {
-    await fetchPlaylist(href)(dispatch, getState);
+    const data = await fetchWithToken(href, token);
+    if (data.error) throw data.error.message;
+    playlist = {
+      href,
+      imageUrl: data.images[0].url,
+      name: data.name,
+      owner: data.owner.display_name,
+      description: data.description,
+      type: data.type,
+    };
+    tracks = data.tracks.items;
   }
 
-  const { tracklist } = getState();
-  const songInd = skipUnavailableTracks(tracklist, 0);
-  dispatch(play(songInd, dispatch));
+  const trackId = skipUnavailableTracks(tracks, 0);
+  dispatch({
+    type: types.PLAYLIST_SET,
+    playlist,
+    tracks,
+    trackId,
+  });
 };
 
 // Fetches album if not in memory and starts it from first available track
@@ -188,6 +174,7 @@ export const startAlbum = ({ href }) => async (dispatch, getState) => {
   }
 
   const activeTrackId = skipUnavailableTracks(tracks, 0);
+  dispatch({ type: types.STOP_PLAY });
 
   dispatch({
     type: types.ALBUM_UPDATE,
@@ -203,18 +190,18 @@ export const clearPlaylistView = () => (dispatch, getState) => {
   });
 };
 
-export const unpause = () => (dispatch, getState) => {
-  dispatch({
-    type: types.UNPAUSE,
-  });
-};
+export const startPlayFromTracklist = (track = 0) => {
+  return (dispatch, getState) => {
+    const { tracklistView: tracklist } = getState();
+    const trackId = skipUnavailableTracks(tracklist, track);
 
-export const startPlayFromTracklist = (track = 0) => (dispatch, getState) => {
-  dispatch({
-    type: types.COPY_FROM_VIEW,
-  });
-  const { tracklist } = getState();
-  const songInd = skipUnavailableTracks(tracklist, track);
+    dispatch({ type: types.STOP_PLAY });
 
-  dispatch(play(songInd, dispatch));
+    setTimeout(() => {
+      dispatch({
+        type: types.COPY_FROM_VIEW_AND_PLAY,
+        trackId,
+      });
+    }, 0);
+  };
 };
