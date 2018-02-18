@@ -64,7 +64,7 @@ class PlaylistView extends Component {
           <PlaylistDescription
             name={playlist.name}
             description={playlist.description}
-            length={Object.keys(tracklist).length}
+            length={tracklist.length}
           >
             <PlaylistPlayButton
               isPlaying={isActivePlaylist && isPlaying && !isPaused}
@@ -73,18 +73,17 @@ class PlaylistView extends Component {
           </PlaylistDescription>
         </PlaylistDescriptionWrapper>
         <PlaylistTracksWrapper>
-          {Object.keys(tracklist).map(key => {
-            const item = tracklist[key].track;
+          {tracklist.map(({ track }, i) => {
             return (
               <TrackContainer
-                key={item.id}
-                artists={item.artists}
-                nr={+key}
-                track={item}
+                key={track.id}
+                artists={track.artists}
+                nr={+i}
+                track={track}
                 playlistId={playlist.id}
-                isActiveTrack={isActivePlaylist && +key === activeTrackId}
-                playTrack={() => startPlay(+key)}
                 isPlaying={isPlaying && !isPaused}
+                isActiveTrack={isActivePlaylist && +i === activeTrackId}
+                playTrack={() => startPlay(+i)}
                 pauseTrack={() => setPause()}
                 unpause={this.props.unpause}
                 activeTrackId={isActivePlaylist ? activeTrackId : null}
