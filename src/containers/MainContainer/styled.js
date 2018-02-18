@@ -11,13 +11,6 @@ export const Container = styled.div`
   letter-spacing: 1px;
   margin: auto;
   width: 100%;
-  & nav {
-    min-width: 515px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 export const ListWrapper = styled.ul`
@@ -37,10 +30,23 @@ export const ListWrapper = styled.ul`
   }
 `;
 
+export const Navbar = styled.nav`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 86px;
+  justify-content: center;
+  min-width: 515px;
+  padding: 20px 0;
+`;
+
 export const NavItem = styled(NavLink).attrs({
   activeClassName,
 })`
   color: ${spotifyGray};
+  margin: 10px;
+  padding: 10px;
+  padding-bottom: 0;
   transition-duration: 0.2s;
   transition-property: color;
 
