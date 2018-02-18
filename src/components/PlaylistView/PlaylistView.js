@@ -82,10 +82,11 @@ class PlaylistView extends Component {
                 nr={+key}
                 track={item}
                 playlistId={playlist.id}
-                isPlaying={isPlaying}
                 isActiveTrack={isActivePlaylist && +key === activeTrackId}
                 playTrack={() => startPlay(+key)}
+                isPlaying={isPlaying && !isPaused}
                 pauseTrack={() => setPause()}
+                unpause={this.props.unpause}
                 activeTrackId={isActivePlaylist ? activeTrackId : null}
               />
             );

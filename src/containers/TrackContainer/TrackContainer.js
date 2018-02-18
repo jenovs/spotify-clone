@@ -40,6 +40,7 @@ class TrackContainer extends Component {
       nr,
       playTrack,
       pauseTrack,
+      isPlaying,
     } = this.props;
     const { showPlayButton } = this.state;
 
@@ -53,11 +54,13 @@ class TrackContainer extends Component {
       >
         <TrackControlButton
           isHovered={showPlayButton}
-          isPlaying={isActiveTrack}
+          isPlaying={isActiveTrack && isPlaying}
           hasPreview={track.preview_url}
           nr={nr}
           handlePlay={() => track.preview_url && playTrack()}
           handlePause={() => pauseTrack()}
+          unpause={this.props.unpause}
+          isActive={isActiveTrack}
         />
         <Description>
           <TrackName>{track.name}</TrackName>
