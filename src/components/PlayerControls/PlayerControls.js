@@ -1,24 +1,16 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faPlayCircle from '@fortawesome/fontawesome-free-regular/faPlayCircle';
+import faPauseCircle from '@fortawesome/fontawesome-free-regular/faPauseCircle';
+import faStepBackward from '@fortawesome/fontawesome-free-solid/faStepBackward';
+import faStepForward from '@fortawesome/fontawesome-free-solid/faStepForward';
 
 import './main.css';
 
-const playButton = (
-  <i id="play" className="far fa-play-circle" aria-hidden="true" title="Play" />
-);
-const pauseButton = (
-  <i
-    id="pause"
-    className="far fa-pause-circle"
-    aria-hidden="true"
-    title="Pause"
-  />
-);
-const prevButton = (
-  <i className="fas fa-step-backward" aria-hidden="true" title="Previous" />
-);
-const nextButton = (
-  <i className="fas fa-step-forward" aria-hidden="true" title="Next" />
-);
+const playButton = <FontAwesomeIcon icon={faPlayCircle} />;
+const pauseButton = <FontAwesomeIcon icon={faPauseCircle} />;
+const prevButton = <FontAwesomeIcon icon={faStepBackward} />;
+const nextButton = <FontAwesomeIcon icon={faStepForward} />;
 
 const PlayerControls = props => (
   <div className="player-controls__container">

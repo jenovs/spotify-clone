@@ -1,10 +1,14 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
+import faPause from '@fortawesome/fontawesome-free-solid/faPause';
+import faVolumeUp from '@fortawesome/fontawesome-free-solid/faVolumeUp';
 
 import './main.css';
 
-const playIcon = <i className="fa fa-play" aria-hidden="true" />;
-const pauseIcon = <i className="fa fa-pause" aria-hidden="true" />;
-const speakerIcon = <i className="fa fa-volume-up" aria-hidden="true" />;
+const playIcon = <FontAwesomeIcon icon={faPlay} />;
+const pauseIcon = <FontAwesomeIcon icon={faPause} />;
+const speakerIcon = <FontAwesomeIcon icon={faVolumeUp} />;
 
 const TrackControlButton = ({
   isActive,
