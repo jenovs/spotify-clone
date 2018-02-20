@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "env": { "browser": true, "jest": true },
+  "parser": "babel-eslint",
+  "plugins": ["babel"],
+  "rules": {
+    "arrow-parens": "off",
+    "babel/semi": 1,
+    "comma-dangle": "off",
+    "function-paren-newline": "off",
+    "object-curly-newline": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/no-danger": "off",
+    "react/prefer-stateless-function": "off"
+  }
+}
