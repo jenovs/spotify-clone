@@ -7,14 +7,13 @@ import { Artist, Description, TrackName, Wrapper } from './styled';
 const formatDuration = ms => {
   let sec = Math.floor(ms / 1000);
   const min = Math.floor(sec / 60);
-  sec = sec - min * 60 + '';
+  sec = `${sec % 60}`;
   sec = sec.length < 2 ? 0 + sec : sec;
   return `${min}:${sec}`;
 };
 
 class TrackContainer extends Component {
   state = {
-    cursor: 'default',
     showPlayButton: false,
   };
 

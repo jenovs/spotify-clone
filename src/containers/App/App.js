@@ -27,11 +27,6 @@ class App extends Component {
     windowWidth: window.innerWidth - 220,
   };
 
-  // Update the token once an hour
-  tokenInterval = setInterval(() => {
-    store.dispatch(actions.fetchToken());
-  }, 3500 * 1000);
-
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     store.dispatch(actions.fetchToken()).then(() => {
@@ -43,6 +38,11 @@ class App extends Component {
     window.removeEventListener('resize', this.handleResize);
     clearInterval(this.tokenInterval);
   }
+
+  // Update the token once an hour
+  tokenInterval = setInterval(() => {
+    store.dispatch(actions.fetchToken());
+  }, 3500 * 1000);
 
   handleResize = e => {
     const windowWidth = e.target.innerWidth - 220; // magic number 220 is sidebar width

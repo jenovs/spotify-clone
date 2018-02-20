@@ -1,9 +1,10 @@
-export default (playlist, trackNumber) => {
+export default (playlist, nr) => {
+  let trackNumber = nr;
   if (trackNumber <= 0) return -1;
 
-  trackNumber--;
+  trackNumber -= 1;
   while (!playlist[trackNumber].track.preview_url) {
-    trackNumber--;
+    trackNumber -= 1;
     if (trackNumber < 0) return -1;
   }
 
