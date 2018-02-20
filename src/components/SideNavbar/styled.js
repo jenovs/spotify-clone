@@ -6,6 +6,21 @@ import { spotifyGray, spotifyGreen } from '../../css-variables/colors';
 
 const activeClassName = 'selected';
 
+export const Group = styled.div`
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.24px;
+  line-height: 26px;
+  padding: 13px 0 8px 0;
+`;
+
+export const GroupHeader = styled.div`
+  border: none;
+  padding-bottom: 10px;
+`;
+
 export const Navbar = styled.nav`
   background-color: rgba(0, 0, 0, 0.5);
   color: ${spotifyGray};
@@ -30,9 +45,16 @@ export const Navbar = styled.nav`
 export const NavItem = styled(NavLink).attrs({
   activeClassName,
 })`
+  align-items: center;
   color: ${spotifyGray};
+  display: flex;
+  justify-content: space-between;
 
   &.${activeClassName} {
     color: ${spotifyGreen};
+  }
+
+  & .fa-search {
+    font-size: 1.25rem;
   }
 `;

@@ -8,6 +8,7 @@
     "babel/semi": 1,
     "comma-dangle": "off",
     "function-paren-newline": "off",
+    "no-confusing-arrow": "warn",
     "object-curly-newline": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
