@@ -79,7 +79,7 @@ class PlaylistView extends Component {
             bigTitle={true}
           />
           <InfoBox>
-            <Text>{playlist.description}</Text>
+            <Text dangerouslySetInnerHTML={{ __html: playlist.description }} />
             <Text>
               {tracklist.length} song{tracklist.length > 1 ? 's' : ''}
             </Text>

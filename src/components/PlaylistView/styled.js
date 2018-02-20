@@ -39,6 +39,11 @@ export const Text = styled.div`
   font-weight: 200;
   line-height: 28px;
   margin: 12px;
+  pointer-events: none;
+
+  & > a {
+    color: currentColor;
+  }
 `;
 
 export const TracksWrapper = styled.div`
