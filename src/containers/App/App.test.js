@@ -1,3 +1,5 @@
 describe('App component', () => {
-  it('placeholder test', () => {});
+  it('placeholder test', () => {
+    expect(1).toBe(1);
+  });
 });
