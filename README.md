@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jenovs/spotify-clone.svg?branch=development)](https://travis-ci.org/jenovs/spotify-clone)
 
-Live version: https://spotify-clone.jenovs.com
+Live version: https://sc.jenovs.com
 
 I started this project in May 2017 to test my React and Redux skills, but since then it has become a testbed for trying different stuff.
 
