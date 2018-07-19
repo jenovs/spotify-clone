@@ -6,7 +6,7 @@ notifications:
 before_deploy: npm run build-css && npm run build
 deploy:
   provider: s3
-  bucket: spotify-clone
+  bucket: sc.jenovs.com
   skip_cleanup: true
   access_key_id: AKIAJCC45WY2ETHOOVVA
   secret_access_key:
