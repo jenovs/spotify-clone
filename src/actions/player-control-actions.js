@@ -8,31 +8,39 @@ export const stopPlay = () => ({
 });
 
 export const playNextTrack = (playlist, songInd) => dispatch => {
-  if (!~songInd) return;
+  if (songInd === -1) {
+    return;
+  }
 
   const nextSongInd = skipUnavailableTracks(playlist, songInd + 1);
 
-  if (!~nextSongInd) return dispatch(stopPlay());
+  if (nextSongInd === -1) {
+    return dispatch(stopPlay());
+  }
 
   dispatch({ type: types.STOP_TRACK });
 
   setTimeout(() => {
     dispatch({
-      type: types.PLAY_NEXT_TRACK,
       activeTrackId: skipUnavailableTracks(playlist, songInd + 1),
+      type: types.PLAY_NEXT_TRACK,
     });
   }, 0);
 };
 
 export const playPrevTrack = (playlist, songInd) => dispatch => {
-  if (!~songInd) return;
+  if (songInd === -1) {
+    return;
+  }
   const prevSongInd = searchPrevTrack(playlist, songInd);
-  if (!~prevSongInd) return { type: 'NOOP' };
+  if (prevSongInd === -1) {
+    return { type: 'NOOP' };
+  }
   dispatch({ type: types.STOP_TRACK });
   setTimeout(() => {
     dispatch({
-      type: types.PLAY_NEXT_TRACK,
       activeTrackId: prevSongInd,
+      type: types.PLAY_NEXT_TRACK,
     });
   }, 0);
 };

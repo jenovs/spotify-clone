@@ -3,21 +3,21 @@ import store from './store';
 
 export default {
   albums: {
-    onMount: () => store.dispatch(actions.fetchNewReleases()),
     initPlay: href => store.dispatch(actions.startAlbum({ href })),
-    selection: 'newReleases',
+    onMount: () => store.dispatch(actions.fetchNewReleases()),
     sectionMessage: 'New Albums and Singles',
+    selection: 'newReleases',
   },
   category: {
+    initPlay: href => store.dispatch(actions.startPlaylist({ href })),
     onMount: id => store.dispatch(actions.fetchCategoryPlaylist(id)),
     onUnmount: () => store.dispatch(actions.clearCategoryPlaylist()),
-    initPlay: href => store.dispatch(actions.startPlaylist({ href })),
-    selection: 'categoryPlaylist',
     sectionMessage: 'Popular Playlists',
+    selection: 'categoryPlaylist',
   },
   featured: {
-    onMount: () => store.dispatch(actions.fetchFeatured()),
     initPlay: href => store.dispatch(actions.startPlaylist({ href })),
+    onMount: () => store.dispatch(actions.fetchFeatured()),
     selection: 'featured',
   },
 };

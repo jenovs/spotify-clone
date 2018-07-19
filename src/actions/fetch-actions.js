@@ -2,18 +2,18 @@ import * as types from '../actions/action-types';
 import skipUnavailableTracks from '../utils/skipUnavailableTracks';
 
 const setToken = token => ({
-  type: types.TOKEN_SET,
   token,
+  type: types.TOKEN_SET,
 });
 
 const setGenres = genres => ({
-  type: types.GENRES_SET,
   genres,
+  type: types.GENRES_SET,
 });
 
 const setCategoryPlaylist = categoryPlaylist => ({
-  type: types.CATEGORY_PLAYLIST_SET,
   categoryPlaylist,
+  type: types.CATEGORY_PLAYLIST_SET,
 });
 
 const fetchWithToken = (url, token) => {
@@ -29,26 +29,34 @@ export const clearCategoryPlaylist = () => ({
 });
 
 export const fetchToken = () => dispatch => {
-  return fetch('https://spotify.jenovs.com')
-    .then(res => res.json())
-    .then(token => dispatch(setToken(token)))
-    .catch(err => console.log('Error fetching Token', err)); // TODO add error handling
+  return (
+    fetch('https://spotify.jenovs.com')
+      .then(res => res.json())
+      .then(token => dispatch(setToken(token)))
+      // tslint:disable-next-line
+      .catch(err => console.log('Error fetching Token', err))
+  ); // TODO add error handling
 };
 
 export const fetchFeatured = () => (dispatch, getState) => {
   const { token } = getState();
   const url = 'https://api.spotify.com/v1/browse/featured-playlists';
 
-  return fetchWithToken(url, token)
-    .then(data => {
-      if (data.error) throw data.error.message;
-      dispatch({
-        type: types.FEATURED_SET,
-        featured: data.playlists.items,
-        sectionMessage: data.message,
-      });
-    })
-    .catch(err => console.log('Error fetching Featured', err)); // TODO add error handling
+  return (
+    fetchWithToken(url, token)
+      .then(data => {
+        if (data.error) {
+          throw data.error.message;
+        }
+        dispatch({
+          featured: data.playlists.items,
+          sectionMessage: data.message,
+          type: types.FEATURED_SET,
+        });
+      })
+      // tslint:disable-next-line
+      .catch(err => console.log('Error fetching Featured', err))
+  ); // TODO add error handling
 };
 
 export const fetchGenres = () => (dispatch, getState) => {
@@ -57,27 +65,33 @@ export const fetchGenres = () => (dispatch, getState) => {
 
   fetchWithToken(url, token)
     .then(data => {
-      if (data.error) throw data.error.message;
+      if (data.error) {
+        throw data.error.message;
+      }
       dispatch(setGenres(data.categories.items));
     })
+    // tslint:disable-next-line
     .catch(err => console.error(err));
 };
 
-export const fetchCategoryPlaylist = category_id => (dispatch, getState) => {
+export const fetchCategoryPlaylist = categoryId => (dispatch, getState) => {
   const { token } = getState();
-  const url = `https://api.spotify.com/v1/browse/categories/${category_id}/playlists?limit=50`;
+  const url = `https://api.spotify.com/v1/browse/categories/${categoryId}/playlists?limit=50`;
 
   fetchWithToken(url, token)
     .then(data => {
-      if (data.error) throw data.error.message;
+      if (data.error) {
+        throw data.error.message;
+      }
       dispatch(setCategoryPlaylist(data.playlists.items));
     })
+    // tslint:disable-next-line
     .catch(err => console.error(err));
 };
 
 const setNewReleases = albums => ({
-  type: types.NEW_RELEASES_SET,
   albums,
+  type: types.NEW_RELEASES_SET,
 });
 
 export const fetchNewReleases = () => (dispatch, getState) => {
@@ -109,16 +123,16 @@ export const fetchPlaylistView = href => (dispatch, getState) => {
           ? normalizeTracks(data.tracks.items, data.images)
           : data.tracks.items;
       dispatch({
-        type: types.SET_PLAYLIST_VIEW,
         playlist: {
+          description: data.description,
           href,
           imageUrl: data.images[0].url,
           name: data.name,
           owner: data.owner && data.owner.display_name,
-          description: data.description,
           type: data.type,
         },
         tracks,
+        type: types.SET_PLAYLIST_VIEW,
       });
     });
   }
@@ -131,13 +145,15 @@ export const startPlaylist = ({ href }) => async (dispatch, getState) => {
 
   if (href !== playlist.href) {
     const data = await fetchWithToken(href, token);
-    if (data.error) throw data.error.message;
+    if (data.error) {
+      throw data.error.message;
+    }
     playlist = {
+      description: data.description,
       href,
       imageUrl: data.images[0].url,
       name: data.name,
       owner: data.owner.display_name,
-      description: data.description,
       type: data.type,
     };
     tracks = data.tracks.items;
@@ -145,10 +161,10 @@ export const startPlaylist = ({ href }) => async (dispatch, getState) => {
 
   const trackId = skipUnavailableTracks(tracks, 0);
   dispatch({
-    type: types.PLAYLIST_SET,
     playlist,
-    tracks,
     trackId,
+    tracks,
+    type: types.PLAYLIST_SET,
   });
 };
 
@@ -161,14 +177,15 @@ export const startAlbum = ({ href }) => async (dispatch, getState) => {
     try {
       const data = await fetchWithToken(href, token);
       playlist = {
+        artists: data.artists,
+        date: data.release_date,
         href,
         imageUrl: data.images[0].url,
         name: data.name,
-        artists: data.artists,
-        date: data.release_date,
       };
       tracks = normalizeTracks(data.tracks.items, data.images);
     } catch (err) {
+      // tslint:disable-next-line
       console.error('Error fetching Album:', err);
     }
   }
@@ -177,10 +194,10 @@ export const startAlbum = ({ href }) => async (dispatch, getState) => {
   dispatch({ type: types.STOP_PLAY });
 
   dispatch({
-    type: types.ALBUM_UPDATE,
+    activeTrackId,
     playlist,
     tracks,
-    activeTrackId,
+    type: types.ALBUM_UPDATE,
   });
 };
 
@@ -199,8 +216,8 @@ export const startPlayFromTracklist = (track = 0) => {
 
     setTimeout(() => {
       dispatch({
-        type: types.COPY_FROM_VIEW_AND_PLAY,
         trackId,
+        type: types.COPY_FROM_VIEW_AND_PLAY,
       });
     }, 0);
   };

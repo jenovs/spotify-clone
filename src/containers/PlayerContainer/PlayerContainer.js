@@ -17,10 +17,10 @@ class PlayerContainer extends Component {
   audioEl = new Audio();
   state = {
     currentTime: 0,
-    paused: false,
-    playing: false,
     hasNextTrack: false,
     hasPrevTrack: false,
+    paused: false,
+    playing: false,
     totalTime: 0,
   };
 
@@ -55,10 +55,12 @@ class PlayerContainer extends Component {
     const { playlist, songInd } = this.props;
     const { currentTime } = this.state;
 
-    if (!~songInd) return this.pauseTrack();
+    if (songInd === -1) {
+      return this.pauseTrack();
+    }
 
-    const hasNextTrack = !!~skipUnavailableTracks(playlist, songInd + 1);
-    const hasPrevTrack = !!~searchPrevTrack(playlist, songInd);
+    const hasNextTrack = skipUnavailableTracks(playlist, songInd + 1) !== -1;
+    const hasPrevTrack = searchPrevTrack(playlist, songInd) !== -1;
 
     this.setState(() => ({
       hasNextTrack,
@@ -84,13 +86,17 @@ class PlayerContainer extends Component {
   };
 
   handleEnded = () => {
-    if (!this.state.hasNextTrack) return this.props.stop();
+    if (!this.state.hasNextTrack) {
+      return this.props.stop();
+    }
     const { playlist, songInd, playNextTrack } = this.props;
     playNextTrack(playlist, songInd);
   };
 
   handlePlay = () => {
-    if (!this.props.playlist) return;
+    if (!this.props.playlist) {
+      return;
+    }
     this.props.unpause();
   };
 
@@ -101,7 +107,9 @@ class PlayerContainer extends Component {
 
   handlePrev = () => {
     const { playlist, songInd, playPrevTrack } = this.props;
-    if (!this.state.hasPrevTrack) return;
+    if (!this.state.hasPrevTrack) {
+      return;
+    }
     playPrevTrack(playlist, songInd);
   };
 
@@ -113,17 +121,21 @@ class PlayerContainer extends Component {
     const { playing, paused } = this.state;
     if (isPlaying !== playing || isPaused !== paused) {
       this.setState(({ currentTime }) => ({
-        playing: isPlaying,
-        paused: isPaused,
         currentTime: !isPlaying && !isPaused ? 0 : currentTime,
+        paused: isPaused,
+        playing: isPlaying,
       }));
     }
   }
 
   componentDidUpdate() {
     const { paused, playing } = this.state;
-    if (playing && !paused && this.audioEl.paused) return this.playTrack();
-    if (playing && paused) return this.pauseTrack();
+    if (playing && !paused && this.audioEl.paused) {
+      return this.playTrack();
+    }
+    if (playing && paused) {
+      return this.pauseTrack();
+    }
     if (!playing && !paused) {
       this.stopTrack();
     }
@@ -132,7 +144,8 @@ class PlayerContainer extends Component {
   render() {
     const { isPlaying, isPaused, playlist, songInd } = this.props;
     const { hasNextTrack, hasPrevTrack } = this.state;
-    const currentTrack = playlist && ~songInd ? playlist[songInd].track : null;
+    const currentTrack =
+      playlist && songInd !== -1 ? playlist[songInd].track : null;
 
     return (
       <Player>
@@ -157,16 +170,13 @@ class PlayerContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  isPlaying: state.isPlaying,
   isPaused: state.isPaused,
+  isPlaying: state.isPlaying,
   playlist: state.tracklist,
   songInd: state.activeTrackId,
 });
 
 const mapDispatchToProps = dispatch => ({
-  unpause: () => {
-    dispatch(actions.unpause());
-  },
   pause: () => {
     dispatch(actions.setPause());
   },
@@ -177,6 +187,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.playPrevTrack(playlist, songInd));
   },
   stop: () => dispatch(actions.stopPlay()),
+  unpause: () => {
+    dispatch(actions.unpause());
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerContainer);

@@ -25,9 +25,13 @@ const TrackControlButton = ({
 
   if (hasPreview) {
     cursorStyle = 'pointer';
-    if (isHovered && isPlaying) btn = pauseIcon;
-    else if (isHovered && !isPlaying) btn = playIcon;
-    else if (isPlaying) btn = speakerIcon;
+    if (isHovered && isPlaying) {
+      btn = pauseIcon;
+    } else if (isHovered && !isPlaying) {
+      btn = playIcon;
+    } else if (isPlaying) {
+      btn = speakerIcon;
+    }
   }
 
   return (

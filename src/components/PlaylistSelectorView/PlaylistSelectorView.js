@@ -12,12 +12,16 @@ import { gridTemplateColumns, rootUrl } from '../../variables';
 class PlaylistSelectorView extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
-    if (!this.props.selection) return this.props.config.onMount(id);
+    if (!this.props.selection) {
+      return this.props.config.onMount(id);
+    }
   }
 
   componentWillUnmount() {
     const { onUnmount } = this.props.config;
-    onUnmount && onUnmount();
+    if (onUnmount) {
+      onUnmount();
+    }
   }
 
   handleClick = (href, playClicked) => {
@@ -53,14 +57,18 @@ class PlaylistSelectorView extends Component {
       windowWidth,
     } = this.props;
 
-    if (!selection) return <Loading />;
+    if (!selection) {
+      return <Loading />;
+    }
 
     return (
       <React.Fragment>
         <Header>{message}</Header>
         <Wrapper template={gridTemplateColumns(windowWidth)}>
           {selection.map(item => {
-            if (!item.images.length) return null;
+            if (!item.images.length) {
+              return null;
+            }
             return (
               <CoverArt
                 key={item.id}
@@ -98,6 +106,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  PlaylistSelectorView
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlaylistSelectorView);

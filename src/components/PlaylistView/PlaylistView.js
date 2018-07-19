@@ -60,7 +60,9 @@ class PlaylistView extends Component {
       isActivePlaylist,
     } = this.props;
 
-    if (!tracklist) return <Loading />;
+    if (!tracklist) {
+      return <Loading />;
+    }
 
     return (
       <Wrapper>
@@ -116,13 +118,13 @@ class PlaylistView extends Component {
 const mapStateToProps = (state, props) => ({
   activePlaylistHref: state.playlist.href,
   activeTrackId: state.activeTrackId,
-  isPaused: state.isPaused,
-  isPlaying: state.isPlaying,
+  currentPlaylistHref: rootUrl + props.history.location.pathname,
   isActivePlaylist:
     state.playlist.href === rootUrl + props.history.location.pathname,
+  isPaused: state.isPaused,
+  isPlaying: state.isPlaying,
   playlist: state.playlistView,
   tracklist: state.tracklistView,
-  currentPlaylistHref: rootUrl + props.history.location.pathname,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
@@ -132,15 +134,18 @@ const mapDispatchToProps = (dispatch, getState) => ({
   fetchPlaylistView: href => {
     dispatch(actions.fetchPlaylistView(href));
   },
-  startPlay: track => {
-    dispatch(actions.startPlayFromTracklist(track));
-  },
   setPause: () => {
     dispatch(actions.setPause());
+  },
+  startPlay: track => {
+    dispatch(actions.startPlayFromTracklist(track));
   },
   unpause: () => {
     dispatch(actions.unpause());
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlaylistView);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlaylistView);
