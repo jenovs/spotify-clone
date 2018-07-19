@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 import Loading from '../../components/Loading';
-import MainContainer from '../MainContainer';
-import PlayerContainer from '../PlayerContainer';
 import PlaylistSelectorView from '../../components/PlaylistSelectorView';
 import PlaylistView from '../../components/PlaylistView';
 import SideNavbar from '../../components/SideNavbar';
+import MainContainer from '../MainContainer';
+import PlayerContainer from '../PlayerContainer';
 
-import store from '../../store';
 import * as actions from '../../actions';
+import store from '../../store';
 
 import config from '../../config';
 
@@ -26,6 +26,11 @@ class App extends Component {
     tokenLoaded: false,
     windowWidth: window.innerWidth - 220,
   };
+
+  // Update the token once an hour
+  tokenInterval = setInterval(() => {
+    store.dispatch(actions.fetchToken());
+  }, 3500 * 1000);
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
@@ -39,12 +44,7 @@ class App extends Component {
     clearInterval(this.tokenInterval);
   }
 
-  // Update the token once an hour
-  tokenInterval = setInterval(() => {
-    store.dispatch(actions.fetchToken());
-  }, 3500 * 1000);
-
-  handleResize = e => {
+  handleResize = (e: any) => {
     const windowWidth = e.target.innerWidth - 220; // magic number 220 is sidebar width
     this.setState(() => ({ windowWidth }));
   };
