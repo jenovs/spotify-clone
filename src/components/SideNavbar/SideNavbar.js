@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 
-import './main.css';
-import logo from '../../../public/Spotify_Icon_RGB_White.png';
+import { Group, GroupHeader, Navbar, NavItem } from './styled';
+import logo from '../../images/Spotify_Icon_RGB_White.png';
 
 class SideNavbar extends Component {
   render() {
     return (
-      <nav className="SideNavbar-nav">
-        <img src={logo} alt="spotify logo"/>
-        <hr/>
-        <p style={{cursor: "not-allowed"}}>Search</p>
-        <hr/>
-        <NavLink to="/browse" className="SideNavbar__link" activeClassName="selected">Browse</NavLink>
-        <hr/>
-      </nav>
-    )
+      <Navbar>
+        <GroupHeader>
+          <img src={logo} alt="spotify logo" />
+        </GroupHeader>
+        <Group>
+          <NavItem to="/search" style={{ pointerEvents: 'none' }}>
+            Search<FontAwesomeIcon icon={faSearch} />
+          </NavItem>
+        </Group>
+        <Group>
+          <NavItem to="/browse">Home</NavItem>
+        </Group>
+      </Navbar>
+    );
   }
 }
 

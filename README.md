@@ -1,9 +1,10 @@
 Live version: https://spotify-clone.jenovs.com
 
-This is a practice project to sharpen my React and Redux skills. It's an attempt to clone Spotify web app functionality.  
-Currently only `FEATURED` tab is functional.  
+In May 2017 I decided to put my newly learned React/Redux skills to test and clone Spotify webapp.
 
-Back-end part to obtain the authentication token is written on Go.
+After few weeks this project was added to the 'finish later' pile.
+
+Fast forward to January 2018 and it's *later* enough for a second attempt :)
 
 ### Installation
-Clone the repo and run `yarn install` and then `yarn start-all`.
+Clone the repo and run `npm i` and then `npm run start-all`.

@@ -1,19 +1,26 @@
 import React from 'react';
 
-import './main.css';
+import { Wrapper } from './styled';
 
-const VolumeControl = props => (
-  <div
-    className="volume-control"
-  >
-    <input
-      onChange={props.handleChange}
-      type="range"
-      min="0.0"
-      max="1.0"
-      step="0.05"
-      value={props.volume}/>
-  </div>
-);
+class VolumeControl extends React.Component {
+  updateVolume = e => {
+    this.props.handleChange(e.target.value);
+  };
+
+  render() {
+    return (
+      <Wrapper>
+        <input
+          onInput={this.updateVolume}
+          type="range"
+          min="0.0"
+          max="1.0"
+          step="0.01"
+          defaultValue="0.3"
+        />
+      </Wrapper>
+    );
+  }
+}
 
 export default VolumeControl;

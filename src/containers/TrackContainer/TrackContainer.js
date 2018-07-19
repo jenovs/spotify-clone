@@ -1,113 +1,77 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-
-import * as actions from '../../actions';
 
 import TrackControlButton from '../../components/TrackControlButton';
 
-import './main.css';
+import { Artist, Description, TrackName, Wrapper } from './styled';
 
 const formatDuration = ms => {
   let sec = Math.floor(ms / 1000);
   const min = Math.floor(sec / 60);
-  sec = (sec - min * 60) + '';
+  sec = `${sec % 60}`;
   sec = sec.length < 2 ? 0 + sec : sec;
-  return `${min}:${sec}`
-}
+  return `${min}:${sec}`;
+};
 
 class TrackContainer extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    showPlayButton: false,
+  };
 
-    this.state = {
-      cursor: 'default',
-      showPlayButton: false,
-    }
-
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  }
-
-  handleMouseEnter() {
+  handleMouseEnter = () => {
     this.setState(() => ({
       cursor: this.props.track.preview_url ? 'pointer' : 'default',
       showPlayButton: this.props.track.preview_url,
     }));
-  }
+  };
 
-  handleMouseLeave() {
+  handleMouseLeave = () => {
     this.setState(() => ({
       cursor: 'default',
       showPlayButton: false,
-    }))
-  }
+    }));
+  };
 
   render() {
     const {
-      isActivePlaylist,
-      songInd,
-      isPlaying,
+      artists,
+      isActiveTrack,
       track,
       nr,
-      startPlaying,
-      playlistShow,
-      setPause,
+      playTrack,
+      pauseTrack,
+      isPlaying,
     } = this.props;
     const { showPlayButton } = this.state;
 
-    const activeTrack = isActivePlaylist ? songInd : null;
-
-    const trackContainerClass = classNames({
-      'track-container': true,
-      'track-container--active': activeTrack === nr,
-    });
-
     return (
-      <div
-        className={trackContainerClass}
+      <Wrapper
+        active={isActiveTrack}
         title={track.preview_url ? '' : 'No preview available'}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        hasPreview={track.preview_url}
       >
         <TrackControlButton
           isHovered={showPlayButton}
-          isPlaying={isPlaying}
+          isPlaying={isActiveTrack && isPlaying}
           hasPreview={track.preview_url}
           nr={nr}
-          handlePlay={startPlaying.bind(this, playlistShow.id, 0, nr)}
-          handlePause={setPause}
+          handlePlay={() => track.preview_url && playTrack()}
+          handlePause={() => pauseTrack()}
+          unpause={this.props.unpause}
+          isActive={isActiveTrack}
         />
-        <div className="track-container__description">
-         <div
-           className="track-container__name"
-          >
-         {track.name}
-        </div>
-        <div
-          className="track-container__artist"
-          >{track.artists.map(artist => artist.name).join(', ')} • {track.album.name}</div>
-        {/* <div>{this.props.isActivePlaylist.toString()}</div> */}
-        </div>
+        <Description>
+          <TrackName>{track.name}</TrackName>
+          <Artist>
+            {artists && artists.map(artist => artist.name).join(', ')}
+            {track.album && track.album.name && ` • ${track.album.name}`}
+          </Artist>
+        </Description>
         <div>{formatDuration(track.duration_ms)}</div>
-      </div>
-    )
+      </Wrapper>
+    );
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  songInd: state.songInd,
-  isPlaying: state.isPlaying && props.isActivePlaylist && (state.songInd === props.nr),
-  playlistShow: state.playlistShow,
-});
-
-const mapDispatchToProps = (dispatch, getState) => ({
-  startPlaying: (id, playlistId, songInd) => {
-    dispatch(actions.startPlaying(id, playlistId, songInd));
-  },
-  setPause: () => {
-    dispatch(actions.setPause());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TrackContainer);
+export default TrackContainer;

@@ -10,5 +10,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3020, () => {
+  // tslint:disable-next-line
   console.log('Server started...');
 });

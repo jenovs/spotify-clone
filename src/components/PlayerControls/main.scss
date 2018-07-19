@@ -54,4 +54,8 @@
   &:hover {
     color: #fff;
   }
+
+  &:disabled:hover {
+    color: #a0a0a0;
+  }
 }

@@ -1,31 +1,48 @@
 import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
+import faPause from '@fortawesome/fontawesome-free-solid/faPause';
+import faVolumeUp from '@fortawesome/fontawesome-free-solid/faVolumeUp';
 
 import './main.css';
 
-const playIcon = <i className="fa fa-play" aria-hidden="true"></i>
-const pauseIcon = <i className="fa fa-pause" aria-hidden="true"></i>
-const speakerIcon = <i className="fa fa-volume-up" aria-hidden="true"></i>
+const playIcon = <FontAwesomeIcon icon={faPlay} />;
+const pauseIcon = <FontAwesomeIcon icon={faPause} />;
+const speakerIcon = <FontAwesomeIcon icon={faVolumeUp} />;
 
-const TrackControlButton = ({isHovered, isPlaying, hasPreview, nr, handlePlay, handlePause}) => {
+const TrackControlButton = ({
+  isActive,
+  isHovered,
+  isPlaying,
+  hasPreview,
+  nr,
+  handlePlay,
+  handlePause,
+  unpause,
+}) => {
   let btn = ++nr + '.';
   let cursorStyle = 'default';
 
   if (hasPreview) {
     cursorStyle = 'pointer';
-    if (isHovered && isPlaying) btn = pauseIcon;
-    else if (isHovered && !isPlaying) btn = playIcon;
-    else if (isPlaying) btn = speakerIcon;
+    if (isHovered && isPlaying) {
+      btn = pauseIcon;
+    } else if (isHovered && !isPlaying) {
+      btn = playIcon;
+    } else if (isPlaying) {
+      btn = speakerIcon;
+    }
   }
 
   return (
     <div
       className="track-control-button"
-      style={{cursor: cursorStyle}}
-      onClick={isPlaying ? handlePause : handlePlay}
-      >
+      style={{ cursor: cursorStyle }}
+      onClick={!isActive ? handlePlay : isPlaying ? handlePause : unpause}
+    >
       {btn}
     </div>
-  )
+  );
 };
 
 export default TrackControlButton;

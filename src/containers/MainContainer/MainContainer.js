@@ -1,38 +1,53 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import FeaturedContainer from '../FeaturedContainer';
-import GenresContainer from '../GenresContainer';
+import config from '../../config';
 
-import './main.css';
+import PlaylistSelectorView from '../../components/PlaylistSelectorView';
+import GenresView from '../../components/GenresView';
+
+import { Container, ListWrapper, Navbar, NavItem } from './styled';
 
 class MainContainer extends Component {
   render() {
     return (
-      <div className="Main-container">
-        <nav>
-          <ul className="Main-nav-ul">
-            <li>
-              <NavLink to="/browse/featured" className="Main-nav" activeClassName="Main-nav--selected">FEATURED</NavLink>
-            </li>
-            <li>
-              <NavLink to="/browse/genres" className="Main-nav" activeClassName="Main-nav--selected">GENRES & MOODS</NavLink>
-            </li>
-            <li>
-              <NavLink to="/browse/newreleases" className="Main-nav" activeClassName="Main-nav--selected">NEW RELEASES</NavLink>
-            </li>
-            <li>
-              <NavLink to="/browse/discover" className="Main-nav" activeClassName="Main-nav--selected">DISCOVER</NavLink>
-            </li>
-          </ul>
-        </nav>
+      <Container>
+        <Navbar>
+          <ListWrapper>
+            <NavItem to="/browse/featured">FEATURED</NavItem>
+            <NavItem to="/browse/genres">GENRES & MOODS</NavItem>
+            <NavItem to="/browse/newreleases">NEW RELEASES</NavItem>
+            {/* <NavItem to="/browse/discover">DISCOVER</NavItem> */}
+          </ListWrapper>
+        </Navbar>
         <Route
           path="/browse/featured"
-          render={routeProps => <FeaturedContainer {...routeProps} handlePlay={this.props.handlePlay} />}
+          render={routeProps => (
+            <PlaylistSelectorView
+              windowWidth={this.props.windowWidth}
+              {...routeProps}
+              config={config.featured}
+            />
+          )}
         />
-        <Route path="/browse/genres" component={GenresContainer} />
-      </div>
-    )
+        <Route
+          path="/browse/genres"
+          render={routeProps => (
+            <GenresView windowWidth={this.props.windowWidth} {...routeProps} />
+          )}
+        />
+        <Route
+          path="/browse/newreleases"
+          render={routeProps => (
+            <PlaylistSelectorView
+              windowWidth={this.props.windowWidth}
+              {...routeProps}
+              config={config.albums}
+            />
+          )}
+        />
+      </Container>
+    );
   }
 }
 
