@@ -3,7 +3,7 @@ node_js:
   - '8'
 notifications:
   email: false
-before_deploy: npm run build
+before_deploy: npm run build-css && npm run build
 deploy:
   provider: s3
   bucket: spotify-clone
