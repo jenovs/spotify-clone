@@ -1,10 +1,11 @@
+[![Build Status](https://travis-ci.org/jenovs/spotify-clone.svg?branch=development)](https://travis-ci.org/jenovs/spotify-clone)
+
 Live version: https://spotify-clone.jenovs.com
 
-In May 2017 I decided to put my newly learned React/Redux skills to test and clone Spotify webapp.
+I started this project in May 2017 to test my React and Redux skills, but since then it has become a testbed for trying different stuff.
 
-After few weeks this project was added to the 'finish later' pile.
-
-Fast forward to January 2018 and it's *later* enough for a second attempt :)
+Currently I'm in the process of converting it to Typescript.
 
 ### Installation
+
 Clone the repo and run `npm i` and then `npm run start-all`.
