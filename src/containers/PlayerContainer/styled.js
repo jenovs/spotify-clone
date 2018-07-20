@@ -1,4 +1,6 @@
-.Player__container {
+import styled from 'styled-components';
+
+export const Wrapper = styled.footer`
   background-color: rgb(40, 40, 40);
   color: white;
   display: flex;
@@ -11,4 +13,4 @@
   left: 0;
   bottom: 0;
   width: 100vw;
-}
+`;

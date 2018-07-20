@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import NowPlaying from '../../components/NowPlaying';
-import Player from '../../components/Player';
 import PlayerControls from '../../components/PlayerControls';
 import VolumeControl from '../../components/VolumeControl';
+
+import { Wrapper } from './styled';
 
 import logo from '../../images/Spotify_Icon_RGB_White.png';
 
@@ -148,7 +149,7 @@ class PlayerContainer extends Component {
       playlist && songInd !== -1 ? playlist[songInd].track : null;
 
     return (
-      <Player>
+      <Wrapper>
         <NowPlaying
           artist={currentTrack ? currentTrack.artists[0].name : ''}
           title={currentTrack ? currentTrack.name : ''}
@@ -164,7 +165,7 @@ class PlayerContainer extends Component {
           handlePrev={this.handlePrev}
         />
         <VolumeControl handleChange={this.handleVolumeChange} />
-      </Player>
+      </Wrapper>
     );
   }
 }
