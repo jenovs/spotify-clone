@@ -24,7 +24,7 @@ interface IPlaylist {
     };
     artists: Array<{ name: string }>;
     name: string;
-    preview_url: string;
+    preview_url: string | null;
   };
 }
 
@@ -106,7 +106,7 @@ class PlayerContainer extends Component<TProps, IState> {
       hasPrevTrack,
     }));
 
-    this.audioEl.src = playlist[songInd].track.preview_url;
+    this.audioEl.src = playlist[songInd].track.preview_url || '';
     this.audioEl.volume = 0.3;
     this.audioEl.currentTime = currentTime;
     const playPromise = this.audioEl.play();
@@ -244,6 +244,8 @@ const mapDispatchToProps = (dispatch: any) => ({
     dispatch(actions.unpause());
   },
 });
+
+export { PlayerContainer, IDispatchProps, IPlaylist, IStateProps };
 
 export default connect<IStateProps, IDispatchProps>(
   mapStateToProps,
