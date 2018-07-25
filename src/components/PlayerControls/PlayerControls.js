@@ -5,7 +5,8 @@ import faPauseCircle from '@fortawesome/fontawesome-free-regular/faPauseCircle';
 import faStepBackward from '@fortawesome/fontawesome-free-solid/faStepBackward';
 import faStepForward from '@fortawesome/fontawesome-free-solid/faStepForward';
 
-import './main.css';
+import { Container, Controls, PlayButton, SkipButton } from './styled';
+import { Play } from '../CoverArt/PlayButton/styled';
 
 const playButton = <FontAwesomeIcon icon={faPlayCircle} />;
 const pauseButton = <FontAwesomeIcon icon={faPauseCircle} />;
@@ -13,39 +14,21 @@ const prevButton = <FontAwesomeIcon icon={faStepBackward} />;
 const nextButton = <FontAwesomeIcon icon={faStepForward} />;
 
 const PlayerControls = props => (
-  <div className="player-controls__container">
-    <div className="player-controls__buttons">
-      <button
-        className="player-controls__buttons--skip"
-        onClick={props.handlePrev}
-        disabled={!props.hasPrevTrack}
-      >
+  <Container>
+    <Controls>
+      <SkipButton onClick={props.handlePrev} disabled={!props.hasPrevTrack}>
         {prevButton}
-      </button>
+      </SkipButton>
       {!props.isPlaying ? (
-        <button
-          className="player-controls__buttons--play"
-          onClick={props.handlePlay}
-        >
-          {playButton}
-        </button>
+        <PlayButton onClick={props.handlePlay}>{playButton}</PlayButton>
       ) : (
-        <button
-          className="player-controls__buttons--play"
-          onClick={props.handlePause}
-        >
-          {pauseButton}
-        </button>
+        <PlayButton onClick={props.handlePause}>{pauseButton}</PlayButton>
       )}
-      <button
-        className="player-controls__buttons--skip"
-        onClick={props.handleNext}
-        disabled={!props.hasNextTrack}
-      >
+      <SkipButton onClick={props.handleNext} disabled={!props.hasNextTrack}>
         {nextButton}
-      </button>
-    </div>
-  </div>
+      </SkipButton>
+    </Controls>
+  </Container>
 );
 
 export default PlayerControls;
