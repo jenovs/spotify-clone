@@ -37,15 +37,27 @@ const PlayerControls: React.SFC<IProps> = ({
 }) => (
   <Container>
     <Controls>
-      <SkipButton onClick={handlePrev} disabled={!hasPrevTrack}>
+      <SkipButton
+        onClick={handlePrev}
+        disabled={!hasPrevTrack}
+        data-testid="prev-btn"
+      >
         {prevButton}
       </SkipButton>
       {!isPlaying ? (
-        <PlayButton onClick={handlePlay}>{playButton}</PlayButton>
+        <PlayButton onClick={handlePlay} data-testid="play-btn">
+          {playButton}
+        </PlayButton>
       ) : (
-        <PlayButton onClick={handlePause}>{pauseButton}</PlayButton>
+        <PlayButton onClick={handlePause} data-testid="pause-btn">
+          {pauseButton}
+        </PlayButton>
       )}
-      <SkipButton onClick={handleNext} disabled={!hasNextTrack}>
+      <SkipButton
+        onClick={handleNext}
+        disabled={!hasNextTrack}
+        data-testid="next-btn"
+      >
         {nextButton}
       </SkipButton>
     </Controls>
