@@ -1,8 +1,6 @@
 import React from 'react';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
-import faPause from '@fortawesome/fontawesome-free-solid/faPause';
-import faVolumeUp from '@fortawesome/fontawesome-free-solid/faVolumeUp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
 import './main.css';
 
