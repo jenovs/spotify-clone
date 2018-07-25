@@ -6,6 +6,13 @@
   "rules": {
     "jsx-boolean-value": false,
     "jsx-no-lambda": false,
-    "member-access": [true, "no-public"]
+    "member-access": [true, "no-public"],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "case-insensitive"
+      }
+    ]
   }
 }
