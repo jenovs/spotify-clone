@@ -16,18 +16,36 @@ const pauseButton = <FontAwesomeIcon icon={faPauseCircle} />;
 const prevButton = <FontAwesomeIcon icon={faStepBackward} />;
 const nextButton = <FontAwesomeIcon icon={faStepForward} />;
 
-const PlayerControls = (props: any) => (
+export interface IProps {
+  handleNext: (() => void);
+  handlePause: (() => void);
+  handlePlay: (() => void);
+  handlePrev: (() => void);
+  hasPrevTrack: boolean;
+  hasNextTrack: boolean;
+  isPlaying: boolean;
+}
+
+const PlayerControls: React.SFC<IProps> = ({
+  handleNext,
+  handlePause,
+  handlePlay,
+  handlePrev,
+  hasPrevTrack,
+  hasNextTrack,
+  isPlaying,
+}) => (
   <Container>
     <Controls>
-      <SkipButton onClick={props.handlePrev} disabled={!props.hasPrevTrack}>
+      <SkipButton onClick={handlePrev} disabled={!hasPrevTrack}>
         {prevButton}
       </SkipButton>
-      {!props.isPlaying ? (
-        <PlayButton onClick={props.handlePlay}>{playButton}</PlayButton>
+      {!isPlaying ? (
+        <PlayButton onClick={handlePlay}>{playButton}</PlayButton>
       ) : (
-        <PlayButton onClick={props.handlePause}>{pauseButton}</PlayButton>
+        <PlayButton onClick={handlePause}>{pauseButton}</PlayButton>
       )}
-      <SkipButton onClick={props.handleNext} disabled={!props.hasNextTrack}>
+      <SkipButton onClick={handleNext} disabled={!hasNextTrack}>
         {nextButton}
       </SkipButton>
     </Controls>
