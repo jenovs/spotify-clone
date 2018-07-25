@@ -1,14 +1,15 @@
-.player-controls__container {
-  // background-color: lightgray;
+import styled from 'styled-components';
+
+export const Container = styled.div`
   flex: 1;
   height: 56px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+`;
 
-.player-controls__buttons {
+export const Controls = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -21,9 +22,9 @@
     color: #a0a0a0;
     outline: none;
   }
-}
+`;
 
-.player-controls__buttons--play {
+export const PlayButton = styled.button`
   background-color: transparent;
   border: none;
   // color: #fff;
@@ -39,9 +40,9 @@
     color: #fff;
     transform: scale(1.2);
   }
-}
+`;
 
-.player-controls__buttons--skip {
+export const SkipButton = styled.button`
   background-color: transparent;
   border: none;
   color: #fff;
@@ -58,4 +59,4 @@
   &:disabled:hover {
     color: #a0a0a0;
   }
-}
+`;
