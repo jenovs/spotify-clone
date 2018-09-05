@@ -68,6 +68,10 @@ class App extends Component {
                   path="/users/:username/playlists/:id"
                   component={PlaylistView}
                 />
+                <Route
+                  path="/playlists/:id"
+                  component={PlaylistView}
+                />
                 <Route path="/albums/:id" component={PlaylistView} />
                 <Route
                   path="/browse/featured"
