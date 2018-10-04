@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/jenovs/spotify-clone.svg?branch=development)](https://travis-ci.org/jenovs/spotify-clone)
+[![codecov](https://codecov.io/gh/jenovs/spotify-clone/branch/development/graph/badge.svg)](https://codecov.io/gh/jenovs/spotify-clone)
 
 Live version: https://sc.jenovs.com
 
