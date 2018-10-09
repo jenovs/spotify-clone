@@ -38,16 +38,10 @@
     "react-testing-library": "^5.2.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build-css": "node-sass src/ -o src/",
-    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
-    "start-all": "yarn run watch-css & yarn start",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom --coverage",
     "test:watch": "react-scripts-ts test --env=jsdom --watch",
-    "eject": "react-scripts-ts eject",
-    "pretest": "npm run build-css"
+    "eject": "react-scripts-ts eject"
   }
 }

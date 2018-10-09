@@ -13,26 +13,21 @@ i,
 button {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 
 html,
 body {
-  height: 100vh;
-}
+  height: 100vh; }
 
 body {
   cursor: default;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 a,
 a:visited,
 a:hover {
-  text-decoration: none;
-}
+  text-decoration: none; }
 
 .container {
   display: flex;
-  flex-direction: row;
-}
+  flex-direction: row; }
