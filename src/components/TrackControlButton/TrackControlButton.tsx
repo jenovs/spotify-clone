@@ -1,45 +1,56 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
-import './main.css';
+import { Wrapper } from './styled';
 
 const playIcon = <FontAwesomeIcon icon={faPlay} />;
 const pauseIcon = <FontAwesomeIcon icon={faPause} />;
 const speakerIcon = <FontAwesomeIcon icon={faVolumeUp} />;
 
-const TrackControlButton = ({
+export interface IProps {
+  handlePause: () => void;
+  handlePlay: () => void;
+  hasPreview: boolean;
+  isActive: boolean;
+  isHovered: boolean;
+  isPlaying: boolean;
+  nr: number;
+  unpause: () => void;
+}
+
+const TrackControlButton: React.SFC<IProps> = ({
+  handlePause,
+  handlePlay,
+  hasPreview,
   isActive,
   isHovered,
   isPlaying,
-  hasPreview,
   nr,
-  handlePlay,
-  handlePause,
   unpause,
 }) => {
-  let btn = ++nr + '.';
   let cursorStyle = 'default';
+  const showIcon = hasPreview && (isHovered || isPlaying);
+  let icon = null;
 
   if (hasPreview) {
     cursorStyle = 'pointer';
     if (isHovered && isPlaying) {
-      btn = pauseIcon;
+      icon = pauseIcon;
     } else if (isHovered && !isPlaying) {
-      btn = playIcon;
+      icon = playIcon;
     } else if (isPlaying) {
-      btn = speakerIcon;
+      icon = speakerIcon;
     }
   }
 
   return (
-    <div
-      className="track-control-button"
+    <Wrapper
       style={{ cursor: cursorStyle }}
       onClick={!isActive ? handlePlay : isPlaying ? handlePause : unpause}
     >
-      {btn}
-    </div>
+      {showIcon ? icon : ++nr + '.'}
+    </Wrapper>
   );
 };
 

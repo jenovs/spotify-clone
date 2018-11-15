@@ -52,7 +52,7 @@ class TrackContainer extends Component {
         hasPreview={track.preview_url}
       >
         <TrackControlButton
-          isHovered={showPlayButton}
+          isHovered={!!showPlayButton}
           isPlaying={isActiveTrack && isPlaying}
           hasPreview={track.preview_url}
           nr={nr}

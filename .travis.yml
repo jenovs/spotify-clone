@@ -3,6 +3,10 @@ node_js:
   - '8'
 notifications:
   email: false
+before_install:
+  - npm install codecov -g
+after_success:
+  - codecov
 before_deploy: npm run build-css && npm run build
 deploy:
   provider: s3
