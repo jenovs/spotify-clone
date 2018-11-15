@@ -32,14 +32,20 @@
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "jest-dom": "^1.10.0",
-    "react-scripts-ts": "^3.1.0",
-    "react-testing-library": "^5.2.0"
+    "react-scripts": "^2.1.1",
+    "react-testing-library": "^5.2.3"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom --coverage",
-    "test:watch": "react-scripts-ts test --env=jsdom --watch",
-    "eject": "react-scripts-ts eject"
-  }
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --coverage",
+    "test:watch": "react-scripts test --env=jsdom --watch",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
