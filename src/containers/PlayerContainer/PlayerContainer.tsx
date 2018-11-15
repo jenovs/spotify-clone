@@ -17,7 +17,7 @@ import skipUnavailableTracks from '../../utils/skipUnavailableTracks';
 
 type TProps = IStateProps & IDispatchProps;
 
-interface IPlaylist {
+export interface IPlaylist {
   track: {
     album: {
       images: Array<{ url: string }>;
@@ -28,14 +28,14 @@ interface IPlaylist {
   };
 }
 
-interface IStateProps {
+export interface IStateProps {
   isPaused: boolean;
   isPlaying: boolean;
   playlist: IPlaylist[];
   songInd: number;
 }
 
-interface IDispatchProps {
+export interface IDispatchProps {
   pause: () => void;
   playNextTrack: (playlist: IPlaylist[], songInd: number) => void;
   playPrevTrack: (playlist: IPlaylist[], songInd: number) => void;
@@ -214,15 +214,7 @@ class PlayerContainer extends Component<TProps, IState> {
   }
 }
 
-// Temp solution
-interface IReduxState {
-  isPaused: boolean;
-  isPlaying: boolean;
-  tracklist: IPlaylist[];
-  activeTrackId: number;
-}
-
-const mapStateToProps = (state: IReduxState): IStateProps => ({
+const mapStateToProps = (state: any): IStateProps => ({
   isPaused: state.isPaused,
   isPlaying: state.isPlaying,
   playlist: state.tracklist,
@@ -245,7 +237,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 });
 
-export { PlayerContainer, IDispatchProps, IPlaylist, IStateProps };
+export { PlayerContainer };
 
 export default connect<IStateProps, IDispatchProps>(
   mapStateToProps,
