@@ -33,14 +33,18 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "jest-dom": "^1.10.0",
     "react-scripts": "^2.1.1",
-    "react-testing-library": "^5.2.3"
+    "react-testing-library": "^5.2.3",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-react": "^3.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "test:watch": "react-scripts test --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "prettier --write \"./src/**/*\""
   },
   "browserslist": [
     ">0.2%",
