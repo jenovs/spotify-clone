@@ -30,7 +30,7 @@ export const clearCategoryPlaylist = () => ({
 
 export const fetchToken = () => dispatch => {
   return (
-    fetch('https://spotify.jenovs.com')
+    fetch('https://ndj7ih3fo8.execute-api.eu-central-1.amazonaws.com/LATEST/')
       .then(res => res.json())
       .then(token => dispatch(setToken(token)))
       // tslint:disable-next-line
