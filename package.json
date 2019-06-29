@@ -34,8 +34,8 @@
     "jest-dom": "^1.10.0",
     "react-scripts": "3.0.1",
     "react-testing-library": "^5.2.3",
-    "tslint": "^5.12.1",
-    "tslint-config-prettier": "^1.17.0",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"
   },
   "scripts": {
