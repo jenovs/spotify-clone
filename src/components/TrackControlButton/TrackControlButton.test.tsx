@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { cleanup, fireEvent, render } from 'react-testing-library';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import 'jest-dom/extend-expect';
 
 import TrackControlButton from './TrackControlButton';
@@ -46,7 +46,6 @@ describe('PlaylistPlayButton component', () => {
     const { getByRole } = render(
       <TrackControlButton {...props} isPlaying={true} />
     );
-
     expect(getByRole('img')).toHaveClass('fa-volume-up');
   });
 
