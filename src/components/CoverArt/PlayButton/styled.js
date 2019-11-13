@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { spotifyGreen } from '../../../css-variables/colors';
+
 const ActionButton = styled.div`
   pointer-events: none;
   position: absolute;
@@ -24,15 +26,16 @@ export const Play = styled(ActionButton)`
 `;
 
 export const Wrapper = styled.div`
-  border: 1px solid #fff;
+  background-color: ${spotifyGreen};
   border-radius: 50%;
+  bottom: 16px;
+  cursor: default;
   filter: brightness(1);
-  height: 64px;
-  left: calc(50% - 32px);
+  height: 40px;
   position: absolute;
-  top: calc(50% - 32px);
+  right: 20px;
   transition: transform 0.1s ease;
-  width: 64px;
+  width: 40px;
 
   &:hover {
     border-width: 2px;
