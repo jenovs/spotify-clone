@@ -33,7 +33,7 @@
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "jest-dom": "^1.10.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.2.0",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0"
