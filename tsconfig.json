@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "es5",
     "allowJs": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,

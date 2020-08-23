@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { cleanup, getByAltText, render } from '@testing-library/react';
-import 'jest-dom/extend-expect';
 
 import NowPlaying from './NowPlaying';
 import { IProps } from './NowPlaying';
