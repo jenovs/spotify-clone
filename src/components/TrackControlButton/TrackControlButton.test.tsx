@@ -1,6 +1,5 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import 'jest-dom/extend-expect';
 
 import TrackControlButton, { IProps } from './TrackControlButton';
 
